@@ -1,0 +1,26 @@
+{% extends "AcmeDemoBundle::layout.html.twig" %}
+{% block title "GroupDocs - Viewer" %}
+
+{% block content_header '' %}
+
+{% block content %}
+    <h1>GroupDocs Viewer Example</h1>
+    <p>Welcome to {{ name }} example! Please enter your ClientID and PrivateKey, and upload file to your GroupDocs account.</p>
+
+    <form action="/app_dev.php/groupdocs/upload" method = "post" enctype = 'multipart/form-data'>
+        <label for='client_id'>GroupDocs Client ID</label>
+        <br />
+        <input type='text', name='client_id' />
+        <br />
+        <label for='private_key'>GroupDocs Private Key</label>
+        <br />
+        <input type='text', name='private_key' />
+        <br />
+        <label for='file'>File</label>
+        <br />
+        <input type='file' name='file'  />
+        <br /><br />
+        <input type='submit' value='Upload'/>
+    </form>
+{% endblock %}
+
