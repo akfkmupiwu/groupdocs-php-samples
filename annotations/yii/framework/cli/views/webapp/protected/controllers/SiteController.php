@@ -67,15 +67,15 @@ class SiteController extends Controller {
     
  
     // Pull list of annotation
-    public function actionPullannot($client_id=null,$apiKey=null,$file_id=null){
+    public function actionPullannot($clientId=null, $apiKey=null, $fileId=null){
         
         // form sent
         if (isset($_GET['client_id']) && isset($_GET['api_key']) && isset($_GET['file_id']) &&
                 !empty($_GET['client_id']) && !empty($_GET['api_key']) && !empty($_GET['file_id'])) {
             // initialize
-                $client_id = stripslashes(strip_tags($_GET['client_id']));
-                $api_key = stripslashes(strip_tags($_GET['api_key']));
-                $file_id = stripslashes(strip_tags($_GET['file_id']));
+                $clientId = stripslashes(strip_tags($_GET['client_id']));
+                $apiKey = stripslashes(strip_tags($_GET['api_key']));
+                $fileId = stripslashes(strip_tags($_GET['file_id']));
             //  GroupDocs SDK include
                 Yii::import('application.vendors.groupdocs-php.models.ListAnnotationsResult');
                 Yii::import('application.vendors.groupdocs-php.models.ListAnnotationsResponse');
@@ -86,14 +86,14 @@ class SiteController extends Controller {
                 Yii::import('application.vendors.groupdocs-php.models.AnnotationReplyInfo');
             //  basic classes
                 Yii::import('application.vendors.groupdocs-php.APIClient', true);
-                Yii::import('application.vendors.groupdocs-php.AntAPI');
+                Yii::import('application.vendors.groupdocs-php.AntApi');
                 Yii::import('application.vendors.groupdocs-php.GroupDocsRequestSigner');
             //  get list
                 // $apiClient = new APIClient($apiKey, "https://api.groupdocs.com/v2.0"); //old api - SDK v1.0
                 $signer = new GroupDocsRequestSigner($apiKey);
                 $apiClient = new APIClient($signer); // PHP SDK V1.1
-                $AntAPI = new AntAPI($apiClient);
-                $annotations = $AntAPI->ListAnnotations($client_id, $file_id);
+                $antApi = new AntApi($apiClient);
+                $annotations = $antApi->ListAnnotations($clientId, $fileId);
             //  build view
                 $annotationsView = array();
                 if(isset($annotations->result->annotations) && $annotations->result->annotations){
@@ -109,28 +109,7 @@ class SiteController extends Controller {
         return false;
 
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     /**
      * This is the action to handle external exceptions.
      */
