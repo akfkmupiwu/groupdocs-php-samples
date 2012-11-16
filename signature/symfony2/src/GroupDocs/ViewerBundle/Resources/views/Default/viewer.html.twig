@@ -1,0 +1,14 @@
+{% extends "AcmeDemoBundle::layout.html.twig" %}
+{% block title "GroupDocs - Viewer" %}
+
+{% block content_header '' %}
+
+{% block content %}
+    <h1>GroupDocs Viewer Example</h1>
+    <p><a href="/app_dev.php/groupdocs/">Back to Upload Form</a> </p>
+    <p>File was uploaded to GroupDocs. Here you can see your <strong>{{ name }}</strong> file in the GroupDocs Embedded Viewer.</p> 
+
+    <iframe src="https://apps.groupdocs.com/document-viewer/Embed/{{guid}}" frameborder="0" width="720" height="600"></iframe>
+
+{% endblock %}
+
