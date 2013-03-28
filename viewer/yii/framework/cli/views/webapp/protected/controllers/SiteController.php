@@ -27,11 +27,9 @@ class SiteController extends Controller {
             if (!empty($_FILES["GroupdocsForm"]["name"]["file"])) {
 				// now uploaded file has priority
 				$model->file_id = '';
-                //
-                $uploads_dir = dirname(__FILE__) . '/../../images';
+             
                 $tmp_name = $_FILES["GroupdocsForm"]["tmp_name"]["file"];
                 $name = $_FILES["GroupdocsForm"]["name"]["file"];
-                move_uploaded_file($tmp_name, "$uploads_dir/$name");
 
                 //  GroupDocs SDK
                 Yii::import('application.vendors.groupdocs-php.APIClient', true);          
@@ -40,14 +38,14 @@ class SiteController extends Controller {
                 Yii::import('application.vendors.groupdocs-php.models.StorageStorageInputFoldersInput');
                 Yii::import('application.vendors.groupdocs-php.models.UploadResponse');
                 Yii::import('application.vendors.groupdocs-php.models.UploadRequestResult');
+                Yii::import('application.vendors.groupdocs-php.FileStream');
                 // groupdocs api
                 
                 $signer = new GroupDocsRequestSigner($apiKey);
                 //$apiClient = new APIClient($apiKey, "https://api.groupdocs.com/v2.0"); //old api - SDK v1.0
                 $apiClient = new APIClient($signer); // PHP SDK V1.1
                 $api = new StorageAPI($apiClient);
-                $result = $api->Upload($clientID, $name, 'uploaded', "file://$uploads_dir/$name");
-                unlink("$uploads_dir/$name");
+                $result = $api->Upload($clientID, $name, 'uploaded', FileStream::fromFile($tmp_name));
             }
 
 			///// Show iframe
