@@ -24,24 +24,24 @@
 class SignatureSignatureSettings {
 
   static $swaggerTypes = array(
-      'position' => 'string',
-      'initialsData' => 'string',
-      'lastName' => 'string',
-      'signatureData' => 'string',
       'name' => 'string',
-      'firstName' => 'string',
       'companyName' => 'string',
-      'textInitials' => 'string'
+      'position' => 'string',
+      'firstName' => 'string',
+      'lastName' => 'string',
+      'textInitials' => 'string',
+      'signatureData' => 'string',
+      'initialsData' => 'string'
 
     );
 
-  public $position; // string
-  public $initialsData; // string
-  public $lastName; // string
-  public $signatureData; // string
   public $name; // string
-  public $firstName; // string
   public $companyName; // string
+  public $position; // string
+  public $firstName; // string
+  public $lastName; // string
   public $textInitials; // string
+  public $signatureData; // string
+  public $initialsData; // string
   }
 

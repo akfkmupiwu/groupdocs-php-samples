@@ -26,12 +26,14 @@ class GetDocumentQuestionnairesResponse {
   static $swaggerTypes = array(
       'result' => 'GetDocumentQuestionnairesResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // GetDocumentQuestionnairesResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

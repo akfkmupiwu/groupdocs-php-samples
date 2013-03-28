@@ -26,12 +26,14 @@ class ResetPasswordResponse {
   static $swaggerTypes = array(
       'result' => 'ResetPasswordResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // ResetPasswordResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

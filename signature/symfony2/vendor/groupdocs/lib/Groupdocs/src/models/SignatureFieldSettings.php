@@ -24,18 +24,18 @@
 class SignatureFieldSettings {
 
   static $swaggerTypes = array(
-      'regularExpression' => 'string',
       'name' => 'string',
+      'graphSizeW' => 'int',
       'graphSizeH' => 'int',
       'getDataFrom' => 'string',
-      'graphSizeW' => 'int'
+      'regularExpression' => 'string'
 
     );
 
-  public $regularExpression; // string
   public $name; // string
+  public $graphSizeW; // int
   public $graphSizeH; // int
   public $getDataFrom; // string
-  public $graphSizeW; // int
+  public $regularExpression; // string
   }
 

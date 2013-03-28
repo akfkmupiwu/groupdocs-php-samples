@@ -24,26 +24,26 @@
 class StorageProviderInfo {
 
   static $swaggerTypes = array(
-      'publicKey' => 'string',
       'id' => 'float',
-      'serviceHost' => 'string',
-      'isPrimary' => 'bool',
-      'privateKey' => 'string',
-      'token' => 'array[int]',
-      'rootFolder' => 'string',
       'provider' => 'string',
-      'type' => 'string'
+      'type' => 'string',
+      'token' => 'array[int]',
+      'publicKey' => 'string',
+      'privateKey' => 'string',
+      'rootFolder' => 'string',
+      'isPrimary' => 'bool',
+      'serviceHost' => 'string'
 
     );
 
-  public $publicKey; // string
   public $id; // float
-  public $serviceHost; // string
-  public $isPrimary; // bool
-  public $privateKey; // string
-  public $token; // array[int]
-  public $rootFolder; // string
   public $provider; // string
   public $type; // string
+  public $token; // array[int]
+  public $publicKey; // string
+  public $privateKey; // string
+  public $rootFolder; // string
+  public $isPrimary; // bool
+  public $serviceHost; // string
   }
 

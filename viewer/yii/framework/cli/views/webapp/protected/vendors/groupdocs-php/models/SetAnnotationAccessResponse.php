@@ -26,12 +26,14 @@ class SetAnnotationAccessResponse {
   static $swaggerTypes = array(
       'result' => 'SetAnnotationAccessResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // SetAnnotationAccessResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

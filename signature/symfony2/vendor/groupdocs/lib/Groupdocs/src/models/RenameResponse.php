@@ -26,12 +26,14 @@ class RenameResponse {
   static $swaggerTypes = array(
       'result' => 'RenameResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // RenameResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

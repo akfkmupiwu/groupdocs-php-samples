@@ -24,26 +24,28 @@
 class SignatureEnvelopeDocumentInfo {
 
   static $swaggerTypes = array(
-      'fieldsCount' => 'int',
-      'originalDocumentImportedFields' => 'array[SignatureDocumentFieldInfo]',
-      'finalDocumentMD5' => 'string',
+      'documentId' => 'string',
+      'envelopeId' => 'string',
       'order' => 'int',
       'name' => 'string',
-      'envelopeId' => 'string',
-      'originalDocumentPagesCount' => 'int',
       'originalDocumentMD5' => 'string',
-      'documentId' => 'string'
+      'finalDocumentMD5' => 'string',
+      'originalDocumentPagesCount' => 'int',
+      'fieldsCount' => 'int',
+      'originalDocumentImportedFields' => 'array[SignatureDocumentFieldInfo]',
+      'originalDocumentId' => 'string'
 
     );
 
-  public $fieldsCount; // int
-  public $originalDocumentImportedFields; // array[SignatureDocumentFieldInfo]
-  public $finalDocumentMD5; // string
+  public $documentId; // string
+  public $envelopeId; // string
   public $order; // int
   public $name; // string
-  public $envelopeId; // string
-  public $originalDocumentPagesCount; // int
   public $originalDocumentMD5; // string
-  public $documentId; // string
+  public $finalDocumentMD5; // string
+  public $originalDocumentPagesCount; // int
+  public $fieldsCount; // int
+  public $originalDocumentImportedFields; // array[SignatureDocumentFieldInfo]
+  public $originalDocumentId; // string
   }
 

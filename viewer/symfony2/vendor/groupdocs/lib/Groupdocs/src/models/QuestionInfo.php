@@ -26,20 +26,20 @@ class QuestionInfo {
   static $swaggerTypes = array(
       'field' => 'string',
       'text' => 'string',
-      'answers' => 'array[AnswerInfo]',
       'def_answer' => 'string',
-      'type' => 'string',
       'required' => 'bool',
-      'disabled' => 'bool'
+      'disabled' => 'bool',
+      'type' => 'string',
+      'answers' => 'array[AnswerInfo]'
 
     );
 
   public $field; // string
   public $text; // string
-  public $answers; // array[AnswerInfo]
   public $def_answer; // string
-  public $type; // string
   public $required; // bool
   public $disabled; // bool
+  public $type; // string
+  public $answers; // array[AnswerInfo]
   }
 

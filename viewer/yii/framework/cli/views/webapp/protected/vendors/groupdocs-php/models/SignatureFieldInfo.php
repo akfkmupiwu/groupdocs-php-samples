@@ -24,40 +24,42 @@
 class SignatureFieldInfo {
 
   static $swaggerTypes = array(
+      'id' => 'string',
+      'name' => 'string',
+      'graphSizeW' => 'int',
+      'graphSizeH' => 'int',
+      'getDataFrom' => 'string',
+      'regularExpression' => 'string',
       'fontName' => 'string',
       'fontColor' => 'string',
-      'regularExpression' => 'string',
-      'fieldType' => 'int',
-      'graphSizeH' => 'int',
-      'fontBold' => 'bool',
       'fontSize' => 'float',
-      'isSystem' => 'bool',
-      'id' => 'string',
-      'acceptableValues' => 'string',
+      'fontBold' => 'bool',
       'fontItalic' => 'bool',
       'fontUnderline' => 'bool',
-      'name' => 'string',
-      'getDataFrom' => 'string',
+      'isSystem' => 'bool',
+      'fieldType' => 'int',
+      'acceptableValues' => 'string',
       'defaultValue' => 'string',
-      'graphSizeW' => 'int'
+      'align' => 'int'
 
     );
 
+  public $id; // string
+  public $name; // string
+  public $graphSizeW; // int
+  public $graphSizeH; // int
+  public $getDataFrom; // string
+  public $regularExpression; // string
   public $fontName; // string
   public $fontColor; // string
-  public $regularExpression; // string
-  public $fieldType; // int
-  public $graphSizeH; // int
-  public $fontBold; // bool
   public $fontSize; // float
-  public $isSystem; // bool
-  public $id; // string
-  public $acceptableValues; // string
+  public $fontBold; // bool
   public $fontItalic; // bool
   public $fontUnderline; // bool
-  public $name; // string
-  public $getDataFrom; // string
+  public $isSystem; // bool
+  public $fieldType; // int
+  public $acceptableValues; // string
   public $defaultValue; // string
-  public $graphSizeW; // int
+  public $align; // int
   }
 

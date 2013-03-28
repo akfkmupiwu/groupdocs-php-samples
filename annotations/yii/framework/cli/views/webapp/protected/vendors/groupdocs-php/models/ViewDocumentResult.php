@@ -24,28 +24,32 @@
 class ViewDocumentResult {
 
   static $swaggerTypes = array(
-      'guid' => 'string',
-      'id' => 'float',
-      'page_size' => 'Dimension',
-      'token' => 'string',
       'name' => 'string',
-      'image_urls' => 'array[string]',
-      'doc_type' => 'string',
-      'url' => 'string',
+      'version' => 'int',
       'page_count' => 'int',
-      'version' => 'int'
+      'page_size' => 'Dimension',
+      'url' => 'string',
+      'doc_type' => 'string',
+      'image_urls' => 'array[string]',
+      'token' => 'string',
+      'pageHtml' => 'string',
+      'pageCss' => 'string',
+      'id' => 'float',
+      'guid' => 'string'
 
     );
 
-  public $guid; // string
-  public $id; // float
-  public $page_size; // Dimension
-  public $token; // string
   public $name; // string
-  public $image_urls; // array[string]
-  public $doc_type; // string
-  public $url; // string
-  public $page_count; // int
   public $version; // int
+  public $page_count; // int
+  public $page_size; // Dimension
+  public $url; // string
+  public $doc_type; // string
+  public $image_urls; // array[string]
+  public $token; // string
+  public $pageHtml; // string
+  public $pageCss; // string
+  public $id; // float
+  public $guid; // string
   }
 

@@ -26,12 +26,14 @@ class GetDocumentForeignTypesResponse {
   static $swaggerTypes = array(
       'result' => 'GetDocumentForeignTypesResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // GetDocumentForeignTypesResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

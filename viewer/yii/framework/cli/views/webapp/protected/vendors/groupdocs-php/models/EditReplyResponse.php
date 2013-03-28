@@ -26,12 +26,14 @@ class EditReplyResponse {
   static $swaggerTypes = array(
       'result' => 'EditReplyResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // EditReplyResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

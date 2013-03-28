@@ -24,26 +24,28 @@
 class UploadRequestResult {
 
   static $swaggerTypes = array(
-      'guid' => 'string',
-      'id' => 'float',
-      'thumbnail' => 'string',
       'adj_name' => 'string',
-      'type' => 'string',
       'url' => 'string',
+      'type' => 'string',
+      'file_type' => 'string',
+      'size' => 'string',
       'version' => 'int',
-      'size' => 'int',
-      'file_type' => 'string'
+      'view_job_id' => 'float',
+      'thumbnail' => 'string',
+      'id' => 'float',
+      'guid' => 'string'
 
     );
 
-  public $guid; // string
-  public $id; // float
-  public $thumbnail; // string
   public $adj_name; // string
-  public $type; // string
   public $url; // string
-  public $version; // int
-  public $size; // int
+  public $type; // string
   public $file_type; // string
+  public $size; // string
+  public $version; // int
+  public $view_job_id; // float
+  public $thumbnail; // string
+  public $id; // float
+  public $guid; // string
   }
 

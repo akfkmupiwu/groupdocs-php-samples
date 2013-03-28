@@ -24,14 +24,14 @@
 class QuestionnairePageInfo {
 
   static $swaggerTypes = array(
+      'number' => 'int',
       'title' => 'string',
-      'questions' => 'array[QuestionInfo]',
-      'number' => 'int'
+      'questions' => 'array[QuestionInfo]'
 
     );
 
+  public $number; // int
   public $title; // string
   public $questions; // array[QuestionInfo]
-  public $number; // int
   }
 

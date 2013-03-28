@@ -24,32 +24,36 @@
 class QuestionnaireInfo {
 
   static $swaggerTypes = array(
-      'assigned_questions' => 'int',
-      'guid' => 'string',
-      'id' => 'float',
-      'expires' => 'int',
-      'status' => 'string',
       'resolved_executions' => 'int',
-      'name' => 'string',
       'pages' => 'array[QuestionnairePageInfo]',
       'document_ids' => 'array[string]',
+      'id' => 'float',
+      'guid' => 'string',
+      'name' => 'string',
       'descr' => 'string',
-      'modified' => 'int',
-      'total_questions' => 'int'
+      'status' => 'string',
+      'assigned_questions' => 'int',
+      'total_questions' => 'int',
+      'modified' => 'string',
+      'expires' => 'string',
+      'folder' => 'string',
+      'emails' => 'string'
 
     );
 
-  public $assigned_questions; // int
-  public $guid; // string
-  public $id; // float
-  public $expires; // int
-  public $status; // string
   public $resolved_executions; // int
-  public $name; // string
   public $pages; // array[QuestionnairePageInfo]
   public $document_ids; // array[string]
+  public $id; // float
+  public $guid; // string
+  public $name; // string
   public $descr; // string
-  public $modified; // int
+  public $status; // string
+  public $assigned_questions; // int
   public $total_questions; // int
+  public $modified; // string
+  public $expires; // string
+  public $folder; // string
+  public $emails; // string
   }
 

@@ -26,12 +26,14 @@ class CreateUserResponse {
   static $swaggerTypes = array(
       'result' => 'CreateUserResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // CreateUserResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

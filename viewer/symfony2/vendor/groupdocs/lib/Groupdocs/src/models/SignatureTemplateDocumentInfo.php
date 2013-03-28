@@ -24,22 +24,24 @@
 class SignatureTemplateDocumentInfo {
 
   static $swaggerTypes = array(
+      'documentId' => 'string',
       'templateId' => 'string',
-      'fieldsCount' => 'int',
       'order' => 'int',
       'name' => 'string',
-      'originalDocumentPagesCount' => 'int',
       'originalDocumentMD5' => 'string',
-      'documentId' => 'string'
+      'originalDocumentPagesCount' => 'int',
+      'fieldsCount' => 'int',
+      'originalDocumentId' => 'string'
 
     );
 
+  public $documentId; // string
   public $templateId; // string
-  public $fieldsCount; // int
   public $order; // int
   public $name; // string
-  public $originalDocumentPagesCount; // int
   public $originalDocumentMD5; // string
-  public $documentId; // string
+  public $originalDocumentPagesCount; // int
+  public $fieldsCount; // int
+  public $originalDocumentId; // string
   }
 

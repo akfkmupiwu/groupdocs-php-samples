@@ -26,12 +26,14 @@ class ChangePasswordResponse {
   static $swaggerTypes = array(
       'result' => 'ChangePasswordResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // ChangePasswordResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

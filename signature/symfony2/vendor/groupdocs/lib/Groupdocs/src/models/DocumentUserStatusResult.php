@@ -26,14 +26,14 @@ class DocumentUserStatusResult {
   static $swaggerTypes = array(
       'doc_info' => 'DocumentInfo',
       'owner_id' => 'float',
-      'user_status' => 'string',
-      'user_id' => 'float'
+      'user_id' => 'float',
+      'user_status' => 'string'
 
     );
 
   public $doc_info; // DocumentInfo
   public $owner_id; // float
-  public $user_status; // string
   public $user_id; // float
+  public $user_status; // string
   }
 

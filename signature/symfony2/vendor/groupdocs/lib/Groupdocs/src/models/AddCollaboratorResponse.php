@@ -26,12 +26,14 @@ class AddCollaboratorResponse {
   static $swaggerTypes = array(
       'result' => 'SetCollaboratorsResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // SetCollaboratorsResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

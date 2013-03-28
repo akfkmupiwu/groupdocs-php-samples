@@ -27,6 +27,10 @@ class DocApi {
 	  $this->apiClient = $apiClient;
 	}
 
+	public static function newInstance($apiClient) {
+	  return new self($apiClient);
+	}
+
     public function setBasePath($basePath) {
 	  $this->basePath = $basePath;
 	}
@@ -49,9 +53,15 @@ class DocApi {
 	 */
 
    public function ViewDocument($userId, $fileId, $pageNumber=null, $pageCount=null, $width=null, $quality=null, $usePdf=null) {
-  	  //parse inputs
+      if( $userId === null || $fileId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/doc/{userId}/files/{fileId}/thumbnails?page_number={pageNumber}&page_count={pageCount}&width={width}&quality={quality}&use_pdf={usePdf}");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
@@ -95,6 +105,59 @@ class DocApi {
   	  return $responseObject;
       }
   /**
+	 * ViewDocumentAsHtml
+	 * View Document
+   * userId, string: User GUID (required)
+   * fileId, string: File GUID (required)
+   * pageNumber, string: Page Number (optional)
+   * pageCount, string: Page Count (optional)
+   * @return ViewDocumentResponse
+	 */
+
+   public function ViewDocumentAsHtml($userId, $fileId, $pageNumber=null, $pageCount=null) {
+      if( $userId === null || $fileId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/doc/{userId}/files/{fileId}/htmlRepresentations?page_number={pageNumber}&page_count={pageCount}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "POST";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($pageNumber !== null) {
+  		  $queryParams['page_number'] = $this->apiClient->toPathValue($pageNumber);
+  		}
+  		if($pageCount !== null) {
+  		  $queryParams['page_count'] = $this->apiClient->toPathValue($pageCount);
+  		}
+  		if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($fileId !== null) {
+  			$resourcePath = str_replace("{" . "fileId" . "}",
+  			                            $fileId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'ViewDocumentResponse');
+  	  return $responseObject;
+      }
+  /**
 	 * GetDocumentViews
 	 * Get Document Views
    * userId, string: User GUID (required)
@@ -104,9 +167,15 @@ class DocApi {
 	 */
 
    public function GetDocumentViews($userId, $startIndex=null, $pageSize=null) {
-  	  //parse inputs
+      if( $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/doc/{userId}/views?page_index={startIndex}&page_size={pageSize}");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
@@ -146,7 +215,10 @@ class DocApi {
 	 */
 
    public function ShareDocument($userId, $fileId, $body) {
-  	  //parse inputs
+      if( $userId === null || $fileId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/doc/{userId}/files/{fileId}/sharers");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
@@ -184,7 +256,10 @@ class DocApi {
 	 */
 
    public function UnshareDocument($userId, $fileId) {
-  	  //parse inputs
+      if( $userId === null || $fileId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/doc/{userId}/files/{fileId}/sharers");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "DELETE";
@@ -222,7 +297,10 @@ class DocApi {
 	 */
 
    public function GetFolderSharers($userId, $folderId) {
-  	  //parse inputs
+      if( $userId === null || $folderId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/doc/{userId}/folders/{folderId}/sharers");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
@@ -261,7 +339,10 @@ class DocApi {
 	 */
 
    public function ShareFolder($userId, $folderId, $body) {
-  	  //parse inputs
+      if( $userId === null || $folderId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/doc/{userId}/folders/{folderId}/sharers");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
@@ -299,7 +380,10 @@ class DocApi {
 	 */
 
    public function UnshareFolder($userId, $folderId) {
-  	  //parse inputs
+      if( $userId === null || $folderId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/doc/{userId}/folders/{folderId}/sharers");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "DELETE";
@@ -338,9 +422,15 @@ class DocApi {
 	 */
 
    public function SetDocumentAccessMode($userId, $fileId, $mode=null) {
-  	  //parse inputs
+      if( $userId === null || $fileId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/doc/{userId}/files/{fileId}/accessinfo?mode={mode}");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
       $queryParams = array();
@@ -380,7 +470,10 @@ class DocApi {
 	 */
 
    public function GetDocumentAccessInfo($userId, $fileId) {
-  	  //parse inputs
+      if( $userId === null || $fileId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/doc/{userId}/files/{fileId}/accessinfo");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
@@ -418,7 +511,10 @@ class DocApi {
 	 */
 
    public function GetDocumentMetadata($userId, $fileId) {
-  	  //parse inputs
+      if( $userId === null || $fileId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/doc/{userId}/files/{fileId}/metadata");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
@@ -456,7 +552,10 @@ class DocApi {
 	 */
 
    public function GetDocumentMetadataByPath($userId, $path) {
-  	  //parse inputs
+      if( $userId === null || $path === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/doc/{userId}/files/{*path}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
@@ -495,9 +594,15 @@ class DocApi {
 	 */
 
    public function SetDocumentUserStatus($userId, $fileId, $status) {
-  	  //parse inputs
+      if( $userId === null || $fileId === null || $status === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/doc/{userId}/files/{fileId}/sharer");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
       $queryParams = array();
@@ -541,9 +646,15 @@ class DocApi {
 	 */
 
    public function GetSharedDocuments($userId, $sharesTypes=null, $pageIndex=null, $pageSize=null, $orderBy=null, $orderAsc=null) {
-  	  //parse inputs
+      if( $userId === null || $sharesTypes === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/doc/{userId}/shares/{sharesTypes}?page_index={pageIndex}&page_size={pageSize}&order_by={orderBy}&order_asc={orderAsc}");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
@@ -593,9 +704,15 @@ class DocApi {
 	 */
 
    public function GetTemplateFields($userId, $fileId, $includeGeometry=null) {
-  	  //parse inputs
+      if( $userId === null || $fileId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/doc/{userId}/files/{fileId}/fields?include_geometry={includeGeometry}");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
@@ -635,7 +752,10 @@ class DocApi {
 	 */
 
    public function GetDocumentFormats($userId, $fileId) {
-  	  //parse inputs
+      if( $userId === null || $fileId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/doc/{userId}/files/{fileId}/formats");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
@@ -678,9 +798,15 @@ class DocApi {
 	 */
 
    public function GetDocumentPageImage($userId, $fileId, $pageNumber, $dimension, $quality=null, $usePdf=null, $expiresOn=null, FileStream $outFileStream) {
-  	  //parse inputs
+      if( $userId === null || $fileId === null || $pageNumber === null || $dimension === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/doc/{userId}/files/{fileId}/pages/{pageNumber}/images/{dimension}?quality={quality}&use_pdf={usePdf}&expires={expiresOn}");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
@@ -719,6 +845,53 @@ class DocApi {
   		                                      $queryParams, $body, $headerParams, $outFileStream);
       }
   /**
+	 * GetDocumentPageHtml
+	 * Returns an HTML representantion of a particular document page.
+   * userId, string: GroupDocs user global unique identifier. (required)
+   * fileId, string: Document global unique identifier. (required)
+   * pageNumber, int: Document page number to get image for. (required)
+   * expiresOn, bool: The date and time in milliseconds since epoch the URL expires. (optional)
+   * @return stream
+	 */
+
+   public function GetDocumentPageHtml($userId, $fileId, $pageNumber, $expiresOn=null, FileStream $outFileStream) {
+      if( $userId === null || $fileId === null || $pageNumber === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/doc/{userId}/files/{fileId}/pages/{pageNumber}/htmlRepresentations?expires={expiresOn}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "GET";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($expiresOn !== null) {
+  		  $queryParams['expires'] = $this->apiClient->toPathValue($expiresOn);
+  		}
+  		if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($fileId !== null) {
+  			$resourcePath = str_replace("{" . "fileId" . "}",
+  			                            $fileId, $resourcePath);
+  		}
+  		if($pageNumber !== null) {
+  			$resourcePath = str_replace("{" . "pageNumber" . "}",
+  			                            $pageNumber, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      return $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams, $outFileStream);
+      }
+  /**
 	 * GetDocumentPagesImageUrls
 	 * Returns a list of URLs pointing to document page images.
    * userId, string: GroupDocs user global unique identifier. (required)
@@ -733,9 +906,15 @@ class DocApi {
 	 */
 
    public function GetDocumentPagesImageUrls($userId, $fileId, $firstPage=null, $pageCount=null, $dimension, $quality=null, $usePdf=null, $token=null) {
-  	  //parse inputs
+      if( $userId === null || $fileId === null || $dimension === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/doc/{userId}/files/{fileId}/pages/images/{dimension}/urls?first_page={firstPage}&page_count={pageCount}&quality={quality}&use_pdf={usePdf}&token={token}");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
@@ -783,6 +962,59 @@ class DocApi {
   	  return $responseObject;
       }
   /**
+	 * GetDocumentPagesHtmlUrls
+	 * Returns a list of URLs pointing to document page HTML representations.
+   * userId, string: GroupDocs user global unique identifier. (required)
+   * fileId, string: Document global unique identifier. (required)
+   * firstPage, int: Document page number to start from. (optional)
+   * pageCount, int: Page count to return URLs for. (optional)
+   * @return GetImageUrlsResponse
+	 */
+
+   public function GetDocumentPagesHtmlUrls($userId, $fileId, $firstPage=null, $pageCount=null) {
+      if( $userId === null || $fileId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/doc/{userId}/files/{fileId}/pages/htmlRepresentationUrls?first_page={firstPage}&page_count={pageCount}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "GET";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($firstPage !== null) {
+  		  $queryParams['first_page'] = $this->apiClient->toPathValue($firstPage);
+  		}
+  		if($pageCount !== null) {
+  		  $queryParams['page_count'] = $this->apiClient->toPathValue($pageCount);
+  		}
+  		if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($fileId !== null) {
+  			$resourcePath = str_replace("{" . "fileId" . "}",
+  			                            $fileId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'GetImageUrlsResponse');
+  	  return $responseObject;
+      }
+  /**
 	 * GetEditLock
 	 * Locks a document for editing and returns editing metadata.
    * userId, string: GroupDocs user global unique identifier. (required)
@@ -791,7 +1023,10 @@ class DocApi {
 	 */
 
    public function GetEditLock($userId, $fileId) {
-  	  //parse inputs
+      if( $userId === null || $fileId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/doc/{userId}/files/{fileId}/editlock");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
@@ -830,9 +1065,15 @@ class DocApi {
 	 */
 
    public function RemoveEditLock($userId, $fileId, $lockId) {
-  	  //parse inputs
+      if( $userId === null || $fileId === null || $lockId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/doc/{userId}/files/{fileId}/editlock");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "DELETE";
       $queryParams = array();
@@ -861,6 +1102,129 @@ class DocApi {
 
   	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'RemoveEditLockResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * GetDocumentTags
+	 * Returns tags assigned to the document.
+   * userId, string: GroupDocs user global unique identifier. (required)
+   * fileId, string: Document global unique identifier. (required)
+   * @return GetTagsResponse
+	 */
+
+   public function GetDocumentTags($userId, $fileId) {
+      if( $userId === null || $fileId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/doc/{userId}/files/{fileId}/tags");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "GET";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($fileId !== null) {
+  			$resourcePath = str_replace("{" . "fileId" . "}",
+  			                            $fileId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'GetTagsResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * SetDocumentTags
+	 * Assign tags to the document.
+   * userId, string: GroupDocs user global unique identifier. (required)
+   * fileId, string: Document global unique identifier. (required)
+   * @return SetTagsResponse
+	 */
+
+   public function SetDocumentTags($userId, $fileId) {
+      if( $userId === null || $fileId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/doc/{userId}/files/{fileId}/tags");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "PUT";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($fileId !== null) {
+  			$resourcePath = str_replace("{" . "fileId" . "}",
+  			                            $fileId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SetTagsResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * RemoveDocumentTags
+	 * Removes tags assigned to the document.
+   * userId, string: GroupDocs user global unique identifier. (required)
+   * fileId, string: Document global unique identifier. (required)
+   * @return RemoveTagsResponse
+	 */
+
+   public function RemoveDocumentTags($userId, $fileId) {
+      if( $userId === null || $fileId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/doc/{userId}/files/{fileId}/tags");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "DELETE";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($fileId !== null) {
+  			$resourcePath = str_replace("{" . "fileId" . "}",
+  			                            $fileId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'RemoveTagsResponse');
   	  return $responseObject;
       }
   

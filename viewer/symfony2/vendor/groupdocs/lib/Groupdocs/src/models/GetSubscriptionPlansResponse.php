@@ -26,12 +26,14 @@ class GetSubscriptionPlansResponse {
   static $swaggerTypes = array(
       'result' => 'GetSubscriptionPlanResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // GetSubscriptionPlanResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

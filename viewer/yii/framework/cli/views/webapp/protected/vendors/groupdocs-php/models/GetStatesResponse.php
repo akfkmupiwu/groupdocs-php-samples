@@ -26,12 +26,14 @@ class GetStatesResponse {
   static $swaggerTypes = array(
       'result' => 'GetStatesResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // GetStatesResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

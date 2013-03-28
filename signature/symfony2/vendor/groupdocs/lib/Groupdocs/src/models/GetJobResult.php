@@ -24,34 +24,34 @@
 class GetJobResult {
 
   static $swaggerTypes = array(
-      'status' => 'string',
-      'documents' => 'JobDocumentsEntry',
-      'out_formats' => 'array[string]',
-      'email_results' => 'bool',
-      'url_only' => 'bool',
-      'requested_time' => 'string',
       'id' => 'float',
-      'guid' => 'string',
-      'scheduled_time' => 'string',
+      'out_formats' => 'array[string]',
+      'actions' => 'string',
+      'status' => 'string',
+      'email_results' => 'bool',
       'priority' => 'float',
+      'url_only' => 'bool',
+      'documents' => 'JobDocumentsEntry',
+      'requested_time' => 'string',
+      'scheduled_time' => 'string',
+      'guid' => 'string',
       'name' => 'string',
-      'callback_url' => 'string',
-      'actions' => 'string'
+      'callback_url' => 'string'
 
     );
 
-  public $status; // string
-  public $documents; // JobDocumentsEntry
-  public $out_formats; // array[string]
-  public $email_results; // bool
-  public $url_only; // bool
-  public $requested_time; // string
   public $id; // float
-  public $guid; // string
-  public $scheduled_time; // string
+  public $out_formats; // array[string]
+  public $actions; // string
+  public $status; // string
+  public $email_results; // bool
   public $priority; // float
+  public $url_only; // bool
+  public $documents; // JobDocumentsEntry
+  public $requested_time; // string
+  public $scheduled_time; // string
+  public $guid; // string
   public $name; // string
   public $callback_url; // string
-  public $actions; // string
   }
 

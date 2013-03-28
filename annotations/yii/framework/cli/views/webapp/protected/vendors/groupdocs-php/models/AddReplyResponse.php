@@ -26,12 +26,14 @@ class AddReplyResponse {
   static $swaggerTypes = array(
       'result' => 'AddReplyResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // AddReplyResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

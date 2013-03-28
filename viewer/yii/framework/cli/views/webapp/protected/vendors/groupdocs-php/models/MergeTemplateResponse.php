@@ -26,12 +26,14 @@ class MergeTemplateResponse {
   static $swaggerTypes = array(
       'result' => 'MergeTemplateResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // MergeTemplateResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

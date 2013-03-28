@@ -14,11 +14,11 @@
  * @param string $className the class to attempt to load
  */
 function swagger_autoloader($className) {
-	$currentDir = substr(__FILE__, 0, strrpos(__FILE__, '/'));
-	if (file_exists($currentDir . '/' . $className . '.php')) {
-		include $currentDir . '/' . $className . '.php';
-	} elseif (file_exists($currentDir . '/models/' . $className . '.php')) {
-		include $currentDir . '/models/' . $className . '.php';
+	$currentDir = substr(__FILE__, 0, strrpos(__FILE__, DIRECTORY_SEPARATOR));
+	if (file_exists($currentDir . DIRECTORY_SEPARATOR . $className . '.php')) {
+		include $currentDir . DIRECTORY_SEPARATOR . $className . '.php';
+	} elseif (file_exists($currentDir . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR . $className . '.php')) {
+		include $currentDir . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR . $className . '.php';
 	}
 }
 spl_autoload_register('swagger_autoloader');
@@ -43,6 +43,30 @@ class DefaultRequestSigner implements RequestSigner {
 }
 
 class APIClient {
+	
+	private static $packageInfo;
+	
+	public static function getPackageInfo(){
+		if(is_null(self::$packageInfo)){
+			$filename = dirname(__FILE__)."/composer.json";
+			if(!file_exists($filename)){
+				$filename = dirname(__FILE__)."/../composer.json";
+			}
+			
+			$json = file_get_contents($filename);
+			$jsonArray = json_decode($json, true);
+			self::$packageInfo = array();
+			if(is_array($jsonArray)){
+				self::$packageInfo['version'] = $jsonArray['version'];
+				self::$packageInfo['name'] = $jsonArray['name'];
+				$pos = strpos(self::$packageInfo['name'], "/");
+				if($pos !== false){
+					self::$packageInfo['name'] = substr(self::$packageInfo['name'], $pos + 1);
+			  	}
+			}
+		}
+		return self::$packageInfo;
+	}
 
 	public static $POST = "POST";
 	public static $GET = "GET";
@@ -54,8 +78,20 @@ class APIClient {
 	 */
 	function __construct($requestSigner = null) {
 		$this->signer = $requestSigner == null ? new DefaultRequestSigner() : $requestSigner;
+		$info = self::getPackageInfo();
+		$this->headers = array("Groupdocs-Referer" => $info["name"]."/".$info["version"]);
+		$this->debug = false;
 	}
 
+	public function setDebug($flag, $curlLogFilepath="php://stderr") {
+		$this->debug = $flag;
+		$this->newline = "\n"; //$html ? "<br />" : "\n";
+		$this->curlLogFilepath = $curlLogFilepath;
+	}
+
+	public function addHeaders(array $headers) {
+		$this->headers = $headers;
+	}
 
     /**
 	 * @param string $resourcePath path to method endpoint
@@ -66,9 +102,18 @@ class APIClient {
 	 * @return unknown
 	 */
 	public function callAPI($apiServer, $resourcePath, $method, $queryParams, $postData,
-		$headerParams, $outFileStream=null) {
+		$headerParams, FileStream $outFileStream=null) {
 
 		$headers = array();
+		foreach ($this->headers as $key => $val) {
+			$headers[] = "$key: $val";
+		}
+		
+		if ($headerParams != null) {
+			foreach ($headerParams as $key => $val) {
+				$headers[] = "$key: $val";
+			}
+		}
 		
 		$isFileUpload = false;
 		if (empty($postData)){
@@ -76,7 +121,7 @@ class APIClient {
 
 		} else if ($postData instanceof FileStream) {
 			$isFileUpload = true;
-			$headers[] = "Content-type: ". $postData->getContentType();
+			$headers[] = "Content-type: application/octet-stream";
 			$headers[] = "Content-Length: ". $postData->getSize();
 
 		} else if (is_object($postData) or is_array($postData)) {
@@ -92,17 +137,22 @@ class APIClient {
 
 		$timeoutSec = 0;
 		$curl = curl_init();
+		if($this->debug){
+			// curl_setopt($curl, CURLOPT_HEADER, true); // Display headers; returns null response
+ 			curl_setopt($curl, CURLOPT_VERBOSE, true); // Display communication with server
+ 			curl_setopt($curl, CURLOPT_STDERR, $curl_log = fopen($this->curlLogFilepath, 'a+'));
+		}
 		curl_setopt($curl, CURLOPT_TIMEOUT, $timeoutSec);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 		// return the result on success, rather than just TRUE
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
-		if ($method == self::$GET) {
-			if (! empty($queryParams)) {
-				$url = ($url . '?' . http_build_query($queryParams));
-			}
-		} else if ($method == self::$POST) {
+		if (! empty($queryParams)) {
+			$url = ($url . '?' . http_build_query($queryParams));
+		}
+
+		if ($method == self::$POST) {
 			if($isFileUpload){
 				curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
 				curl_setopt($curl, CURLOPT_TIMEOUT, 0);
@@ -114,17 +164,15 @@ class APIClient {
 				curl_setopt($curl, CURLOPT_POSTFIELDS, $postData);
 			}
 		} else if ($method == self::$PUT) {
-			$json_data = json_encode($postData);
 			curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
 			curl_setopt($curl, CURLOPT_POSTFIELDS, $postData);
 		} else if ($method == self::$DELETE) {
 			curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
 			curl_setopt($curl, CURLOPT_POSTFIELDS, $postData);
-		} else {
-			throw new Exception('Method ' . $method . ' is not recognized.');
 		}
 
-		curl_setopt($curl, CURLOPT_URL, self::encodeURI($this->signer->signUrl($url)));
+		$url = self::encodeURI($this->signer->signUrl($url));
+		curl_setopt($curl, CURLOPT_URL, $url);
 		
 		if($outFileStream !== null){
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, false);
@@ -133,36 +181,64 @@ class APIClient {
 			curl_setopt($curl, CURLOPT_WRITEFUNCTION, array($outFileStream, 'bodyCallback'));
 		}
 		
+		if($this->debug){
+			$body = "> Request Body: $this->newline";
+			if($isFileUpload){
+				fwrite($curl_log, "$body >>>stream info: size=".$postData->getSize()." content-type=".$postData->getContentType());
+			} else {
+				fwrite($curl_log, $body.$postData);
+			}
+			echo $this->newline;
+		}
+		
 		// Make the request
 		$response = curl_exec($curl);
 		$response_info = curl_getinfo($curl);
 		
 		// Close curl
 		curl_close($curl);
-		if($outFileStream !== null){
-			fclose($outFileStream->getInputStream());
+		
+		if($this->debug){
+			$body = "< Response Body: $this->newline";
+			if($outFileStream !== null){
+				fwrite($curl_log, "$body <<<stream info: size=".$outFileStream->getSize()." content-type=".
+				$outFileStream->getContentType()." filename=".$outFileStream->getFileName());
+			} else {
+				fwrite($curl_log, $body.$response);
+			}
+			fwrite($curl_log, $this->newline);
+			fclose($curl_log);
 		}
 		
 		// Handle the response
 		if ($response_info['http_code'] == 0) {
-			throw new Exception("TIMEOUT: api call to " . $url .
+			throw new ApiException("TIMEOUT: api call to " . $url .
 				" took more than " . $timeoutSec . "s to return" );
-		} else if ($response_info['http_code'] == 200) {
+		} else if ($response_info['http_code'] == 200 || $response_info['http_code'] == 201 || $response_info['http_code'] == 202) {
 			if($outFileStream !== null){
-				return $outFileStream;
+				if(in_array('Transfer-Encoding', $outFileStream->headers) or $outFileStream->getSize() > 0){
+					fclose($outFileStream->getInputStream());
+					return $outFileStream;
+				} else {
+					return null;
+				}
 			} else {
 				return json_decode($response);
 			}
 		} else if ($response_info['http_code'] == 401) {
-			throw new Exception("Unauthorized API request to " . $url .
-					": ".$response );
+			throw new ApiException("Unauthorized API request to " . $url, 401);
 		} else if ($response_info['http_code'] == 404) {
 			return null;
 		} else {
-			throw new Exception("Can't connect to the api: " . $url .
-				" response code: " .
-				$response_info['http_code'] .
-				" response body: " . $response); 
+			$msg = $response;
+			if($outFileStream !== null and !empty($outFileStream->jsonError)){
+				$msg = $outFileStream->jsonError;
+			}
+			$jsonArray = json_decode($msg, true);
+			if(is_array($jsonArray)){
+				$msg = $jsonArray['error_message'];
+			}
+			throw new ApiException($msg, $response_info['http_code']); 
 		}
 	}
 
@@ -177,13 +253,23 @@ class APIClient {
 	public static function toPathValue($object) {
         if (is_array($object)) {
             return implode(',', array_map(function($obj) {
-            	return var_export($obj, true);
+            	return self::unquote(var_export($obj, true));
 			}, $object));
         } else {
-            return var_export($object, true);
+            return self::unquote(var_export($object, true));
         }
 	}
 
+	public static function unquote($str) {
+		$to_return = $str;
+		if(self::startsWith($to_return, "'") && self::endsWith($to_return, "'")){
+			$to_return = str_replace("'", "", $to_return);
+		}
+		if(self::startsWith($to_return, '"') && self::endsWith($to_return, '"')){
+			$to_return = str_replace('"', '', $to_return);
+		}
+        return $to_return;
+	}
 
 	/**
 	 * Derialize a JSON string into an object
@@ -218,7 +304,6 @@ class APIClient {
 
 		foreach ($object as $property => $value) {
 
-			// Need to handle possible pluralization differences
 			$true_property = $property;
 
 			if (! property_exists($class, $true_property)) {
@@ -226,15 +311,10 @@ class APIClient {
 					$true_property = ucfirst($property);
 				} else if (property_exists($class, lcfirst($property))) {
 					$true_property = lcfirst($property);
-				} else if (substr($property, -1) == 's') {
-					$true_property = substr($property, 0, -1);
-					if (! property_exists($class, $true_property)) {
-						trigger_error("class $class has no property $property"
-							. " or $true_property", E_USER_WARNING);
-					}
 				} else {
-					trigger_error("class $class has no property $property",
-						E_USER_WARNING);
+					// trigger_error("class $class has no property $property", E_USER_WARNING);
+					// ignore newly added attributes
+					continue;
 				}
 			}
 
@@ -277,14 +357,10 @@ class APIClient {
 	        $finfo = finfo_open(FILEINFO_MIME_TYPE);
 	        $cont_type = finfo_file($finfo, $filePath);
 	        finfo_close($finfo);
-	    } 
-		if($cont_type == null){
-			$cont_type = mime_content_type($filePath);
-		}
+	    }
 		if($cont_type == null){
 			$cont_type = "application/octet-stream";
 		}
-		
 		return $cont_type;
 	}
 
@@ -315,4 +391,34 @@ class APIClient {
 		return 'data:'.self::getMimeType($filePath).';base64,'.base64_encode(file_get_contents($filePath));
 	}
 
+	/**
+	* Starts the $haystack string with the prefix $needle?
+	* @param  string
+	* @param  string
+	* @return bool
+	*/
+	public static function startsWith($haystack, $needle) {
+		return strncmp($haystack, $needle, strlen($needle)) === 0;
+	}
+	
+	
+	/**
+	* Ends the $haystack string with the suffix $needle?
+	* @param  string
+	* @param  string
+	* @return bool
+	*/
+	public static function endsWith($haystack, $needle) {
+		return strlen($needle) === 0 || substr($haystack, -strlen($needle)) === $needle;
+	}
+}
+
+class ApiException extends Exception {
+	public function _construct($message, $code = 0, Exception $previous = null){
+		parent::__construct($message, $code, $previous);
+	}
+	
+	public function __toString() {
+        return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
+    }
 }

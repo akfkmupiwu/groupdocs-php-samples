@@ -26,12 +26,14 @@ class UpdateUserResponse {
   static $swaggerTypes = array(
       'result' => 'UpdateUserResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // UpdateUserResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

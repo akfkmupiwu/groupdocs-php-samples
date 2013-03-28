@@ -27,6 +27,10 @@ class AsyncApi {
 	  $this->apiClient = $apiClient;
 	}
 
+	public static function newInstance($apiClient) {
+	  return new self($apiClient);
+	}
+
     public function setBasePath($basePath) {
 	  $this->basePath = $basePath;
 	}
@@ -44,7 +48,10 @@ class AsyncApi {
 	 */
 
    public function GetJob($userId, $jobId) {
-  	  //parse inputs
+      if( $userId === null || $jobId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/async/{userId}/jobs/{jobId}?format=xml");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
@@ -82,7 +89,10 @@ class AsyncApi {
 	 */
 
    public function GetJobJson($userId, $jobId) {
-  	  //parse inputs
+      if( $userId === null || $jobId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/async/{userId}/jobs/{jobId}?format=json");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
@@ -122,9 +132,15 @@ class AsyncApi {
 	 */
 
    public function GetJobResources($userId, $statusIds, $actions=null, $excludedActions=null) {
-  	  //parse inputs
+      if( $userId === null || $statusIds === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/async/{userId}/jobs/resources?statusIds={statusIds}&actions={actions}&excluded_actions={excludedActions}");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
@@ -167,9 +183,15 @@ class AsyncApi {
 	 */
 
    public function GetJobDocuments($userId, $jobId, $format=null) {
-  	  //parse inputs
+      if( $userId === null || $jobId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/async/{userId}/jobs/{jobId}/documents?format={format}");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
@@ -209,7 +231,10 @@ class AsyncApi {
 	 */
 
    public function CreateJob($userId, $body) {
-  	  //parse inputs
+      if( $userId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/async/{userId}/jobs");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
@@ -243,7 +268,10 @@ class AsyncApi {
 	 */
 
    public function DeleteJob($userId, $jobGuid) {
-  	  //parse inputs
+      if( $userId === null || $jobGuid === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/async/{userId}/jobs/{jobGuid}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "DELETE";
@@ -284,9 +312,15 @@ class AsyncApi {
 	 */
 
    public function AddJobDocument($userId, $jobId, $fileId, $checkOwnership, $formats=null) {
-  	  //parse inputs
+      if( $userId === null || $jobId === null || $fileId === null || $checkOwnership === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/async/{userId}/jobs/{jobId}/files/{fileId}?check_ownership={checkOwnership}&out_formats={formats}");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
       $queryParams = array();
@@ -334,7 +368,10 @@ class AsyncApi {
 	 */
 
    public function DeleteJobDocument($userId, $jobGuid, $documentId) {
-  	  //parse inputs
+      if( $userId === null || $jobGuid === null || $documentId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/async/{userId}/jobs/{jobGuid}/documents/{documentId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "DELETE";
@@ -378,9 +415,15 @@ class AsyncApi {
 	 */
 
    public function AddJobDocumentUrl($userId, $jobId, $absoluteUrl, $formats=null) {
-  	  //parse inputs
+      if( $userId === null || $jobId === null || $absoluteUrl === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/async/{userId}/jobs/{jobId}/urls?absolute_url={absoluteUrl}&out_formats={formats}");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
       $queryParams = array();
@@ -424,7 +467,10 @@ class AsyncApi {
 	 */
 
    public function UpdateJob($userId, $jobId, $body) {
-  	  //parse inputs
+      if( $userId === null || $jobId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/async/{userId}/jobs/{jobId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
@@ -467,9 +513,15 @@ class AsyncApi {
 	 */
 
    public function GetJobs($userId, $pageIndex=null, $pageSize=null, $DateTime=null, $statusIds=null, $actions=null, $excludedActions=null) {
-  	  //parse inputs
+      if( $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/async/{userId}/jobs?page={pageIndex}&count={pageSize}&date={date}&statusIds={statusIds}&actions={actions}&excluded_actions={excludedActions}");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
@@ -525,9 +577,15 @@ class AsyncApi {
 	 */
 
    public function GetJobsDocuments($userId, $pageIndex=null, $pageSize=null, $actions=null, $excludedActions=null, $orderBy=null, $orderAsc=null) {
-  	  //parse inputs
+      if( $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/async/{userId}/jobs/documents?page={pageIndex}&count={pageSize}&actions={actions}&excluded_actions={excludedActions}&order_by={orderBy}&order_asc={orderAsc}");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
@@ -574,28 +632,30 @@ class AsyncApi {
 	 * Convert
    * userId, string: User GUID (required)
    * fileId, string: File GUID (required)
-   * targetType, string: Target type (optional)
    * emailResults, string: Email results (optional)
    * description, string: Description (optional)
    * printScript, bool: Print (optional)
    * callbackUrl, string: Callback url (optional)
-   * checkDocumentOwnership, bool: Check Document Ownership (optional)
+   * new_type, string: Target type (optional)
    * @return ConvertResponse
 	 */
 
-   public function Convert($userId, $fileId, $targetType=null, $emailResults=null, $description=null, $printScript=null, $callbackUrl=null, $checkDocumentOwnership=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/async/{userId}/files/{fileId}?new_type={targetType}&email_results={emailResults}&new_description={description}&print_script={printScript}&callback={callbackUrl}&checkDocumentOwnership={checkDocumentOwnership}");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+   public function Convert($userId, $fileId, $emailResults=null, $description=null, $printScript=null, $callbackUrl=null, $new_type=null) {
+      if( $userId === null || $fileId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/async/{userId}/files/{fileId}?new_type={targetType}&email_results={emailResults}&new_description={description}&print_script={printScript}&callback={callbackUrl}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
-      if($targetType !== null) {
-  		  $queryParams['new_type'] = $this->apiClient->toPathValue($targetType);
-  		}
-  		if($emailResults !== null) {
+      if($emailResults !== null) {
   		  $queryParams['email_results'] = $this->apiClient->toPathValue($emailResults);
   		}
   		if($description !== null) {
@@ -607,8 +667,8 @@ class AsyncApi {
   		if($callbackUrl !== null) {
   		  $queryParams['callback'] = $this->apiClient->toPathValue($callbackUrl);
   		}
-  		if($checkDocumentOwnership !== null) {
-  		  $queryParams['checkDocumentOwnership'] = $this->apiClient->toPathValue($checkDocumentOwnership);
+  		if($new_type !== null) {
+  		  $queryParams['new_type'] = $this->apiClient->toPathValue($new_type);
   		}
   		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",

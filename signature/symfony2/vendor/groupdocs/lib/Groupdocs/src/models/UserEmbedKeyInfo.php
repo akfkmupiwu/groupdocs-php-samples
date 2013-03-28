@@ -24,18 +24,18 @@
 class UserEmbedKeyInfo {
 
   static $swaggerTypes = array(
+      'user' => 'UserIdentity',
       'guid' => 'string',
       'area' => 'string',
       'active' => 'bool',
-      'hit_count' => 'int',
-      'user' => 'UserIdentity'
+      'hit_count' => 'int'
 
     );
 
+  public $user; // UserIdentity
   public $guid; // string
   public $area; // string
   public $active; // bool
   public $hit_count; // int
-  public $user; // UserIdentity
   }
 

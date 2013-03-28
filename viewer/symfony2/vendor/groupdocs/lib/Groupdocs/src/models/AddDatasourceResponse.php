@@ -26,12 +26,14 @@ class AddDatasourceResponse {
   static $swaggerTypes = array(
       'result' => 'AddDatasourceResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // AddDatasourceResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

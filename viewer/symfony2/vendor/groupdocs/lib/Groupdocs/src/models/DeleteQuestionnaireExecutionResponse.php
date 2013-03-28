@@ -26,12 +26,14 @@ class DeleteQuestionnaireExecutionResponse {
   static $swaggerTypes = array(
       'result' => 'DeleteQuestionnaireExecutionResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // DeleteQuestionnaireExecutionResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

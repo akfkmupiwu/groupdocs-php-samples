@@ -24,12 +24,12 @@
 class CompressRequestResult {
 
   static $swaggerTypes = array(
-      'guid' => 'string',
-      'id' => 'float'
+      'id' => 'float',
+      'guid' => 'string'
 
     );
 
-  public $guid; // string
   public $id; // float
+  public $guid; // string
   }
 

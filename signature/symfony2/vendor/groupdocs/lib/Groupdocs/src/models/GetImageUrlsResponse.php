@@ -26,12 +26,14 @@ class GetImageUrlsResponse {
   static $swaggerTypes = array(
       'result' => 'GetImageUrlsResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // GetImageUrlsResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

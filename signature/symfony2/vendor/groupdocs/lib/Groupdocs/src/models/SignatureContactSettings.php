@@ -24,14 +24,14 @@
 class SignatureContactSettings {
 
   static $swaggerTypes = array(
+      'firstName' => 'string',
       'lastName' => 'string',
-      'email' => 'string',
-      'firstName' => 'string'
+      'email' => 'string'
 
     );
 
+  public $firstName; // string
   public $lastName; // string
   public $email; // string
-  public $firstName; // string
   }
 

@@ -24,14 +24,14 @@
 class MergeTemplateResult {
 
   static $swaggerTypes = array(
-      'datasource_id' => 'float',
+      'job_id' => 'float',
       'document_id' => 'float',
-      'job_id' => 'float'
+      'datasource_id' => 'float'
 
     );
 
-  public $datasource_id; // float
-  public $document_id; // float
   public $job_id; // float
+  public $document_id; // float
+  public $datasource_id; // float
   }
 

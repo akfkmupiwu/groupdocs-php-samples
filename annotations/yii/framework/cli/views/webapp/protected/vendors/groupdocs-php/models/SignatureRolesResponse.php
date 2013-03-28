@@ -26,12 +26,14 @@ class SignatureRolesResponse {
   static $swaggerTypes = array(
       'result' => 'SignatureRolesResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // SignatureRolesResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

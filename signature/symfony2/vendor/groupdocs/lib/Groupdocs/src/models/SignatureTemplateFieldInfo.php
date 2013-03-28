@@ -24,33 +24,33 @@
 class SignatureTemplateFieldInfo {
 
   static $swaggerTypes = array(
-      'regularExpression' => 'string',
-      'fieldType' => 'int',
-      'mandatory' => 'bool',
       'id' => 'string',
       'templateId' => 'string',
-      'acceptableValues' => 'string',
       'recipientId' => 'string',
+      'name' => 'string',
+      'mandatory' => 'bool',
       'order' => 'float',
+      'regularExpression' => 'string',
       'signatureFieldId' => 'float',
       'locations' => 'array[SignatureTemplateFieldLocationInfo]',
-      'name' => 'string',
+      'fieldType' => 'int',
+      'acceptableValues' => 'string',
       'defaultValue' => 'string',
       'tooltip' => 'string'
 
     );
 
-  public $regularExpression; // string
-  public $fieldType; // int
-  public $mandatory; // bool
   public $id; // string
   public $templateId; // string
-  public $acceptableValues; // string
   public $recipientId; // string
+  public $name; // string
+  public $mandatory; // bool
   public $order; // float
+  public $regularExpression; // string
   public $signatureFieldId; // float
   public $locations; // array[SignatureTemplateFieldLocationInfo]
-  public $name; // string
+  public $fieldType; // int
+  public $acceptableValues; // string
   public $defaultValue; // string
   public $tooltip; // string
   }

@@ -24,12 +24,12 @@
 class CreateJobResult {
 
   static $swaggerTypes = array(
-      'job_guid' => 'string',
-      'job_id' => 'float'
+      'job_id' => 'float',
+      'job_guid' => 'string'
 
     );
 
-  public $job_guid; // string
   public $job_id; // float
+  public $job_guid; // string
   }
 

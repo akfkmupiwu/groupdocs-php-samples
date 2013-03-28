@@ -24,12 +24,12 @@
 class SignatureContactsImportResult {
 
   static $swaggerTypes = array(
-      'ignored' => 'string',
-      'imported' => 'string'
+      'imported' => 'string',
+      'ignored' => 'string'
 
     );
 
-  public $ignored; // string
   public $imported; // string
+  public $ignored; // string
   }
 

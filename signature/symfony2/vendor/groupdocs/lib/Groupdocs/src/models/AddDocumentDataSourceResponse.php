@@ -26,12 +26,14 @@ class AddDocumentDataSourceResponse {
   static $swaggerTypes = array(
       'result' => 'AddDocumentDataSourceResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // AddDocumentDataSourceResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

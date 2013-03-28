@@ -26,12 +26,12 @@ class DocumentViewInfo {
   static $swaggerTypes = array(
       'document' => 'DocumentInfo',
       'short_url' => 'string',
-      'viewed_on' => 'int'
+      'viewed_on' => 'string'
 
     );
 
   public $document; // DocumentInfo
   public $short_url; // string
-  public $viewed_on; // int
+  public $viewed_on; // string
   }
 

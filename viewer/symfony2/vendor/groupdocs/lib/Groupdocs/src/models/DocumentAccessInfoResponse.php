@@ -26,12 +26,14 @@ class DocumentAccessInfoResponse {
   static $swaggerTypes = array(
       'result' => 'DocumentAccessInfoResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // DocumentAccessInfoResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

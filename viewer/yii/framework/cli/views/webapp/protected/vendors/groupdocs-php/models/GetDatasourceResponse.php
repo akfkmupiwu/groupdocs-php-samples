@@ -26,12 +26,14 @@ class GetDatasourceResponse {
   static $swaggerTypes = array(
       'result' => 'GetDatasourceResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // GetDatasourceResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

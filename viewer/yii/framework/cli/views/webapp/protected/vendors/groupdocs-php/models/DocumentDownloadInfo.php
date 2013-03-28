@@ -24,16 +24,16 @@
 class DocumentDownloadInfo {
 
   static $swaggerTypes = array(
-      'guid' => 'string',
-      'id' => 'float',
       'url' => 'string',
-      'file_type' => 'string'
+      'file_type' => 'string',
+      'id' => 'float',
+      'guid' => 'string'
 
     );
 
-  public $guid; // string
-  public $id; // float
   public $url; // string
   public $file_type; // string
+  public $id; // float
+  public $guid; // string
   }
 

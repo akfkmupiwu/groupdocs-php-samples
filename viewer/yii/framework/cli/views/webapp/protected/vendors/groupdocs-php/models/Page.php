@@ -24,14 +24,14 @@
 class Page {
 
   static $swaggerTypes = array(
-      'w' => 'float',
       'id' => 'int',
+      'w' => 'float',
       'h' => 'float'
 
     );
 
-  public $w; // float
   public $id; // int
+  public $w; // float
   public $h; // float
   }
 

@@ -26,12 +26,14 @@ class DocumentUserStatusResponse {
   static $swaggerTypes = array(
       'result' => 'DocumentUserStatusResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // DocumentUserStatusResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

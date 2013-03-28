@@ -26,12 +26,14 @@ class SignatureEnvelopesResponse {
   static $swaggerTypes = array(
       'result' => 'SignatureEnvelopesResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // SignatureEnvelopesResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

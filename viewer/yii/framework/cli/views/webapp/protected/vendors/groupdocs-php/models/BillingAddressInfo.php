@@ -24,32 +24,32 @@
 class BillingAddressInfo {
 
   static $swaggerTypes = array(
-      'zip' => 'string',
-      'lastName' => 'string',
-      'phone' => 'string',
-      'fax' => 'string',
-      'email' => 'string',
-      'company' => 'string',
-      'state' => 'string',
       'address1' => 'string',
       'address2' => 'string',
-      'firstName' => 'string',
+      'city' => 'string',
+      'company' => 'string',
       'country' => 'string',
-      'city' => 'string'
+      'email' => 'string',
+      'fax' => 'string',
+      'firstName' => 'string',
+      'lastName' => 'string',
+      'phone' => 'string',
+      'state' => 'string',
+      'zip' => 'string'
 
     );
 
-  public $zip; // string
-  public $lastName; // string
-  public $phone; // string
-  public $fax; // string
-  public $email; // string
-  public $company; // string
-  public $state; // string
   public $address1; // string
   public $address2; // string
-  public $firstName; // string
-  public $country; // string
   public $city; // string
+  public $company; // string
+  public $country; // string
+  public $email; // string
+  public $fax; // string
+  public $firstName; // string
+  public $lastName; // string
+  public $phone; // string
+  public $state; // string
+  public $zip; // string
   }
 

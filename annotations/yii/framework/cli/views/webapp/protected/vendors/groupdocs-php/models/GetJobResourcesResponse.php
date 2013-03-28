@@ -26,12 +26,14 @@ class GetJobResourcesResponse {
   static $swaggerTypes = array(
       'result' => 'GetJobResourcesResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // GetJobResourcesResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

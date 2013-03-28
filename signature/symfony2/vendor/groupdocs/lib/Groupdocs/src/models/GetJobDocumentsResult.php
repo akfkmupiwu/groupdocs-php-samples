@@ -24,14 +24,14 @@
 class GetJobDocumentsResult {
 
   static $swaggerTypes = array(
+      'job_status' => 'string',
       'inputs' => 'array[JobInputDocument]',
-      'outputs' => 'array[JobOutputDocument]',
-      'job_status' => 'string'
+      'outputs' => 'array[JobOutputDocument]'
 
     );
 
+  public $job_status; // string
   public $inputs; // array[JobInputDocument]
   public $outputs; // array[JobOutputDocument]
-  public $job_status; // string
   }
 

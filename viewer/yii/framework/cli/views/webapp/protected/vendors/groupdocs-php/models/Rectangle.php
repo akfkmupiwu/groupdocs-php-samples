@@ -24,16 +24,16 @@
 class Rectangle {
 
   static $swaggerTypes = array(
-      'height' => 'float',
-      'width' => 'float',
+      'x' => 'float',
       'y' => 'float',
-      'x' => 'float'
+      'width' => 'float',
+      'height' => 'float'
 
     );
 
-  public $height; // float
-  public $width; // float
-  public $y; // float
   public $x; // float
+  public $y; // float
+  public $width; // float
+  public $height; // float
   }
 

@@ -27,6 +27,10 @@ class PostApi {
 	  $this->apiClient = $apiClient;
 	}
 
+	public static function newInstance($apiClient) {
+	  return new self($apiClient);
+	}
+
     public function setBasePath($basePath) {
 	  $this->basePath = $basePath;
 	}
@@ -45,41 +49,42 @@ class PostApi {
 	 */
 
    public function RenameByPost($userId, $fileId, $newName) {
-  	  //parse inputs
+      if( $userId === null || $fileId === null || $newName === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/post/file.rename?user_id={userId}&file_id={fileId}&new_name={newName}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
       if($userId !== null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
+  		  $queryParams['user_id'] = $this->apiClient->toPathValue($userId);
   		}
   		if($fileId !== null) {
-  			$resourcePath = str_replace("{" . "fileId" . "}",
-  			                            $fileId, $resourcePath);
+  		  $queryParams['file_id'] = $this->apiClient->toPathValue($fileId);
   		}
   		if($newName !== null) {
-  			$resourcePath = str_replace("{" . "newName" . "}",
-  			                            $newName, $resourcePath);
+  		  $queryParams['new_name'] = $this->apiClient->toPathValue($newName);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'RenameResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * DeleteByPost
@@ -90,37 +95,39 @@ class PostApi {
 	 */
 
    public function DeleteByPost($userId, $fileId) {
-  	  //parse inputs
+      if( $userId === null || $fileId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/post/file.delete?user_id={userId}&file_id={fileId}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
       if($userId !== null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
+  		  $queryParams['user_id'] = $this->apiClient->toPathValue($userId);
   		}
   		if($fileId !== null) {
-  			$resourcePath = str_replace("{" . "fileId" . "}",
-  			                            $fileId, $resourcePath);
+  		  $queryParams['file_id'] = $this->apiClient->toPathValue($fileId);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'DeleteResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * DeleteFromFolderByPost
@@ -131,37 +138,39 @@ class PostApi {
 	 */
 
    public function DeleteFromFolderByPost($userId, $path) {
-  	  //parse inputs
+      if( $userId === null || $path === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/post/file.delete.in?user_id={userId}&path={path}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
       if($userId !== null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
+  		  $queryParams['user_id'] = $this->apiClient->toPathValue($userId);
   		}
   		if($path !== null) {
-  			$resourcePath = str_replace("{" . "path" . "}",
-  			                            $path, $resourcePath);
+  		  $queryParams['path'] = $this->apiClient->toPathValue($path);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'DeleteResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * CompressByPost
@@ -173,41 +182,42 @@ class PostApi {
 	 */
 
    public function CompressByPost($userId, $fileId, $archiveType) {
-  	  //parse inputs
+      if( $userId === null || $fileId === null || $archiveType === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/post/file.compress?user_id={userId}&file_id={fileId}&archive_type={archiveType}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
       if($userId !== null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
+  		  $queryParams['user_id'] = $this->apiClient->toPathValue($userId);
   		}
   		if($fileId !== null) {
-  			$resourcePath = str_replace("{" . "fileId" . "}",
-  			                            $fileId, $resourcePath);
+  		  $queryParams['file_id'] = $this->apiClient->toPathValue($fileId);
   		}
   		if($archiveType !== null) {
-  			$resourcePath = str_replace("{" . "archiveType" . "}",
-  			                            $archiveType, $resourcePath);
+  		  $queryParams['archive_type'] = $this->apiClient->toPathValue($archiveType);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'CompressResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   
 }

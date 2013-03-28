@@ -39,9 +39,9 @@ class DefaultController extends Controller
         $documents = $json_post_data['documents'];
         $signers = $json_post_data['signers'];
         for ($i = 0; $i < count($signers); $i++) {
-            $signers[$i]['placeSingatureOn'] = '';
+            $signers[$i]['placeSignatureOn'] = '';
         }
-
+       
         require_once 'Groupdocs/groupdocs.php';
         require_once 'Groupdocs/src/GroupDocsRequestSigner.php';
         require_once 'Groupdocs/src/models/SignatureSignDocumentSettings.php';
@@ -58,11 +58,11 @@ class DefaultController extends Controller
         $settings = new \SignatureSignDocumentSettings();
         $settings->documents = $documents;
         $settings->signers = $signers;
+        
         $response = $signatureApi->SignDocument($userId, $settings);
 
-
         if ($userId != "") {
-            $return = array("responseCode" => 200, "documentId" => $response->result->documentId);
+            $return = array("responseCode" => 200, "documentId" => $response->result->documents[0]->documentId);
         } else {
             $return = array("responseCode" => 400, "greeting" => "You have to write your name!");
         }

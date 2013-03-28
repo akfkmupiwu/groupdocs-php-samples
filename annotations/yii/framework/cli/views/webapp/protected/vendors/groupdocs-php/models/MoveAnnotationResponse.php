@@ -26,12 +26,14 @@ class MoveAnnotationResponse {
   static $swaggerTypes = array(
       'result' => 'MoveAnnotationResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // MoveAnnotationResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

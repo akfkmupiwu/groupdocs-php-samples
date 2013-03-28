@@ -24,32 +24,34 @@
 class SignatureTemplateFieldLocationSettings {
 
   static $swaggerTypes = array(
-      'locationHeight' => 'float',
-      'fontItalic' => 'bool',
-      'fontColor' => 'string',
-      'fontName' => 'string',
-      'forceNewField' => 'bool',
-      'fontUnderline' => 'bool',
       'page' => 'int',
-      'locationWidth' => 'float',
       'locationX' => 'float',
-      'fontBold' => 'bool',
+      'locationY' => 'float',
+      'locationWidth' => 'float',
+      'locationHeight' => 'float',
+      'fontName' => 'string',
+      'fontColor' => 'string',
       'fontSize' => 'float',
-      'locationY' => 'float'
+      'fontBold' => 'bool',
+      'fontItalic' => 'bool',
+      'fontUnderline' => 'bool',
+      'forceNewField' => 'bool',
+      'align' => 'int'
 
     );
 
-  public $locationHeight; // float
-  public $fontItalic; // bool
-  public $fontColor; // string
-  public $fontName; // string
-  public $forceNewField; // bool
-  public $fontUnderline; // bool
   public $page; // int
-  public $locationWidth; // float
   public $locationX; // float
-  public $fontBold; // bool
-  public $fontSize; // float
   public $locationY; // float
+  public $locationWidth; // float
+  public $locationHeight; // float
+  public $fontName; // string
+  public $fontColor; // string
+  public $fontSize; // float
+  public $fontBold; // bool
+  public $fontItalic; // bool
+  public $fontUnderline; // bool
+  public $forceNewField; // bool
+  public $align; // int
   }
 

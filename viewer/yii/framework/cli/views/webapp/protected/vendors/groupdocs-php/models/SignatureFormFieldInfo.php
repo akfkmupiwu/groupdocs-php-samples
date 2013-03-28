@@ -25,31 +25,33 @@ class SignatureFormFieldInfo {
 
   static $swaggerTypes = array(
       'id' => 'string',
-      'acceptableValues' => 'string',
+      'formGuid' => 'string',
       'participantGuid' => 'string',
-      'regularExpression' => 'string',
-      'locations' => 'array[SignatureFormFieldLocationInfo]',
-      'fieldType' => 'int',
-      'mandatory' => 'bool',
       'name' => 'string',
+      'mandatory' => 'bool',
+      'regularExpression' => 'string',
       'data' => 'array[int]',
       'fillTimeStamp' => 'string',
+      'locations' => 'array[SignatureFormFieldLocationInfo]',
+      'fieldType' => 'int',
+      'acceptableValues' => 'string',
       'defaultValue' => 'string',
-      'formGuid' => 'string'
+      'tooltip' => 'string'
 
     );
 
   public $id; // string
-  public $acceptableValues; // string
+  public $formGuid; // string
   public $participantGuid; // string
-  public $regularExpression; // string
-  public $locations; // array[SignatureFormFieldLocationInfo]
-  public $fieldType; // int
-  public $mandatory; // bool
   public $name; // string
+  public $mandatory; // bool
+  public $regularExpression; // string
   public $data; // array[int]
   public $fillTimeStamp; // string
+  public $locations; // array[SignatureFormFieldLocationInfo]
+  public $fieldType; // int
+  public $acceptableValues; // string
   public $defaultValue; // string
-  public $formGuid; // string
+  public $tooltip; // string
   }
 

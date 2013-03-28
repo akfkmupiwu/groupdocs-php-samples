@@ -26,12 +26,14 @@ class CompareResponse {
   static $swaggerTypes = array(
       'result' => 'CompareResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // CompareResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

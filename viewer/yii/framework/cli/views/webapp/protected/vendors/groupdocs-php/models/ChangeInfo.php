@@ -25,19 +25,19 @@ class ChangeInfo {
 
   static $swaggerTypes = array(
       'id' => 'float',
-      'text' => 'string',
-      'page' => 'Page',
+      'type' => 'string',
       'action' => 'string',
+      'page' => 'Page',
       'box' => 'Rectangle',
-      'type' => 'string'
+      'text' => 'string'
 
     );
 
   public $id; // float
-  public $text; // string
-  public $page; // Page
-  public $action; // string
-  public $box; // Rectangle
   public $type; // string
+  public $action; // string
+  public $page; // Page
+  public $box; // Rectangle
+  public $text; // string
   }
 

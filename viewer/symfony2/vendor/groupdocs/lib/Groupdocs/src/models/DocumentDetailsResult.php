@@ -25,13 +25,13 @@ class DocumentDetailsResult {
 
   static $swaggerTypes = array(
       'guid' => 'string',
-      'supported' => 'bool',
-      'name' => 'string'
+      'name' => 'string',
+      'supported' => 'bool'
 
     );
 
   public $guid; // string
-  public $supported; // bool
   public $name; // string
+  public $supported; // bool
   }
 

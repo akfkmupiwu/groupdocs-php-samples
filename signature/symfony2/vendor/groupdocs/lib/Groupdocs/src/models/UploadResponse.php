@@ -26,12 +26,14 @@ class UploadResponse {
   static $swaggerTypes = array(
       'result' => 'UploadRequestResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // UploadRequestResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

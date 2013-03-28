@@ -24,40 +24,44 @@
 class SignatureEnvelopeInfo {
 
   static $swaggerTypes = array(
-      'creationDateTime' => 'string',
-      'ownerShouldSign' => 'bool',
-      'recipients' => 'array[SignatureEnvelopeRecipientInfo]',
-      'status' => 'int',
-      'envelopeExpireTime' => 'float',
-      'reminderTime' => 'float',
-      'emailSubject' => 'string',
-      'statusDateTime' => 'string',
       'id' => 'string',
+      'name' => 'string',
+      'creationDateTime' => 'string',
+      'ownerGuid' => 'string',
+      'status' => 'int',
+      'statusDateTime' => 'string',
+      'reminderTime' => 'float',
       'stepExpireTime' => 'float',
+      'envelopeExpireTime' => 'float',
+      'ownerShouldSign' => 'bool',
+      'orderedSignature' => 'bool',
+      'emailSubject' => 'string',
       'emailBody' => 'string',
       'documentsCount' => 'float',
-      'orderedSignature' => 'bool',
       'documentsPages' => 'float',
-      'ownerGuid' => 'string',
-      'name' => 'string'
+      'recipients' => 'array[SignatureEnvelopeRecipientInfo]',
+      'waterMarkText' => 'string',
+      'waterMarkImage' => 'string'
 
     );
 
-  public $creationDateTime; // string
-  public $ownerShouldSign; // bool
-  public $recipients; // array[SignatureEnvelopeRecipientInfo]
-  public $status; // int
-  public $envelopeExpireTime; // float
-  public $reminderTime; // float
-  public $emailSubject; // string
-  public $statusDateTime; // string
   public $id; // string
+  public $name; // string
+  public $creationDateTime; // string
+  public $ownerGuid; // string
+  public $status; // int
+  public $statusDateTime; // string
+  public $reminderTime; // float
   public $stepExpireTime; // float
+  public $envelopeExpireTime; // float
+  public $ownerShouldSign; // bool
+  public $orderedSignature; // bool
+  public $emailSubject; // string
   public $emailBody; // string
   public $documentsCount; // float
-  public $orderedSignature; // bool
   public $documentsPages; // float
-  public $ownerGuid; // string
-  public $name; // string
+  public $recipients; // array[SignatureEnvelopeRecipientInfo]
+  public $waterMarkText; // string
+  public $waterMarkImage; // string
   }
 

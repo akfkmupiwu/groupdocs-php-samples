@@ -24,16 +24,16 @@
 class SignatureTemplateFieldResult {
 
   static $swaggerTypes = array(
-      'field' => 'SignatureTemplateFieldInfo',
       'templateId' => 'string',
+      'documentId' => 'string',
       'recipientId' => 'string',
-      'documentId' => 'string'
+      'field' => 'SignatureTemplateFieldInfo'
 
     );
 
-  public $field; // SignatureTemplateFieldInfo
   public $templateId; // string
-  public $recipientId; // string
   public $documentId; // string
+  public $recipientId; // string
+  public $field; // SignatureTemplateFieldInfo
   }
 

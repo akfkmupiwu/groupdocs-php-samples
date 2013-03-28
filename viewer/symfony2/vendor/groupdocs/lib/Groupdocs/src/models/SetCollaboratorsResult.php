@@ -24,16 +24,16 @@
 class SetCollaboratorsResult {
 
   static $swaggerTypes = array(
-      'sessionGuid' => 'string',
       'documentGuid' => 'string',
-      'collaborators' => 'array[ReviewerInfo]',
-      'owner' => 'ReviewerInfo'
+      'sessionGuid' => 'string',
+      'owner' => 'ReviewerInfo',
+      'collaborators' => 'array[ReviewerInfo]'
 
     );
 
-  public $sessionGuid; // string
   public $documentGuid; // string
-  public $collaborators; // array[ReviewerInfo]
+  public $sessionGuid; // string
   public $owner; // ReviewerInfo
+  public $collaborators; // array[ReviewerInfo]
   }
 

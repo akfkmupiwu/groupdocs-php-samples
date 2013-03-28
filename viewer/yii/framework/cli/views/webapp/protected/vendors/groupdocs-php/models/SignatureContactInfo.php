@@ -25,17 +25,17 @@ class SignatureContactInfo {
 
   static $swaggerTypes = array(
       'id' => 'string',
+      'firstName' => 'string',
       'lastName' => 'string',
       'email' => 'string',
-      'provider' => 'string',
-      'firstName' => 'string'
+      'provider' => 'string'
 
     );
 
   public $id; // string
+  public $firstName; // string
   public $lastName; // string
   public $email; // string
   public $provider; // string
-  public $firstName; // string
   }
 

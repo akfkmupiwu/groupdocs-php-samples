@@ -26,12 +26,14 @@ class FileMoveResponse {
   static $swaggerTypes = array(
       'result' => 'FileMoveResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // FileMoveResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

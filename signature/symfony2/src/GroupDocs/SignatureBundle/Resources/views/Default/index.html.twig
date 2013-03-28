@@ -100,12 +100,13 @@
                 $("body").sign({
                     userId: $('#client_id').val(),
                     privateKey: $('#private_key').val(),
-                    signMethod: "/app_dev.php/groupdocs/PublicSignDocument",
+                    signMethod: "/web/app_dev.php/groupdocs/PublicSignDocument",
                     onError: function (e, data) {
                         alert(data);
                     },
                     onSigned: function (e, data) {
                         var result = data;
+                        console.log(data);
                         $("#viewer").attr("src", "https://apps.groupdocs.com/document-viewer/Embed/" + data.documentId);
                         $('#viewer').fadeIn("slow");
                     }

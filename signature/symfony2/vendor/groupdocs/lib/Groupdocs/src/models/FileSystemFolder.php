@@ -24,30 +24,30 @@
 class FileSystemFolder {
 
   static $swaggerTypes = array(
-      'sharers' => 'array[UserInfo]',
-      'guid' => 'string',
-      'id' => 'float',
       'folder_count' => 'int',
-      'modified_on' => 'string',
-      'dir' => 'bool',
-      'created_on' => 'string',
-      'name' => 'string',
-      'owner' => 'UserInfo',
       'file_count' => 'int',
-      'access' => 'string'
+      'id' => 'float',
+      'guid' => 'string',
+      'name' => 'string',
+      'access' => 'string',
+      'owner' => 'UserInfo',
+      'sharers' => 'array[UserInfo]',
+      'dir' => 'bool',
+      'modified_on' => 'string',
+      'created_on' => 'string'
 
     );
 
-  public $sharers; // array[UserInfo]
-  public $guid; // string
-  public $id; // float
   public $folder_count; // int
-  public $modified_on; // string
-  public $dir; // bool
-  public $created_on; // string
-  public $name; // string
-  public $owner; // UserInfo
   public $file_count; // int
+  public $id; // float
+  public $guid; // string
+  public $name; // string
   public $access; // string
+  public $owner; // UserInfo
+  public $sharers; // array[UserInfo]
+  public $dir; // bool
+  public $modified_on; // string
+  public $created_on; // string
   }
 

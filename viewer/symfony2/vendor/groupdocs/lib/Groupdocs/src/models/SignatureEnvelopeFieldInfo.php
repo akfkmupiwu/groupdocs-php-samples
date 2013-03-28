@@ -24,39 +24,39 @@
 class SignatureEnvelopeFieldInfo {
 
   static $swaggerTypes = array(
-      'regularExpression' => 'string',
-      'fieldType' => 'int',
-      'mandatory' => 'bool',
-      'data' => 'array[int]',
       'id' => 'string',
-      'acceptableValues' => 'string',
+      'envelopeId' => 'string',
       'recipientId' => 'string',
+      'name' => 'string',
+      'mandatory' => 'bool',
       'order' => 'float',
+      'regularExpression' => 'string',
+      'getDataFrom' => 'string',
+      'data' => 'array[int]',
+      'fillTimeStamp' => 'string',
       'signatureFieldId' => 'float',
       'locations' => 'array[SignatureEnvelopeFieldLocationInfo]',
-      'envelopeId' => 'string',
-      'name' => 'string',
-      'fillTimeStamp' => 'string',
-      'getDataFrom' => 'string',
+      'fieldType' => 'int',
+      'acceptableValues' => 'string',
       'defaultValue' => 'string',
       'tooltip' => 'string'
 
     );
 
-  public $regularExpression; // string
-  public $fieldType; // int
-  public $mandatory; // bool
-  public $data; // array[int]
   public $id; // string
-  public $acceptableValues; // string
+  public $envelopeId; // string
   public $recipientId; // string
+  public $name; // string
+  public $mandatory; // bool
   public $order; // float
+  public $regularExpression; // string
+  public $getDataFrom; // string
+  public $data; // array[int]
+  public $fillTimeStamp; // string
   public $signatureFieldId; // float
   public $locations; // array[SignatureEnvelopeFieldLocationInfo]
-  public $envelopeId; // string
-  public $name; // string
-  public $fillTimeStamp; // string
-  public $getDataFrom; // string
+  public $fieldType; // int
+  public $acceptableValues; // string
   public $defaultValue; // string
   public $tooltip; // string
   }

@@ -25,33 +25,33 @@ class JobOutputDocument {
 
   static $swaggerTypes = array(
       'error' => 'string',
-      'type_str' => 'string',
+      'name' => 'string',
+      'version' => 'int',
+      'size' => 'string',
       'type' => 'string',
+      'type_str' => 'string',
+      'file_type_str' => 'string',
+      'document_path' => 'string',
       'access' => 'string',
       'url' => 'string',
-      'version' => 'int',
-      'size' => 'int',
       'file_type' => 'string',
       'id' => 'float',
-      'guid' => 'string',
-      'document_path' => 'string',
-      'name' => 'string',
-      'file_type_str' => 'string'
+      'guid' => 'string'
 
     );
 
   public $error; // string
-  public $type_str; // string
+  public $name; // string
+  public $version; // int
+  public $size; // string
   public $type; // string
+  public $type_str; // string
+  public $file_type_str; // string
+  public $document_path; // string
   public $access; // string
   public $url; // string
-  public $version; // int
-  public $size; // int
   public $file_type; // string
   public $id; // float
   public $guid; // string
-  public $document_path; // string
-  public $name; // string
-  public $file_type_str; // string
   }
 

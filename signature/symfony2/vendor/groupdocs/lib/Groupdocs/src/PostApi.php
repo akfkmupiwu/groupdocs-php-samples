@@ -27,6 +27,10 @@ class PostApi {
 	  $this->apiClient = $apiClient;
 	}
 
+	public static function newInstance($apiClient) {
+	  return new self($apiClient);
+	}
+
     public function setBasePath($basePath) {
 	  $this->basePath = $basePath;
 	}
@@ -45,9 +49,15 @@ class PostApi {
 	 */
 
    public function RenameByPost($userId, $fileId, $newName) {
-  	  //parse inputs
+      if( $userId === null || $fileId === null || $newName === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/post/file.rename?user_id={userId}&file_id={fileId}&new_name={newName}");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
@@ -85,9 +95,15 @@ class PostApi {
 	 */
 
    public function DeleteByPost($userId, $fileId) {
-  	  //parse inputs
+      if( $userId === null || $fileId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/post/file.delete?user_id={userId}&file_id={fileId}");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
@@ -122,9 +138,15 @@ class PostApi {
 	 */
 
    public function DeleteFromFolderByPost($userId, $path) {
-  	  //parse inputs
+      if( $userId === null || $path === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/post/file.delete.in?user_id={userId}&path={path}");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
@@ -160,9 +182,15 @@ class PostApi {
 	 */
 
    public function CompressByPost($userId, $fileId, $archiveType) {
-  	  //parse inputs
+      if( $userId === null || $fileId === null || $archiveType === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/post/file.compress?user_id={userId}&file_id={fileId}&archive_type={archiveType}");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();

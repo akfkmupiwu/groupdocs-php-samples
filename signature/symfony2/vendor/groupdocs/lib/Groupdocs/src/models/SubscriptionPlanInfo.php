@@ -24,26 +24,26 @@
 class SubscriptionPlanInfo {
 
   static $swaggerTypes = array(
-      'userCount' => 'int',
-      'expirationDate' => 'DateTime',
-      'firstNameOnCard' => 'string',
-      'address' => 'BillingAddressInfo',
-      'lastNameOnCard' => 'string',
+      'productId' => 'int',
       'name' => 'string',
-      'cvv' => 'string',
+      'userCount' => 'int',
+      'firstNameOnCard' => 'string',
+      'lastNameOnCard' => 'string',
       'number' => 'string',
-      'productId' => 'int'
+      'expirationDate' => 'DateTime',
+      'cvv' => 'string',
+      'address' => 'BillingAddressInfo'
 
     );
 
-  public $userCount; // int
-  public $expirationDate; // DateTime
-  public $firstNameOnCard; // string
-  public $address; // BillingAddressInfo
-  public $lastNameOnCard; // string
-  public $name; // string
-  public $cvv; // string
-  public $number; // string
   public $productId; // int
+  public $name; // string
+  public $userCount; // int
+  public $firstNameOnCard; // string
+  public $lastNameOnCard; // string
+  public $number; // string
+  public $expirationDate; // DateTime
+  public $cvv; // string
+  public $address; // BillingAddressInfo
   }
 

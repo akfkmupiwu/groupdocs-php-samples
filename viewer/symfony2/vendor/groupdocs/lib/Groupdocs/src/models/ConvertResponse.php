@@ -26,12 +26,14 @@ class ConvertResponse {
   static $swaggerTypes = array(
       'result' => 'ConvertRequestResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // ConvertRequestResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

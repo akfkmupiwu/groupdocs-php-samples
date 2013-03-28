@@ -25,45 +25,45 @@ class JobInputDocument {
 
   static $swaggerTypes = array(
       'status' => 'string',
+      'proc_date' => 'string',
       'output_formats' => 'string',
-      'type_str' => 'string',
-      'access' => 'string',
+      'outputs' => 'array[JobOutputDocument]',
+      'job_errors' => 'array[JobErrorInfo]',
+      'actions' => 'string',
+      'supported_output_file_types' => 'array[string]',
+      'name' => 'string',
+      'version' => 'int',
+      'size' => 'string',
       'type' => 'string',
+      'type_str' => 'string',
+      'file_type_str' => 'string',
+      'document_path' => 'string',
+      'access' => 'string',
       'url' => 'string',
       'file_type' => 'string',
-      'version' => 'int',
-      'size' => 'int',
-      'guid' => 'string',
       'id' => 'float',
-      'document_path' => 'string',
-      'supported_output_file_types' => 'array[string]',
-      'proc_date' => 'int',
-      'name' => 'string',
-      'file_type_str' => 'string',
-      'outputs' => 'array[JobOutputDocument]',
-      'actions' => 'string',
-      'job_errors' => 'array[JobErrorInfo]'
+      'guid' => 'string'
 
     );
 
   public $status; // string
+  public $proc_date; // string
   public $output_formats; // string
-  public $type_str; // string
-  public $access; // string
+  public $outputs; // array[JobOutputDocument]
+  public $job_errors; // array[JobErrorInfo]
+  public $actions; // string
+  public $supported_output_file_types; // array[string]
+  public $name; // string
+  public $version; // int
+  public $size; // string
   public $type; // string
+  public $type_str; // string
+  public $file_type_str; // string
+  public $document_path; // string
+  public $access; // string
   public $url; // string
   public $file_type; // string
-  public $version; // int
-  public $size; // int
-  public $guid; // string
   public $id; // float
-  public $document_path; // string
-  public $supported_output_file_types; // array[string]
-  public $proc_date; // int
-  public $name; // string
-  public $file_type_str; // string
-  public $outputs; // array[JobOutputDocument]
-  public $actions; // string
-  public $job_errors; // array[JobErrorInfo]
+  public $guid; // string
   }
 

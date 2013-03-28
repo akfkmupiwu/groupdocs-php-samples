@@ -25,21 +25,25 @@ class SignatureTemplateSettings {
 
   static $swaggerTypes = array(
       'ownerShouldSign' => 'int',
-      'stepExpireTime' => 'float',
-      'emailBody' => 'string',
-      'envelopeExpireTime' => 'float',
       'orderedSignature' => 'int',
       'reminderTime' => 'float',
-      'emailSubject' => 'string'
+      'stepExpireTime' => 'float',
+      'envelopeExpireTime' => 'float',
+      'emailSubject' => 'string',
+      'emailBody' => 'string',
+      'waterMarkText' => 'string',
+      'waterMarkImage' => 'string'
 
     );
 
   public $ownerShouldSign; // int
-  public $stepExpireTime; // float
-  public $emailBody; // string
-  public $envelopeExpireTime; // float
   public $orderedSignature; // int
   public $reminderTime; // float
+  public $stepExpireTime; // float
+  public $envelopeExpireTime; // float
   public $emailSubject; // string
+  public $emailBody; // string
+  public $waterMarkText; // string
+  public $waterMarkImage; // string
   }
 

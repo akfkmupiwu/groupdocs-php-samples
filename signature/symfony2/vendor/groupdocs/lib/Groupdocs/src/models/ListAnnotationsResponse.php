@@ -26,12 +26,14 @@ class ListAnnotationsResponse {
   static $swaggerTypes = array(
       'result' => 'ListAnnotationsResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // ListAnnotationsResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

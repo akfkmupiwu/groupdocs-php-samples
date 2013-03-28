@@ -24,14 +24,14 @@
 class UserIdentity {
 
   static $swaggerTypes = array(
-      'guid' => 'string',
       'id' => 'float',
+      'guid' => 'string',
       'primary_email' => 'string'
 
     );
 
-  public $guid; // string
   public $id; // float
+  public $guid; // string
   public $primary_email; // string
   }
 

@@ -26,12 +26,14 @@ class SetUserRolesResponse {
   static $swaggerTypes = array(
       'result' => 'SetUserRolesResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // SetUserRolesResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

@@ -26,12 +26,14 @@ class DeleteReplyResponse {
   static $swaggerTypes = array(
       'result' => 'DeleteReplyResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // DeleteReplyResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

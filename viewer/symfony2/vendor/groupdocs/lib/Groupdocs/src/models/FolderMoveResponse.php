@@ -26,12 +26,14 @@ class FolderMoveResponse {
   static $swaggerTypes = array(
       'result' => 'FolderMoveResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // FolderMoveResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

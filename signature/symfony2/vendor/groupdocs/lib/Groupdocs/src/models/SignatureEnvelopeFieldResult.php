@@ -24,16 +24,16 @@
 class SignatureEnvelopeFieldResult {
 
   static $swaggerTypes = array(
-      'field' => 'SignatureEnvelopeFieldInfo',
-      'recipientId' => 'string',
       'envelopeId' => 'string',
-      'documentId' => 'string'
+      'documentId' => 'string',
+      'recipientId' => 'string',
+      'field' => 'SignatureEnvelopeFieldInfo'
 
     );
 
-  public $field; // SignatureEnvelopeFieldInfo
-  public $recipientId; // string
   public $envelopeId; // string
   public $documentId; // string
+  public $recipientId; // string
+  public $field; // SignatureEnvelopeFieldInfo
   }
 

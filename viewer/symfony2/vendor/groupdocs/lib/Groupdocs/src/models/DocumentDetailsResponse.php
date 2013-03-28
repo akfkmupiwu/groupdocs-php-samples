@@ -26,12 +26,14 @@ class DocumentDetailsResponse {
   static $swaggerTypes = array(
       'result' => 'DocumentDetailsResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // DocumentDetailsResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

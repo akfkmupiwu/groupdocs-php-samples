@@ -25,15 +25,15 @@ class SignaturePredefinedListInfo {
 
   static $swaggerTypes = array(
       'id' => 'string',
-      'values' => 'string',
       'name' => 'string',
+      'values' => 'string',
       'defaultValue' => 'string'
 
     );
 
   public $id; // string
-  public $values; // string
   public $name; // string
+  public $values; // string
   public $defaultValue; // string
   }
 

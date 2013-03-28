@@ -26,12 +26,14 @@ class GetQuestionnaireMetadataResponse {
   static $swaggerTypes = array(
       'result' => 'GetQuestionnaireMetadataResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // GetQuestionnaireMetadataResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

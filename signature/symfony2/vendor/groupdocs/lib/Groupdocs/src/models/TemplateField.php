@@ -26,14 +26,14 @@ class TemplateField {
   static $swaggerTypes = array(
       'page' => 'int',
       'name' => 'string',
-      'rect' => 'Rectangle',
-      'type' => 'string'
+      'type' => 'string',
+      'rect' => 'Rectangle'
 
     );
 
   public $page; // int
   public $name; // string
-  public $rect; // Rectangle
   public $type; // string
+  public $rect; // Rectangle
   }
 

@@ -24,32 +24,32 @@
 class QuestionnaireExecutionInfo {
 
   static $swaggerTypes = array(
-      'id' => 'float',
-      'datasource_id' => 'float',
+      'status' => 'string',
       'guid' => 'string',
-      'executive' => 'UserIdentity',
-      'document' => 'DocumentDownloadInfo',
       'collector_id' => 'float',
       'collector_guid' => 'string',
-      'status' => 'string',
-      'approver' => 'UserIdentity',
-      'owner' => 'UserIdentity',
       'questionnaire_name' => 'string',
-      'modified' => 'string'
+      'owner' => 'UserIdentity',
+      'executive' => 'UserIdentity',
+      'approver' => 'UserIdentity',
+      'datasource_id' => 'float',
+      'id' => 'float',
+      'modified' => 'string',
+      'document' => 'DocumentDownloadInfo'
 
     );
 
-  public $id; // float
-  public $datasource_id; // float
+  public $status; // string
   public $guid; // string
-  public $executive; // UserIdentity
-  public $document; // DocumentDownloadInfo
   public $collector_id; // float
   public $collector_guid; // string
-  public $status; // string
-  public $approver; // UserIdentity
-  public $owner; // UserIdentity
   public $questionnaire_name; // string
+  public $owner; // UserIdentity
+  public $executive; // UserIdentity
+  public $approver; // UserIdentity
+  public $datasource_id; // float
+  public $id; // float
   public $modified; // string
+  public $document; // DocumentDownloadInfo
   }
 

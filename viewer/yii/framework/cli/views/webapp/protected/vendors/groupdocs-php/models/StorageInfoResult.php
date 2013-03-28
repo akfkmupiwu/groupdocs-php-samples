@@ -24,16 +24,20 @@
 class StorageInfoResult {
 
   static $swaggerTypes = array(
-      'total_space' => 'int',
-      'avail_space' => 'int',
+      'total_space' => 'string',
+      'avail_space' => 'string',
+      'doc_credits' => 'int',
       'avail_credits' => 'int',
-      'doc_credits' => 'int'
+      'total_documents' => 'int',
+      'avail_documents' => 'string'
 
     );
 
-  public $total_space; // int
-  public $avail_space; // int
-  public $avail_credits; // int
+  public $total_space; // string
+  public $avail_space; // string
   public $doc_credits; // int
+  public $avail_credits; // int
+  public $total_documents; // int
+  public $avail_documents; // string
   }
 

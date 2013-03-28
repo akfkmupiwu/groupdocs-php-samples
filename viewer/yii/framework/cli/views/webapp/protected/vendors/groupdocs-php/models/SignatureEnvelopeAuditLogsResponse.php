@@ -26,12 +26,14 @@ class SignatureEnvelopeAuditLogsResponse {
   static $swaggerTypes = array(
       'result' => 'SignatureEnvelopeAuditLogsResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // SignatureEnvelopeAuditLogsResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

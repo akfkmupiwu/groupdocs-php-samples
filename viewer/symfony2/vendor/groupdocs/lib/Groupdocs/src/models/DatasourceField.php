@@ -24,15 +24,15 @@
 class DatasourceField {
 
   static $swaggerTypes = array(
-      'values' => 'string',
       'name' => 'string',
+      'values' => 'string',
       'contentType' => 'string',
       'type' => 'string'
 
     );
 
-  public $values; // string
   public $name; // string
+  public $values; // string
   public $contentType; // string
   public $type; // string
   }

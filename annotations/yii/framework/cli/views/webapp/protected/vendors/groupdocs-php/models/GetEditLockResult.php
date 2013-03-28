@@ -24,14 +24,14 @@
 class GetEditLockResult {
 
   static $swaggerTypes = array(
-      'edit_url' => 'string',
+      'doc_guid' => 'string',
       'file_id' => 'string',
-      'doc_guid' => 'string'
+      'edit_url' => 'string'
 
     );
 
-  public $edit_url; // string
-  public $file_id; // string
   public $doc_guid; // string
+  public $file_id; // string
+  public $edit_url; // string
   }
 

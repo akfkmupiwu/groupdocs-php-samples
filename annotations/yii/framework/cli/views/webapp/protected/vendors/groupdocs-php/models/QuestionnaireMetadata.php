@@ -24,26 +24,30 @@
 class QuestionnaireMetadata {
 
   static $swaggerTypes = array(
-      'assigned_questions' => 'int',
-      'guid' => 'string',
       'id' => 'float',
-      'expires' => 'string',
-      'status' => 'string',
+      'guid' => 'string',
       'name' => 'string',
       'descr' => 'string',
+      'status' => 'string',
+      'assigned_questions' => 'int',
+      'total_questions' => 'int',
       'modified' => 'string',
-      'total_questions' => 'int'
+      'expires' => 'string',
+      'folder' => 'string',
+      'emails' => 'string'
 
     );
 
-  public $assigned_questions; // int
-  public $guid; // string
   public $id; // float
-  public $expires; // string
-  public $status; // string
+  public $guid; // string
   public $name; // string
   public $descr; // string
-  public $modified; // string
+  public $status; // string
+  public $assigned_questions; // int
   public $total_questions; // int
+  public $modified; // string
+  public $expires; // string
+  public $folder; // string
+  public $emails; // string
   }
 

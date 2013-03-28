@@ -26,12 +26,14 @@ class CreateQuestionnaireResponse {
   static $swaggerTypes = array(
       'result' => 'CreateQuestionnaireResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // CreateQuestionnaireResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

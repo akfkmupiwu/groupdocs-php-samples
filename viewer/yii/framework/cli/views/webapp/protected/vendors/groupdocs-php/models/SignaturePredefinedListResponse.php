@@ -26,12 +26,14 @@ class SignaturePredefinedListResponse {
   static $swaggerTypes = array(
       'result' => 'SignaturePredefinedListResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // SignaturePredefinedListResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

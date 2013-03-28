@@ -26,12 +26,14 @@ class SignatureFieldsResponse {
   static $swaggerTypes = array(
       'result' => 'SignatureFieldsResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // SignatureFieldsResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

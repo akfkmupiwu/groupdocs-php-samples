@@ -27,6 +27,10 @@ class StorageApi {
 	  $this->apiClient = $apiClient;
 	}
 
+	public static function newInstance($apiClient) {
+	  return new self($apiClient);
+	}
+
     public function setBasePath($basePath) {
 	  $this->basePath = $basePath;
 	}
@@ -43,7 +47,10 @@ class StorageApi {
 	 */
 
    public function GetStorageInfo($userId) {
-  	  //parse inputs
+      if( $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/storage/{userId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
@@ -84,9 +91,15 @@ class StorageApi {
 	 */
 
    public function ListEntities($userId, $path=null, $pageIndex=null, $pageSize=null, $orderBy=null, $orderAsc=null, $filter=null, $fileTypes=null, $extended=null) {
-  	  //parse inputs
+      if( $userId === null || $path === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/storage/{userId}/folders/{*path}?page={pageIndex}&count={pageSize}&order_by={orderBy}&order_asc={orderAsc}&filter={filter}&file_types={fileTypes}&extended={extended}");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
@@ -144,7 +157,10 @@ class StorageApi {
 	 */
 
    public function GetFile($userId, $fileId, FileStream $outFileStream) {
-  	  //parse inputs
+      if( $userId === null || $fileId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/storage/{userId}/files/{fileId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
@@ -175,7 +191,10 @@ class StorageApi {
 	 */
 
    public function GetSharedFile($userEmail, $filePath, FileStream $outFileStream) {
-  	  //parse inputs
+      if( $userEmail === null || $filePath === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/storage/shared/{userEmail}/{*filePath}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
@@ -208,9 +227,15 @@ class StorageApi {
 	 */
 
    public function Upload($userId, $path, $description=null, $body) {
-  	  //parse inputs
+      if( $userId === null || $path === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/storage/{userId}/folders/{*path}?description={description}");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
@@ -253,9 +278,15 @@ class StorageApi {
 	 */
 
    public function Decompress($userId, $path, $description=null, $archiveType=null, $body) {
-  	  //parse inputs
+      if( $userId === null || $path === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/storage/{userId}/decompress/{*path}?description={description}&archiveType={archiveType}");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
@@ -298,9 +329,15 @@ class StorageApi {
 	 */
 
    public function UploadWeb($userId, $url) {
-  	  //parse inputs
+      if( $userId === null || $url === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/storage/{userId}/urls?url={url}");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
@@ -337,9 +374,15 @@ class StorageApi {
 	 */
 
    public function UploadGoogle($userId, $path, $fileId=null) {
-  	  //parse inputs
+      if( $userId === null || $path === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/storage/{userId}/google/files/{*path}?file_id={fileId}");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
@@ -379,7 +422,10 @@ class StorageApi {
 	 */
 
    public function Delete($userId, $fileId) {
-  	  //parse inputs
+      if( $userId === null || $fileId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/storage/{userId}/files/{fileId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "DELETE";
@@ -417,7 +463,10 @@ class StorageApi {
 	 */
 
    public function DeleteFromFolder($userId, $path) {
-  	  //parse inputs
+      if( $userId === null || $path === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/storage/{userId}/folders/{*path}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "DELETE";
@@ -452,15 +501,21 @@ class StorageApi {
    * userId, string: User GUID (required)
    * path, string: Path (required)
    * mode, string: Mode (optional)
-   * Groupdocs_Copy, string: File ID (copy) (optional)
    * Groupdocs_Move, string: File ID (move) (optional)
+   * Groupdocs_Copy, string: File ID (copy) (optional)
    * @return FileMoveResponse
 	 */
 
-   public function MoveFile($userId, $path, $mode=null, $Groupdocs_Copy=null, $Groupdocs_Move=null) {
-  	  //parse inputs
+   public function MoveFile($userId, $path, $mode=null, $Groupdocs_Move=null, $Groupdocs_Copy=null) {
+      if( $userId === null || $path === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/storage/{userId}/files/{*path}");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
       $queryParams = array();
@@ -469,11 +524,11 @@ class StorageApi {
       if($mode !== null) {
   		  $queryParams['mode'] = $this->apiClient->toPathValue($mode);
   		}
-  		if($Groupdocs_Copy !== null) {
-  		 	$headerParams['Groupdocs-Copy'] = $this->apiClient->toPathValue($Groupdocs_Copy);
-  		}
-      if($Groupdocs_Move !== null) {
+  		if($Groupdocs_Move !== null) {
   		 	$headerParams['Groupdocs-Move'] = $this->apiClient->toPathValue($Groupdocs_Move);
+  		}
+      if($Groupdocs_Copy !== null) {
+  		 	$headerParams['Groupdocs-Copy'] = $this->apiClient->toPathValue($Groupdocs_Copy);
   		}
       if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
@@ -509,9 +564,15 @@ class StorageApi {
 	 */
 
    public function MoveFolder($userId, $path, $mode=null, $Groupdocs_Move=null, $Groupdocs_Copy=null) {
-  	  //parse inputs
+      if( $userId === null || $path === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/storage/{userId}/folders/{*path}?override_mode={mode}");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
       $queryParams = array();
@@ -557,7 +618,10 @@ class StorageApi {
 	 */
 
    public function Create($userId, $path) {
-  	  //parse inputs
+      if( $userId === null || $path === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/storage/{userId}/paths/{*path}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
@@ -596,7 +660,10 @@ class StorageApi {
 	 */
 
    public function Compress($userId, $fileId, $archiveType=null) {
-  	  //parse inputs
+      if( $userId === null || $fileId === null || $archiveType === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/storage/{userId}/files/{fileId}/archive/{archiveType}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
@@ -640,9 +707,15 @@ class StorageApi {
 	 */
 
    public function CreatePackage($userId, $packageName, $storeRelativePath=null, $body=null) {
-  	  //parse inputs
+      if( $userId === null || $packageName === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/storage/{userId}/packages/{packageName}?storeRelativePath={storeRelativePath}");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
@@ -682,7 +755,10 @@ class StorageApi {
 	 */
 
    public function MoveToTrash($userId, $path) {
-  	  //parse inputs
+      if( $userId === null || $path === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/storage/{userId}/trash/{*path}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
@@ -720,7 +796,10 @@ class StorageApi {
 	 */
 
    public function RestoreFromTrash($userId, $path) {
-  	  //parse inputs
+      if( $userId === null || $path === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/storage/{userId}/trash/{*path}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "DELETE";

@@ -24,12 +24,12 @@
 class SignatureFormDocumentResult {
 
   static $swaggerTypes = array(
-      'document' => 'SignatureFormDocumentInfo',
-      'formId' => 'string'
+      'formId' => 'string',
+      'document' => 'SignatureFormDocumentInfo'
 
     );
 
-  public $document; // SignatureFormDocumentInfo
   public $formId; // string
+  public $document; // SignatureFormDocumentInfo
   }
 

@@ -24,12 +24,12 @@
 class Point {
 
   static $swaggerTypes = array(
-      'y' => 'float',
-      'x' => 'float'
+      'x' => 'float',
+      'y' => 'float'
 
     );
 
-  public $y; // float
   public $x; // float
+  public $y; // float
   }
 

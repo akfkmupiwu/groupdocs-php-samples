@@ -24,12 +24,12 @@
 class SignatureFormResourcesResult {
 
   static $swaggerTypes = array(
-      'dates' => 'array[string]',
-      'documents' => 'array[SignatureFormDocumentInfo]'
+      'documents' => 'array[SignatureFormDocumentInfo]',
+      'dates' => 'array[string]'
 
     );
 
-  public $dates; // array[string]
   public $documents; // array[SignatureFormDocumentInfo]
+  public $dates; // array[string]
   }
 

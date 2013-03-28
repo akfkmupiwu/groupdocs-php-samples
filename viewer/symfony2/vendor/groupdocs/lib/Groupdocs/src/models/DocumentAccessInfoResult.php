@@ -24,40 +24,40 @@
 class DocumentAccessInfoResult {
 
   static $swaggerTypes = array(
-      'sharers' => 'array[UserInfo]',
       'status' => 'string',
-      'type_str' => 'string',
-      'shared_on' => 'int',
+      'owner' => 'UserInfo',
+      'sharers' => 'array[UserInfo]',
+      'shared_on' => 'string',
+      'name' => 'string',
+      'version' => 'int',
+      'size' => 'string',
       'type' => 'string',
+      'type_str' => 'string',
+      'file_type_str' => 'string',
+      'document_path' => 'string',
       'access' => 'string',
       'url' => 'string',
       'file_type' => 'string',
-      'version' => 'int',
-      'size' => 'int',
-      'guid' => 'string',
       'id' => 'float',
-      'document_path' => 'string',
-      'name' => 'string',
-      'owner' => 'UserInfo',
-      'file_type_str' => 'string'
+      'guid' => 'string'
 
     );
 
-  public $sharers; // array[UserInfo]
   public $status; // string
-  public $type_str; // string
-  public $shared_on; // int
+  public $owner; // UserInfo
+  public $sharers; // array[UserInfo]
+  public $shared_on; // string
+  public $name; // string
+  public $version; // int
+  public $size; // string
   public $type; // string
+  public $type_str; // string
+  public $file_type_str; // string
+  public $document_path; // string
   public $access; // string
   public $url; // string
   public $file_type; // string
-  public $version; // int
-  public $size; // int
-  public $guid; // string
   public $id; // float
-  public $document_path; // string
-  public $name; // string
-  public $owner; // UserInfo
-  public $file_type_str; // string
+  public $guid; // string
   }
 

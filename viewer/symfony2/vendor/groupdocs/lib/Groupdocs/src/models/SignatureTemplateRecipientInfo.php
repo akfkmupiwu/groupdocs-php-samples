@@ -25,15 +25,15 @@ class SignatureTemplateRecipientInfo {
 
   static $swaggerTypes = array(
       'id' => 'string',
-      'order' => 'int',
       'nickname' => 'string',
+      'order' => 'int',
       'roleId' => 'float'
 
     );
 
   public $id; // string
-  public $order; // int
   public $nickname; // string
+  public $order; // int
   public $roleId; // float
   }
 

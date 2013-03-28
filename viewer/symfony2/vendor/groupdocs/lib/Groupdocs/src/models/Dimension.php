@@ -24,12 +24,12 @@
 class Dimension {
 
   static $swaggerTypes = array(
-      'height' => 'int',
-      'width' => 'int'
+      'width' => 'int',
+      'height' => 'int'
 
     );
 
-  public $height; // int
   public $width; // int
+  public $height; // int
   }
 

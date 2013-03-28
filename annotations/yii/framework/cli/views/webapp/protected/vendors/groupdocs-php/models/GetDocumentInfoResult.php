@@ -24,18 +24,18 @@
 class GetDocumentInfoResult {
 
   static $swaggerTypes = array(
-      'guid' => 'string',
-      'id' => 'float',
+      'page_count' => 'int',
       'views_count' => 'int',
       'last_view' => 'DocumentViewInfo',
-      'page_count' => 'int'
+      'id' => 'float',
+      'guid' => 'string'
 
     );
 
-  public $guid; // string
-  public $id; // float
+  public $page_count; // int
   public $views_count; // int
   public $last_view; // DocumentViewInfo
-  public $page_count; // int
+  public $id; // float
+  public $guid; // string
   }
 

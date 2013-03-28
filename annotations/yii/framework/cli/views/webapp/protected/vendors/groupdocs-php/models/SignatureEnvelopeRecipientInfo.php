@@ -24,38 +24,40 @@
 class SignatureEnvelopeRecipientInfo {
 
   static $swaggerTypes = array(
-      'lastName' => 'string',
-      'delegatedRecipientId' => 'float',
-      'status' => 'int',
-      'statusDateTime' => 'DateTime',
-      'statusMessage' => 'string',
       'id' => 'string',
-      'signatureBrowser' => 'string',
-      'order' => 'int',
-      'email' => 'string',
-      'signatureLocation' => 'string',
-      'signatureFingerprint' => 'string',
       'firstName' => 'string',
+      'lastName' => 'string',
+      'email' => 'string',
       'userGuid' => 'string',
+      'order' => 'int',
       'roleId' => 'float',
-      'signatureHost' => 'string'
+      'status' => 'int',
+      'statusMessage' => 'string',
+      'statusDateTime' => 'string',
+      'delegatedRecipientId' => 'float',
+      'signatureFingerprint' => 'string',
+      'signatureHost' => 'string',
+      'signatureLocation' => 'string',
+      'signatureBrowser' => 'string',
+      'embedUrl' => 'string'
 
     );
 
-  public $lastName; // string
-  public $delegatedRecipientId; // float
-  public $status; // int
-  public $statusDateTime; // DateTime
-  public $statusMessage; // string
   public $id; // string
-  public $signatureBrowser; // string
-  public $order; // int
-  public $email; // string
-  public $signatureLocation; // string
-  public $signatureFingerprint; // string
   public $firstName; // string
+  public $lastName; // string
+  public $email; // string
   public $userGuid; // string
+  public $order; // int
   public $roleId; // float
+  public $status; // int
+  public $statusMessage; // string
+  public $statusDateTime; // string
+  public $delegatedRecipientId; // float
+  public $signatureFingerprint; // string
   public $signatureHost; // string
+  public $signatureLocation; // string
+  public $signatureBrowser; // string
+  public $embedUrl; // string
   }
 

@@ -27,6 +27,10 @@ class SystemApi {
 	  $this->apiClient = $apiClient;
 	}
 
+	public static function newInstance($apiClient) {
+	  return new self($apiClient);
+	}
+
     public function setBasePath($basePath) {
 	  $this->basePath = $basePath;
 	}
@@ -43,14 +47,17 @@ class SystemApi {
 	 */
 
    public function GetUserPlan($callerId) {
-  	  //parse inputs
+      if( $callerId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/system/{callerId}/plan");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($callerId != null) {
+      if($callerId !== null) {
   			$resourcePath = str_replace("{" . "callerId" . "}",
   			                            $callerId, $resourcePath);
   		}
@@ -58,18 +65,15 @@ class SystemApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'GetPlanResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetUserSubscriptionPlan
@@ -79,14 +83,17 @@ class SystemApi {
 	 */
 
    public function GetUserSubscriptionPlan($callerId) {
-  	  //parse inputs
+      if( $callerId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/system/{callerId}/subscription");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($callerId != null) {
+      if($callerId !== null) {
   			$resourcePath = str_replace("{" . "callerId" . "}",
   			                            $callerId, $resourcePath);
   		}
@@ -94,18 +101,15 @@ class SystemApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'GetUserSubscriptionPlanResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetSubscriptionPlans
@@ -116,18 +120,21 @@ class SystemApi {
 	 */
 
    public function GetSubscriptionPlans($callerId, $family) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/system/{callerId}/plans/{family}");
+      if( $callerId === null || $family === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/system/{callerId}/plans/{family}?invalidate={invalidate}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($callerId != null) {
+      if($callerId !== null) {
   			$resourcePath = str_replace("{" . "callerId" . "}",
   			                            $callerId, $resourcePath);
   		}
-  		if($family != null) {
+  		if($family !== null) {
   			$resourcePath = str_replace("{" . "family" . "}",
   			                            $family, $resourcePath);
   		}
@@ -135,18 +142,15 @@ class SystemApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'GetSubscriptionPlansResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * SetSubscriptionPlan
@@ -158,18 +162,21 @@ class SystemApi {
 	 */
 
    public function SetSubscriptionPlan($userId, $productId, $body) {
-  	  //parse inputs
+      if( $userId === null || $productId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/system/{userId}/subscriptions/{productId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($productId != null) {
+  		if($productId !== null) {
   			$resourcePath = str_replace("{" . "productId" . "}",
   			                            $productId, $resourcePath);
   		}
@@ -177,18 +184,15 @@ class SystemApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SetUserSubscriptionPlanResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetCountries
@@ -198,14 +202,17 @@ class SystemApi {
 	 */
 
    public function GetCountries($callerId) {
-  	  //parse inputs
+      if( $callerId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/system/{callerId}/countries");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($callerId != null) {
+      if($callerId !== null) {
   			$resourcePath = str_replace("{" . "callerId" . "}",
   			                            $callerId, $resourcePath);
   		}
@@ -213,18 +220,15 @@ class SystemApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'GetCountriesResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetStates
@@ -235,18 +239,21 @@ class SystemApi {
 	 */
 
    public function GetStates($callerId, $countryName) {
-  	  //parse inputs
+      if( $callerId === null || $countryName === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/system/{callerId}/countries/{countryName}/states");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($callerId != null) {
+      if($callerId !== null) {
   			$resourcePath = str_replace("{" . "callerId" . "}",
   			                            $callerId, $resourcePath);
   		}
-  		if($countryName != null) {
+  		if($countryName !== null) {
   			$resourcePath = str_replace("{" . "countryName" . "}",
   			                            $countryName, $resourcePath);
   		}
@@ -254,18 +261,52 @@ class SystemApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'GetStatesResponse');
-  		return $responseObject;
+  	  return $responseObject;
+      }
+  /**
+	 * SetBillingAddress
+	 * Set user billing address
+   * userId, string: User GUID (required)
+   * body, BillingAddressInfo: Billing Address (required)
+   * @return GetBillingAddressResponse
+	 */
 
+   public function SetBillingAddress($userId, $body) {
+      if( $userId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/system/{userId}/billingaddress");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "PUT";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'GetBillingAddressResponse');
+  	  return $responseObject;
       }
   
 }

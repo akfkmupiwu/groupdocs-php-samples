@@ -27,6 +27,10 @@ class SignatureApi {
 	  $this->apiClient = $apiClient;
 	}
 
+	public static function newInstance($apiClient) {
+	  return new self($apiClient);
+	}
+
     public function setBasePath($basePath) {
 	  $this->basePath = $basePath;
 	}
@@ -36,484 +40,6 @@ class SignatureApi {
 	}
 
   /**
-	 * DeleteSignatureTemplateFieldLocation
-	 * Delete signature template field location
-   * userId, string: User GUID (required)
-   * templateId, string: Template GUID (required)
-   * fieldId, string: Field GUID (required)
-   * locationId, string: Field location GUID (required)
-   * @return SignatureStatusResponse
-	 */
-
-   public function DeleteSignatureTemplateFieldLocation($userId, $templateId, $fieldId, $locationId) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}/fields/{fieldId}/locations/{locationId}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "DELETE";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($templateId != null) {
-  			$resourcePath = str_replace("{" . "templateId" . "}",
-  			                            $templateId, $resourcePath);
-  		}
-  		if($fieldId != null) {
-  			$resourcePath = str_replace("{" . "fieldId" . "}",
-  			                            $fieldId, $resourcePath);
-  		}
-  		if($locationId != null) {
-  			$resourcePath = str_replace("{" . "locationId" . "}",
-  			                            $locationId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureStatusResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * ModifySignatureTemplateFieldLocation
-	 * Modify signature template field location
-   * userId, string: User GUID (required)
-   * templateId, string: Template GUID (required)
-   * documentId, string: Document GUID (required)
-   * recipientId, string: Recipient GUID (required)
-   * fieldId, string: Field GUID (required)
-   * locationId, string: Field location GUID (required)
-   * body, SignatureTemplateFieldLocationSettings: Settings of the field location (optional)
-   * @return SignatureTemplateFieldResponse
-	 */
-
-   public function ModifySignatureTemplateFieldLocation($userId, $templateId, $documentId, $recipientId, $fieldId, $locationId, $body=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}/documents/{documentId}/recipient/{recipientId}/fields/{fieldId}/locations/{locationId}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "PUT";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($templateId != null) {
-  			$resourcePath = str_replace("{" . "templateId" . "}",
-  			                            $templateId, $resourcePath);
-  		}
-  		if($documentId != null) {
-  			$resourcePath = str_replace("{" . "documentId" . "}",
-  			                            $documentId, $resourcePath);
-  		}
-  		if($recipientId != null) {
-  			$resourcePath = str_replace("{" . "recipientId" . "}",
-  			                            $recipientId, $resourcePath);
-  		}
-  		if($fieldId != null) {
-  			$resourcePath = str_replace("{" . "fieldId" . "}",
-  			                            $fieldId, $resourcePath);
-  		}
-  		if($locationId != null) {
-  			$resourcePath = str_replace("{" . "locationId" . "}",
-  			                            $locationId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureTemplateFieldResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * GetSignatureTemplateFields
-	 * Get template fields
-   * userId, string: User GUID (required)
-   * templateId, string: Template GUID (required)
-   * documentId, string: Document GUID (required)
-   * recipientId, string: Recipient GUID (required)
-   * @return SignatureTemplateFieldsResponse
-	 */
-
-   public function GetSignatureTemplateFields($userId, $templateId, $documentId, $recipientId) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}/fields?document={documentId}&amp;recipient={recipientId}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "GET";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($templateId != null) {
-  			$resourcePath = str_replace("{" . "templateId" . "}",
-  			                            $templateId, $resourcePath);
-  		}
-  		if($documentId != null) {
-  			$resourcePath = str_replace("{" . "documentId" . "}",
-  			                            $documentId, $resourcePath);
-  		}
-  		if($recipientId != null) {
-  			$resourcePath = str_replace("{" . "recipientId" . "}",
-  			                            $recipientId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureTemplateFieldsResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * DeleteSignatureTemplateField
-	 * Delete signature template field
-   * userId, string: User GUID (required)
-   * templateId, string: Template GUID (required)
-   * fieldId, string: Field GUID (required)
-   * @return SignatureTemplateResponse
-	 */
-
-   public function DeleteSignatureTemplateField($userId, $templateId, $fieldId) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}/fields/{fieldId}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "DELETE";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($templateId != null) {
-  			$resourcePath = str_replace("{" . "templateId" . "}",
-  			                            $templateId, $resourcePath);
-  		}
-  		if($fieldId != null) {
-  			$resourcePath = str_replace("{" . "fieldId" . "}",
-  			                            $fieldId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureTemplateResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * GetSignatureTemplateResources
-	 * Get template recources
-   * userId, string: User GUID (required)
-   * @return SignatureTemplateResourcesResponse
-	 */
-
-   public function GetSignatureTemplateResources($userId) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/resources");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "GET";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureTemplateResourcesResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * GetRolesList
-	 * Get signature roles
-   * userId, string: User GUID (required)
-   * id, string: Filter roles by id (optional)
-   * @return SignatureRolesResponse
-	 */
-
-   public function GetRolesList($userId, $id=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/roles?id={roleId}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "GET";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($id != null) {
-  		  $queryParams['id'] = $this->apiClient->toPathValue($id);
-  		}
-  		if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureRolesResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * AddContactIntegration
-	 * Add Contact Integration Authorization
-   * userId, string: User GUID (required)
-   * body, string: Authorization settings (optional)
-   * @return SignatureStatusResponse
-	 */
-
-   public function AddContactIntegration($userId, $body=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/integration");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "POST";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureStatusResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * SignDocument
-	 * Sign document
-   * userId, string: User GUID (required)
-   * body, SignatureSignDocumentSettings: Settings of the signing document (optional)
-   * @return SignatureSignDocumentResponse
-	 */
-
-   public function SignDocument($userId, $body=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/sign");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "POST";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureSignDocumentResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * AddPredefinedList
-	 * Add predefined list
-   * userId, string: User GUID (required)
-   * body, SignaturePredefinedListSettings: List data (required)
-   * @return SignaturePredefinedListResponse
-	 */
-
-   public function AddPredefinedList($userId, $body) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/list");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "POST";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignaturePredefinedListResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * DeletePredefinedList
-	 * Delete predefined list
-   * userId, string: User GUID (required)
-   * listId, string: List GUID (required)
-   * @return SignaturePredefinedListResponse
-	 */
-
-   public function DeletePredefinedList($userId, $listId) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/lists/{listId}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "DELETE";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($listId != null) {
-  			$resourcePath = str_replace("{" . "listId" . "}",
-  			                            $listId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignaturePredefinedListResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * GetFieldsList
-	 * Get signature fields
-   * userId, string: User GUID (required)
-   * id, string: Filter fields by id (optional)
-   * @return SignatureFieldsResponse
-	 */
-
-   public function GetFieldsList($userId, $id=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/fields?id={fieldId}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "GET";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($id != null) {
-  		  $queryParams['id'] = $this->apiClient->toPathValue($id);
-  		}
-  		if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureFieldsResponse');
-  		return $responseObject;
-
-      }
-  /**
 	 * CreateSignatureField
 	 * Create signature field
    * userId, string: User GUID (required)
@@ -522,14 +48,17 @@ class SignatureApi {
 	 */
 
    public function CreateSignatureField($userId, $body=null) {
-  	  //parse inputs
+      if( $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/signature/{userId}/field");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
@@ -537,18 +66,15 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SignatureFieldResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * ModifySignatureField
@@ -560,18 +86,21 @@ class SignatureApi {
 	 */
 
    public function ModifySignatureField($userId, $fieldId, $body=null) {
-  	  //parse inputs
+      if( $userId === null || $fieldId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/signature/{userId}/fields/{fieldId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($fieldId != null) {
+  		if($fieldId !== null) {
   			$resourcePath = str_replace("{" . "fieldId" . "}",
   			                            $fieldId, $resourcePath);
   		}
@@ -579,18 +108,15 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SignatureFieldResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * DeleteSignatureField
@@ -601,18 +127,21 @@ class SignatureApi {
 	 */
 
    public function DeleteSignatureField($userId, $fieldId) {
-  	  //parse inputs
+      if( $userId === null || $fieldId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/signature/{userId}/fields/{fieldId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "DELETE";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($fieldId != null) {
+  		if($fieldId !== null) {
   			$resourcePath = str_replace("{" . "fieldId" . "}",
   			                            $fieldId, $resourcePath);
   		}
@@ -620,1035 +149,59 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SignatureStatusResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
-	 * CreateSignatureForm
-	 * Create signature form
-   * userId, string: User GUID (required)
-   * name, string: Form name (optional)
-   * body, SignatureFormSettings: Settings of the new form (optional)
-   * templateGuid, string: A templateGuid of the template which will be used to created the new form (optional)
-   * assemblyGuid, int: A guid of the assembly which will be used to created the new form (optional)
-   * @return SignatureFormResponse
-	 */
-
-   public function CreateSignatureForm($userId, $name=null, $body=null, $templateGuid=null, $assemblyGuid=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/form?name={name}&amp;templateId={templateId}&amp;assemblyId={assemblyId}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "POST";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($name != null) {
-  		  $queryParams['name'] = $this->apiClient->toPathValue($name);
-  		}
-  		if($templateGuid != null) {
-  		  $queryParams['templateGuid'] = $this->apiClient->toPathValue($templateGuid);
-  		}
-  		if($assemblyGuid != null) {
-  		  $queryParams['assemblyGuid'] = $this->apiClient->toPathValue($assemblyGuid);
-  		}
-  		if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureFormResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * GetSignatureFormDocuments
-	 * Get documents in form
-   * userId, string: User GUID (required)
-   * formId, string: Form GUID (required)
-   * @return SignatureFormDocumentsResponse
-	 */
-
-   public function GetSignatureFormDocuments($userId, $formId) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}/documents");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "GET";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($formId != null) {
-  			$resourcePath = str_replace("{" . "formId" . "}",
-  			                            $formId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureFormDocumentsResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * GetSignatureFormParticipantFields
-	 * Get form fields for document in form per participant
-   * userId, string: User GUID (required)
-   * formId, string: Form GUID (required)
-   * documentId, string: Document GUID (required)
-   * participantId, string: Participant GUID (required)
-   * @return SignatureFormFieldsResponse
-	 */
-
-   public function GetSignatureFormParticipantFields($userId, $formId, $documentId, $participantId) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}/fields?document={documentId}&amp;participant={participantId}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "GET";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($formId != null) {
-  			$resourcePath = str_replace("{" . "formId" . "}",
-  			                            $formId, $resourcePath);
-  		}
-  		if($documentId != null) {
-  			$resourcePath = str_replace("{" . "documentId" . "}",
-  			                            $documentId, $resourcePath);
-  		}
-  		if($participantId != null) {
-  			$resourcePath = str_replace("{" . "participantId" . "}",
-  			                            $participantId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureFormFieldsResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * DeleteSignatureForm
-	 * Delete signature form
-   * userId, string: User GUID (required)
-   * formId, string: Form GUID (required)
-   * @return SignatureStatusResponse
-	 */
-
-   public function DeleteSignatureForm($userId, $formId) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "DELETE";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($formId != null) {
-  			$resourcePath = str_replace("{" . "formId" . "}",
-  			                            $formId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureStatusResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * GetSignatureForm
-	 * Get signature form
-   * userId, string: User GUID (required)
-   * formId, string: Form GUID (required)
-   * @return SignatureFormResponse
-	 */
-
-   public function GetSignatureForm($userId, $formId) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "GET";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($formId != null) {
-  			$resourcePath = str_replace("{" . "formId" . "}",
-  			                            $formId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureFormResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * GetSignatureForms
-	 * Get signature forms
-   * userId, string: User GUID (required)
-   * statusId, string: Filter forms by statusId (optional)
-   * page, int: Show records for page number (optional)
-   * DateTime, string: Filter forms by date (optional)
-   * name, string: Filter forms by name (optional)
-   * records, int: Show records count (optional)
-   * documentId, string: Filter forms by document GUID (optional)
-   * @return SignatureFormsResponse
-	 */
-
-   public function GetSignatureForms($userId, $statusId=null, $page=null, $DateTime=null, $name=null, $records=null, $documentId=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms?statusId={statusId}&amp;records={count}&amp;page={page}&amp;document={originalDocumentMD5}&amp;date={date}&amp;name={name}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "GET";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($statusId != null) {
-  		  $queryParams['statusId'] = $this->apiClient->toPathValue($statusId);
-  		}
-  		if($page != null) {
-  		  $queryParams['page'] = $this->apiClient->toPathValue($page);
-  		}
-  		if($DateTime != null) {
-  		  $queryParams['date'] = $this->apiClient->toPathValue($DateTime);
-  		}
-  		if($name != null) {
-  		  $queryParams['name'] = $this->apiClient->toPathValue($name);
-  		}
-  		if($records != null) {
-  		  $queryParams['records'] = $this->apiClient->toPathValue($records);
-  		}
-  		if($documentId != null) {
-  		  $queryParams['documentId'] = $this->apiClient->toPathValue($documentId);
-  		}
-  		if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureFormsResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * RenameSignatureForm
-	 * Rename signature form
-   * userId, string: User GUID (required)
-   * formId, string: Form GUID (required)
-   * name, string: New form name (required)
-   * @return SignatureFormResponse
-	 */
-
-   public function RenameSignatureForm($userId, $formId, $name) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}?new_name={name}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "PUT";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($name != null) {
-  		  $queryParams['name'] = $this->apiClient->toPathValue($name);
-  		}
-  		if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($formId != null) {
-  			$resourcePath = str_replace("{" . "formId" . "}",
-  			                            $formId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureFormResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * PublishSignatureForm
-	 * Publish signature form
-   * userId, string: User GUID (required)
-   * formId, string: Form GUID (required)
-   * @return SignatureStatusResponse
-	 */
-
-   public function PublishSignatureForm($userId, $formId) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}/publish");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "PUT";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($formId != null) {
-  			$resourcePath = str_replace("{" . "formId" . "}",
-  			                            $formId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureStatusResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * CompleteSignatureForm
-	 * Complete signature form
-   * userId, string: User GUID (required)
-   * formId, string: Form GUID (required)
-   * @return SignatureStatusResponse
-	 */
-
-   public function CompleteSignatureForm($userId, $formId) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}/complete");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "PUT";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($formId != null) {
-  			$resourcePath = str_replace("{" . "formId" . "}",
-  			                            $formId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureStatusResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * ModifySignatureForm
-	 * Modify signature form
-   * userId, string: User GUID (required)
-   * formId, string: Form GUID (required)
-   * body, SignatureFormSettings: Settings of the form (optional)
-   * @return SignatureFormResponse
-	 */
-
-   public function ModifySignatureForm($userId, $formId, $body=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "POST";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($formId != null) {
-  			$resourcePath = str_replace("{" . "formId" . "}",
-  			                            $formId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureFormResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * ArchiveSignatureForm
-	 * Archive signature form
-   * userId, string: User GUID (required)
-   * formId, string: Form GUID (required)
-   * @return SignatureStatusResponse
-	 */
-
-   public function ArchiveSignatureForm($userId, $formId) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}/archive");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "PUT";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($formId != null) {
-  			$resourcePath = str_replace("{" . "formId" . "}",
-  			                            $formId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureStatusResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * GetSignatureFormResources
-	 * Get form recources
-   * userId, string: User GUID (required)
-   * statusIds, string: Form status identifier - comma separated list (required)
-   * @return SignatureFormResourcesResponse
-	 */
-
-   public function GetSignatureFormResources($userId, $statusIds) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/resources?statusIds={statusIds}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "GET";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($statusIds != null) {
-  			$resourcePath = str_replace("{" . "statusIds" . "}",
-  			                            $statusIds, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureFormResourcesResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * AddSignatureFormField
-	 * Add signature field for document in form
-   * userId, string: User GUID (required)
-   * formId, string: Form GUID (required)
-   * documentId, string: Document GUID (required)
-   * fieldId, string: Field GUID (required)
-   * body, SignatureFormFieldSettings: Settings of the field (optional)
-   * @return SignatureFormFieldResponse
-	 */
-
-   public function AddSignatureFormField($userId, $formId, $documentId, $fieldId, $body=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}/documents/{documentId}/field/{fieldId}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "POST";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($formId != null) {
-  			$resourcePath = str_replace("{" . "formId" . "}",
-  			                            $formId, $resourcePath);
-  		}
-  		if($documentId != null) {
-  			$resourcePath = str_replace("{" . "documentId" . "}",
-  			                            $documentId, $resourcePath);
-  		}
-  		if($fieldId != null) {
-  			$resourcePath = str_replace("{" . "fieldId" . "}",
-  			                            $fieldId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureFormFieldResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * ModifySignatureFormFieldLocation
-	 * Modify signature form field location
-   * userId, string: User GUID (required)
-   * formId, string: Form GUID (required)
-   * documentId, string: Document GUID (required)
-   * fieldId, string: Field GUID (required)
-   * locationId, string: Field location GUID (required)
-   * body, SignatureFormFieldLocationSettings: Settings of the field location (optional)
-   * @return SignatureFormFieldResponse
-	 */
-
-   public function ModifySignatureFormFieldLocation($userId, $formId, $documentId, $fieldId, $locationId, $body=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}/documents/{documentId}/fields/{fieldId}/locations/{locationId}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "PUT";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($formId != null) {
-  			$resourcePath = str_replace("{" . "formId" . "}",
-  			                            $formId, $resourcePath);
-  		}
-  		if($documentId != null) {
-  			$resourcePath = str_replace("{" . "documentId" . "}",
-  			                            $documentId, $resourcePath);
-  		}
-  		if($fieldId != null) {
-  			$resourcePath = str_replace("{" . "fieldId" . "}",
-  			                            $fieldId, $resourcePath);
-  		}
-  		if($locationId != null) {
-  			$resourcePath = str_replace("{" . "locationId" . "}",
-  			                            $locationId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureFormFieldResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * DeleteSignatureFormField
-	 * Delete signature form field
-   * userId, string: User GUID (required)
-   * formId, string: Form GUID (required)
-   * fieldId, string: Field GUID (required)
-   * @return SignatureStatusResponse
-	 */
-
-   public function DeleteSignatureFormField($userId, $formId, $fieldId) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}/fields/{fieldId}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "DELETE";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($formId != null) {
-  			$resourcePath = str_replace("{" . "formId" . "}",
-  			                            $formId, $resourcePath);
-  		}
-  		if($fieldId != null) {
-  			$resourcePath = str_replace("{" . "fieldId" . "}",
-  			                            $fieldId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureStatusResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * ModifySignatureFormField
-	 * Modify signature form field
-   * userId, string: User GUID (required)
-   * formId, string: Form GUID (required)
-   * documentId, string: Document GUID (required)
-   * fieldId, string: Field GUID (required)
-   * body, SignatureFormFieldSettings: Settings of the field (optional)
-   * @return SignatureFormFieldResponse
-	 */
-
-   public function ModifySignatureFormField($userId, $formId, $documentId, $fieldId, $body=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}/documents/{documentId}/field/{fieldId}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "PUT";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($formId != null) {
-  			$resourcePath = str_replace("{" . "formId" . "}",
-  			                            $formId, $resourcePath);
-  		}
-  		if($documentId != null) {
-  			$resourcePath = str_replace("{" . "documentId" . "}",
-  			                            $documentId, $resourcePath);
-  		}
-  		if($fieldId != null) {
-  			$resourcePath = str_replace("{" . "fieldId" . "}",
-  			                            $fieldId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureFormFieldResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * DeleteSignatureFormFieldLocation
-	 * Remove signature form field location
-   * userId, string: User GUID (required)
-   * formId, string: Form GUID (required)
-   * fieldId, string: Field GUID (required)
-   * locationId, string: Field location GUID (required)
-   * @return SignatureStatusResponse
-	 */
-
-   public function DeleteSignatureFormFieldLocation($userId, $formId, $fieldId, $locationId) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}/fields/{fieldId}/locations/{locationId}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "DELETE";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($formId != null) {
-  			$resourcePath = str_replace("{" . "formId" . "}",
-  			                            $formId, $resourcePath);
-  		}
-  		if($fieldId != null) {
-  			$resourcePath = str_replace("{" . "fieldId" . "}",
-  			                            $fieldId, $resourcePath);
-  		}
-  		if($locationId != null) {
-  			$resourcePath = str_replace("{" . "locationId" . "}",
-  			                            $locationId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureStatusResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * GetSignatureFormFields
-	 * Get form fields for document in form per participant
-   * userId, string: User GUID (required)
-   * formId, string: Form GUID (required)
-   * documentId, string: Document GUID (required)
-   * @return SignatureFormFieldsResponse
-	 */
-
-   public function GetSignatureFormFields($userId, $formId, $documentId) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}/documents/{documentId}/fields");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "GET";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($formId != null) {
-  			$resourcePath = str_replace("{" . "formId" . "}",
-  			                            $formId, $resourcePath);
-  		}
-  		if($documentId != null) {
-  			$resourcePath = str_replace("{" . "documentId" . "}",
-  			                            $documentId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureFormFieldsResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * AddSignatureFormDocument
-	 * Add document in form
-   * userId, string: User GUID (required)
-   * formId, string: Form GUID (required)
-   * documentId, string: Document GUID (required)
-   * order, int: Document order (optional)
-   * @return SignatureFormDocumentResponse
-	 */
-
-   public function AddSignatureFormDocument($userId, $formId, $documentId, $order=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}/document/{documentId}?order={order}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "POST";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($order != null) {
-  		  $queryParams['order'] = $this->apiClient->toPathValue($order);
-  		}
-  		if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($formId != null) {
-  			$resourcePath = str_replace("{" . "formId" . "}",
-  			                            $formId, $resourcePath);
-  		}
-  		if($documentId != null) {
-  			$resourcePath = str_replace("{" . "documentId" . "}",
-  			                            $documentId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureFormDocumentResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * DeleteSignatureFormDocument
-	 * Delete document from form
-   * userId, string: User GUID (required)
-   * formId, string: Form GUID (required)
-   * documentId, string: Document GUID (required)
-   * @return SignatureStatusResponse
-	 */
-
-   public function DeleteSignatureFormDocument($userId, $formId, $documentId) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}/documents/{documentId}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "DELETE";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($formId != null) {
-  			$resourcePath = str_replace("{" . "formId" . "}",
-  			                            $formId, $resourcePath);
-  		}
-  		if($documentId != null) {
-  			$resourcePath = str_replace("{" . "documentId" . "}",
-  			                            $documentId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureStatusResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * UpdateSignatureFormFromTemplate
-	 * Add signature form fields from template
-   * userId, string: User GUID (required)
-   * formId, string: Form GUID (required)
-   * templateId, string: Template GUID (required)
-   * @return SignatureFormResponse
-	 */
-
-   public function UpdateSignatureFormFromTemplate($userId, $formId, $templateId) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}/templates/{templateId}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "POST";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($formId != null) {
-  			$resourcePath = str_replace("{" . "formId" . "}",
-  			                            $formId, $resourcePath);
-  		}
-  		if($templateId != null) {
-  			$resourcePath = str_replace("{" . "templateId" . "}",
-  			                            $templateId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureFormResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * GetSignatureTemplates
-	 * Get templates
+	 * GetContacts
+	 * Get contacts
    * userId, string: User GUID (required)
    * page, string: Page number (optional)
-   * documentGuid, string: Fitler templates by document originalMD5 (optional)
-   * recipientName, string: Filter templates by recipient nickname (optional)
-   * name, string: Filter templates by signatureTemplate name (optional)
-   * records, string: Records count (optional)
-   * @return SignatureTemplatesResponse
+   * firstName, string: Filter by firstName (optional)
+   * lastName, string: Filter by lastName (optional)
+   * email, string: Filter by email (optional)
+   * records, string: Records count to be returned (optional)
+   * @return SignatureContactsResponse
 	 */
 
-   public function GetSignatureTemplates($userId, $page=null, $documentGuid=null, $recipientName=null, $name=null, $records=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates?records={count}&amp;page={page}&amp;documentGuid={documentGuid}&amp;recipientName={recipientName}&amp;name={name}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+   public function GetContacts($userId, $page=null, $firstName=null, $lastName=null, $email=null, $records=null) {
+      if( $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/contacts?firstName={firstName}&lastName={lastName}&email={email}&records={count}&page={page}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($page != null) {
+      if($page !== null) {
   		  $queryParams['page'] = $this->apiClient->toPathValue($page);
   		}
-  		if($documentGuid != null) {
-  		  $queryParams['documentGuid'] = $this->apiClient->toPathValue($documentGuid);
+  		if($firstName !== null) {
+  		  $queryParams['firstName'] = $this->apiClient->toPathValue($firstName);
   		}
-  		if($recipientName != null) {
-  		  $queryParams['recipientName'] = $this->apiClient->toPathValue($recipientName);
+  		if($lastName !== null) {
+  		  $queryParams['lastName'] = $this->apiClient->toPathValue($lastName);
   		}
-  		if($name != null) {
-  		  $queryParams['name'] = $this->apiClient->toPathValue($name);
+  		if($email !== null) {
+  		  $queryParams['email'] = $this->apiClient->toPathValue($email);
   		}
-  		if($records != null) {
+  		if($records !== null) {
   		  $queryParams['records'] = $this->apiClient->toPathValue($records);
   		}
-  		if($userId != null) {
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
@@ -1656,676 +209,246 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureTemplatesResponse');
-  		return $responseObject;
-
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureContactsResponse');
+  	  return $responseObject;
       }
   /**
-	 * GetSignatureTemplate
-	 * Get template
+	 * AddContact
+	 * Add contact
    * userId, string: User GUID (required)
-   * templateId, string: Template GUID (required)
-   * @return SignatureTemplateResponse
+   * body, SignatureContactSettings: Contact data (required)
+   * @return SignatureContactResponse
 	 */
 
-   public function GetSignatureTemplate($userId, $templateId) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "GET";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($templateId != null) {
-  			$resourcePath = str_replace("{" . "templateId" . "}",
-  			                            $templateId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
+   public function AddContact($userId, $body) {
+      if( $userId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureTemplateResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * CreateSignatureTemplate
-	 * Create template
-   * userId, string: User GUID (required)
-   * name, string: Template name (optional)
-   * templateId, string: Template GUID of the template that will be used to create the new template (optional)
-   * body, SignatureTemplateSettings: Settings of the template (optional)
-   * envelopetId, string: Envelope GUID of the envelope that will be used to create the new template (required)
-   * @return SignatureTemplateResponse
-	 */
-
-   public function CreateSignatureTemplate($userId, $name=null, $templateId=null, $body=null, $envelopetId) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/template?name={name}&amp;templateId={templateId}&amp;envelopeId={envelopeId}");
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/contact");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
-      if($name != null) {
-  		  $queryParams['name'] = $this->apiClient->toPathValue($name);
-  		}
-  		if($templateId != null) {
-  		  $queryParams['templateId'] = $this->apiClient->toPathValue($templateId);
-  		}
-  		if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
-  		}
-  		if($envelopetId != null) {
-  			$resourcePath = str_replace("{" . "envelopetId" . "}",
-  			                            $envelopetId, $resourcePath);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureTemplateResponse');
-  		return $responseObject;
-
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureContactResponse');
+  	  return $responseObject;
       }
   /**
-	 * ModifySignatureTemplate
-	 * Modify template
+	 * ModifyContact
+	 * Update contact
    * userId, string: User GUID (required)
-   * templateId, string: Template GUID (required)
-   * body, SignatureTemplateSettings: Settings of the template (optional)
-   * @return SignatureTemplateResponse
+   * contactId, string: Contact GUID (required)
+   * body, SignatureContactSettings: Contact data (optional)
+   * @return SignatureContactResponse
 	 */
 
-   public function ModifySignatureTemplate($userId, $templateId, $body=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}");
+   public function ModifyContact($userId, $contactId, $body=null) {
+      if( $userId === null || $contactId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/contacts/{contactId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($templateId != null) {
-  			$resourcePath = str_replace("{" . "templateId" . "}",
-  			                            $templateId, $resourcePath);
+  		if($contactId !== null) {
+  			$resourcePath = str_replace("{" . "contactId" . "}",
+  			                            $contactId, $resourcePath);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureTemplateResponse');
-  		return $responseObject;
-
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureContactResponse');
+  	  return $responseObject;
       }
   /**
-	 * RenameSignatureTemplate
-	 * Rename template
+	 * DeleteContact
+	 * Delete contact
    * userId, string: User GUID (required)
-   * templateId, string: Template GUID (required)
-   * name, string: New template name (required)
-   * @return SignatureTemplateResponse
+   * contactId, string: Contact GUID (required)
+   * @return SignatureContactResponse
 	 */
 
-   public function RenameSignatureTemplate($userId, $templateId, $name) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}?name={name}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "PUT";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($name != null) {
-  		  $queryParams['name'] = $this->apiClient->toPathValue($name);
-  		}
-  		if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($templateId != null) {
-  			$resourcePath = str_replace("{" . "templateId" . "}",
-  			                            $templateId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
+   public function DeleteContact($userId, $contactId) {
+      if( $userId === null || $contactId === null ) {
+        throw new ApiException("missing required parameters", 400);
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureTemplateResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * DeleteSignatureTemplate
-	 * Delete template
-   * userId, string: User GUID (required)
-   * templateId, string: Template GUID (required)
-   * @return SignatureStatusResponse
-	 */
-
-   public function DeleteSignatureTemplate($userId, $templateId) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}");
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/contacts/{contactId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "DELETE";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($templateId != null) {
-  			$resourcePath = str_replace("{" . "templateId" . "}",
-  			                            $templateId, $resourcePath);
+  		if($contactId !== null) {
+  			$resourcePath = str_replace("{" . "contactId" . "}",
+  			                            $contactId, $resourcePath);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureStatusResponse');
-  		return $responseObject;
-
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureContactResponse');
+  	  return $responseObject;
       }
   /**
-	 * AddSignatureTemplateRecipient
-	 * Add recipient to the template
+	 * ImportContacts
+	 * Import contacts
    * userId, string: User GUID (required)
-   * templateId, string: Template GUID (required)
-   * nickname, string: Nickname of the recipient (required)
-   * order, string: Display order of the recipient (optional)
-   * role, string: Role GUID (required)
-   * @return SignatureTemplateResponse
+   * body, List[SignatureContactSettings]: Array of SignatureContactSettings (optional)
+   * @return SignatureContactsImportResponse
 	 */
 
-   public function AddSignatureTemplateRecipient($userId, $templateId, $nickname, $order=null, $role) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}/recipient?nickname={nickname}&amp;role={roleId}&amp;order={order}");
+   public function ImportContacts($userId, $body=null) {
+      if( $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/contacts");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
-      if($nickname != null) {
-  		  $queryParams['nickname'] = $this->apiClient->toPathValue($nickname);
-  		}
-  		if($order != null) {
-  		  $queryParams['order'] = $this->apiClient->toPathValue($order);
-  		}
-  		if($role != null) {
-  		  $queryParams['role'] = $this->apiClient->toPathValue($role);
-  		}
-  		if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
-  		}
-  		if($templateId != null) {
-  			$resourcePath = str_replace("{" . "templateId" . "}",
-  			                            $templateId, $resourcePath);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureTemplateResponse');
-  		return $responseObject;
-
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureContactsImportResponse');
+  	  return $responseObject;
       }
   /**
-	 * GetSignatureTemplateRecipients
-	 * Get template recipients
+	 * AddContactIntegration
+	 * Add Contact Integration Authorization
    * userId, string: User GUID (required)
-   * templateId, string: Template GUID (required)
-   * @return SignatureTemplateRecipientsResponse
-	 */
-
-   public function GetSignatureTemplateRecipients($userId, $templateId) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}/recipients");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "GET";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($templateId != null) {
-  			$resourcePath = str_replace("{" . "templateId" . "}",
-  			                            $templateId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureTemplateRecipientsResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * DeleteSignatureTemplateRecipient
-	 * Remove recipient from template
-   * userId, string: User GUID (required)
-   * templateId, string: Template GUID (required)
-   * recipientId, string: Recipient GUID (required)
+   * body, string: Authorization settings (optional)
    * @return SignatureStatusResponse
 	 */
 
-   public function DeleteSignatureTemplateRecipient($userId, $templateId, $recipientId) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}/recipients/{recipientId}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "DELETE";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($templateId != null) {
-  			$resourcePath = str_replace("{" . "templateId" . "}",
-  			                            $templateId, $resourcePath);
-  		}
-  		if($recipientId != null) {
-  			$resourcePath = str_replace("{" . "recipientId" . "}",
-  			                            $recipientId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
+   public function AddContactIntegration($userId, $body=null) {
+      if( $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureStatusResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * ModifySignatureTemplateRecipient
-	 * Update template recipient
-   * userId, string: User GUID (required)
-   * templateId, string: Template GUID (required)
-   * nickname, string: Nickname of the recipient (required)
-   * order, string: Display order of the recipient (optional)
-   * role, string: Role GUID (required)
-   * @return SignatureTemplateResponse
-	 */
-
-   public function ModifySignatureTemplateRecipient($userId, $templateId, $nickname, $order=null, $role) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}/recipient/{recipientId}?nickname={nickname}&amp;role={roleId}&amp;order={order}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "PUT";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($nickname != null) {
-  		  $queryParams['nickname'] = $this->apiClient->toPathValue($nickname);
-  		}
-  		if($order != null) {
-  		  $queryParams['order'] = $this->apiClient->toPathValue($order);
-  		}
-  		if($role != null) {
-  		  $queryParams['role'] = $this->apiClient->toPathValue($role);
-  		}
-  		if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($templateId != null) {
-  			$resourcePath = str_replace("{" . "templateId" . "}",
-  			                            $templateId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureTemplateResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * AddSignatureTemplateDocument
-	 * Add document to template
-   * userId, string: User GUID (required)
-   * templateId, string: Template GUID (required)
-   * documentId, string: Document GUID (required)
-   * order, string: Display order of the document (optional)
-   * @return SignatureTemplateDocumentResponse
-	 */
-
-   public function AddSignatureTemplateDocument($userId, $templateId, $documentId, $order=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}/document/{documentId}?order={order}");
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/integration");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
-      if($order != null) {
-  		  $queryParams['order'] = $this->apiClient->toPathValue($order);
-  		}
-  		if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
-  		}
-  		if($templateId != null) {
-  			$resourcePath = str_replace("{" . "templateId" . "}",
-  			                            $templateId, $resourcePath);
-  		}
-  		if($documentId != null) {
-  			$resourcePath = str_replace("{" . "documentId" . "}",
-  			                            $documentId, $resourcePath);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureTemplateDocumentResponse');
-  		return $responseObject;
-
+        return null;
       }
-  /**
-	 * GetSignatureTemplateDocuments
-	 * Get documents in template
-   * userId, string: User GUID (required)
-   * templateId, string: Template GUID (required)
-   * @return SignatureTemplateDocumentsResponse
-	 */
 
-   public function GetSignatureTemplateDocuments($userId, $templateId) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}/documents");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "GET";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($templateId != null) {
-  			$resourcePath = str_replace("{" . "templateId" . "}",
-  			                            $templateId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureTemplateDocumentsResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * DeleteSignatureTemplateDocument
-	 * Remove document from template
-   * userId, string: User GUID (required)
-   * templateId, string: Template GUID (required)
-   * documentId, string: Document GUID (required)
-   * @return SignatureStatusResponse
-	 */
-
-   public function DeleteSignatureTemplateDocument($userId, $templateId, $documentId) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}/documents/{documentId}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "DELETE";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($templateId != null) {
-  			$resourcePath = str_replace("{" . "templateId" . "}",
-  			                            $templateId, $resourcePath);
-  		}
-  		if($documentId != null) {
-  			$resourcePath = str_replace("{" . "documentId" . "}",
-  			                            $documentId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SignatureStatusResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
-	 * AddSignatureTemplateField
-	 * Add signature template field
+	 * SignDocument
+	 * Sign document
    * userId, string: User GUID (required)
-   * templateId, string: Template GUID (required)
-   * documentId, string: Document GUID (required)
-   * recipientId, string: Recipient GUID (required)
-   * fieldId, string: Field GUID (required)
-   * body, SignatureTemplateFieldSettings: Settings of the field (optional)
-   * @return SignatureTemplateFieldResponse
+   * body, SignatureSignDocumentSettings: Settings of the signing document (optional)
+   * @return SignatureSignDocumentsResponse
 	 */
 
-   public function AddSignatureTemplateField($userId, $templateId, $documentId, $recipientId, $fieldId, $body=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}/documents/{documentId}/recipient/{recipientId}/field/{fieldId}");
+   public function SignDocument($userId, $body=null) {
+      if( $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/sign");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
-  		}
-  		if($templateId != null) {
-  			$resourcePath = str_replace("{" . "templateId" . "}",
-  			                            $templateId, $resourcePath);
-  		}
-  		if($documentId != null) {
-  			$resourcePath = str_replace("{" . "documentId" . "}",
-  			                            $documentId, $resourcePath);
-  		}
-  		if($recipientId != null) {
-  			$resourcePath = str_replace("{" . "recipientId" . "}",
-  			                            $recipientId, $resourcePath);
-  		}
-  		if($fieldId != null) {
-  			$resourcePath = str_replace("{" . "fieldId" . "}",
-  			                            $fieldId, $resourcePath);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureTemplateFieldResponse');
-  		return $responseObject;
-
+        return null;
       }
-  /**
-	 * ModifySignatureTemplateField
-	 * Modify signature template field
-   * userId, string: User GUID (required)
-   * templateId, string: Template GUID (required)
-   * documentId, string: Document GUID (required)
-   * fieldId, string: Field GUID (required)
-   * body, SignatureTemplateFieldSettings: Settings of the field (optional)
-   * @return SignatureTemplateFieldResponse
-	 */
 
-   public function ModifySignatureTemplateField($userId, $templateId, $documentId, $fieldId, $body=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}/documents/{documentId}/field/{fieldId}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "PUT";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($templateId != null) {
-  			$resourcePath = str_replace("{" . "templateId" . "}",
-  			                            $templateId, $resourcePath);
-  		}
-  		if($documentId != null) {
-  			$resourcePath = str_replace("{" . "documentId" . "}",
-  			                            $documentId, $resourcePath);
-  		}
-  		if($fieldId != null) {
-  			$resourcePath = str_replace("{" . "fieldId" . "}",
-  			                            $fieldId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureTemplateFieldResponse');
-  		return $responseObject;
-
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureSignDocumentsResponse');
+  	  return $responseObject;
       }
   /**
 	 * ArchiveSignatureEnvelope
@@ -2336,18 +459,21 @@ class SignatureApi {
 	 */
 
    public function ArchiveSignatureEnvelope($userId, $envelopeId) {
-  	  //parse inputs
+      if( $userId === null || $envelopeId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/{envelopeId}/archive");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($envelopeId != null) {
+  		if($envelopeId !== null) {
   			$resourcePath = str_replace("{" . "envelopeId" . "}",
   			                            $envelopeId, $resourcePath);
   		}
@@ -2355,18 +481,15 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SignatureStatusResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetEnvelopeAuditLogs
@@ -2377,18 +500,21 @@ class SignatureApi {
 	 */
 
    public function GetEnvelopeAuditLogs($userId, $envelopeId) {
-  	  //parse inputs
+      if( $userId === null || $envelopeId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/{envelopeId}/logs");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($envelopeId != null) {
+  		if($envelopeId !== null) {
   			$resourcePath = str_replace("{" . "envelopeId" . "}",
   			                            $envelopeId, $resourcePath);
   		}
@@ -2396,18 +522,15 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SignatureEnvelopeAuditLogsResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * CreateSignatureEnvelope
@@ -2417,27 +540,38 @@ class SignatureApi {
    * body, SignatureEnvelopeSettings: Settings of the new envelope (optional)
    * templateGuid, string: A templateGuid of the template which will be used to created the new envelope (optional)
    * envelopeGuid, int: A envelopeGuid of the envelope which will be used to created the new envelope (optional)
+   * documentGuid, int: A documentGuid of the document which will be added to the new created envelope (optional)
    * @return SignatureEnvelopeResponse
 	 */
 
-   public function CreateSignatureEnvelope($userId, $name=null, $body=null, $templateGuid=null, $envelopeGuid=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelope?name={name}&amp;templateId={templateId}&amp;envelopeId={envelopeId}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+   public function CreateSignatureEnvelope($userId, $name=null, $body=null, $templateGuid=null, $envelopeGuid=null, $documentGuid=null) {
+      if( $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelope?name={name}&templateId={templateId}&envelopeId={envelopeId}&documentId={documentId}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
-      if($name != null) {
+      if($name !== null) {
   		  $queryParams['name'] = $this->apiClient->toPathValue($name);
   		}
-  		if($templateGuid != null) {
+  		if($templateGuid !== null) {
   		  $queryParams['templateGuid'] = $this->apiClient->toPathValue($templateGuid);
   		}
-  		if($envelopeGuid != null) {
+  		if($envelopeGuid !== null) {
   		  $queryParams['envelopeGuid'] = $this->apiClient->toPathValue($envelopeGuid);
   		}
-  		if($userId != null) {
+  		if($documentGuid !== null) {
+  		  $queryParams['documentGuid'] = $this->apiClient->toPathValue($documentGuid);
+  		}
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
@@ -2445,18 +579,15 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SignatureEnvelopeResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * DeclineEnvelope
@@ -2468,22 +599,25 @@ class SignatureApi {
 	 */
 
    public function DeclineEnvelope($userId, $envelopeId, $recipientId) {
-  	  //parse inputs
+      if( $userId === null || $envelopeId === null || $recipientId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/{envelopeId}/recipient/{recipientId}/decline");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($envelopeId != null) {
+  		if($envelopeId !== null) {
   			$resourcePath = str_replace("{" . "envelopeId" . "}",
   			                            $envelopeId, $resourcePath);
   		}
-  		if($recipientId != null) {
+  		if($recipientId !== null) {
   			$resourcePath = str_replace("{" . "recipientId" . "}",
   			                            $recipientId, $resourcePath);
   		}
@@ -2491,18 +625,15 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SignatureStatusResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * DelegateEnvelopeRecipient
@@ -2510,38 +641,45 @@ class SignatureApi {
    * userId, string: User GUID (required)
    * envelopeId, string: Envelope GUID (required)
    * recipientId, string: Recipient GUID (required)
-   * lastname, string: Delegated recipient last name (required)
-   * email, string: Delegated recipient email (required)
-   * firstname, string: Delegated recipient first name (required)
+   * recipientEmail, string: Delegated recipient email (required)
+   * recipientFirstName, string: Delegated recipient first name (required)
+   * recipientLastName, string: Delegated recipient last name (required)
    * @return SignatureStatusResponse
 	 */
 
-   public function DelegateEnvelopeRecipient($userId, $envelopeId, $recipientId, $lastname, $email, $firstname) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/{envelopeId}/recipient/{recipientId}/delegate?email={recipientEmail}&amp;firstname={recipientFirstName}&amp;lastname={recipientLastName}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+   public function DelegateEnvelopeRecipient($userId, $envelopeId, $recipientId, $recipientEmail, $recipientFirstName, $recipientLastName) {
+      if( $userId === null || $envelopeId === null || $recipientId === null || $recipientEmail === null || $recipientFirstName === null || $recipientLastName === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/{envelopeId}/recipient/{recipientId}/delegate?email={recipientEmail}&firstname={recipientFirstName}&lastname={recipientLastName}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
-      if($lastname != null) {
-  		  $queryParams['lastname'] = $this->apiClient->toPathValue($lastname);
+      if($recipientEmail !== null) {
+  		  $queryParams['email'] = $this->apiClient->toPathValue($recipientEmail);
   		}
-  		if($email != null) {
-  		  $queryParams['email'] = $this->apiClient->toPathValue($email);
+  		if($recipientFirstName !== null) {
+  		  $queryParams['firstname'] = $this->apiClient->toPathValue($recipientFirstName);
   		}
-  		if($firstname != null) {
-  		  $queryParams['firstname'] = $this->apiClient->toPathValue($firstname);
+  		if($recipientLastName !== null) {
+  		  $queryParams['lastname'] = $this->apiClient->toPathValue($recipientLastName);
   		}
-  		if($userId != null) {
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($envelopeId != null) {
+  		if($envelopeId !== null) {
   			$resourcePath = str_replace("{" . "envelopeId" . "}",
   			                            $envelopeId, $resourcePath);
   		}
-  		if($recipientId != null) {
+  		if($recipientId !== null) {
   			$resourcePath = str_replace("{" . "recipientId" . "}",
   			                            $recipientId, $resourcePath);
   		}
@@ -2549,18 +687,15 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SignatureStatusResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * DeleteSignatureEnvelope
@@ -2571,18 +706,21 @@ class SignatureApi {
 	 */
 
    public function DeleteSignatureEnvelope($userId, $envelopeId) {
-  	  //parse inputs
+      if( $userId === null || $envelopeId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/{envelopeId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "DELETE";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($envelopeId != null) {
+  		if($envelopeId !== null) {
   			$resourcePath = str_replace("{" . "envelopeId" . "}",
   			                            $envelopeId, $resourcePath);
   		}
@@ -2590,18 +728,15 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SignatureStatusResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * AddSignatureEnvelopeDocument
@@ -2614,25 +749,32 @@ class SignatureApi {
 	 */
 
    public function AddSignatureEnvelopeDocument($userId, $envelopeId, $documentId, $order=null) {
-  	  //parse inputs
+      if( $userId === null || $envelopeId === null || $documentId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/{envelopeId}/document/{documentId}?order={order}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
-      if($order != null) {
+      if($order !== null) {
   		  $queryParams['order'] = $this->apiClient->toPathValue($order);
   		}
-  		if($userId != null) {
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($envelopeId != null) {
+  		if($envelopeId !== null) {
   			$resourcePath = str_replace("{" . "envelopeId" . "}",
   			                            $envelopeId, $resourcePath);
   		}
-  		if($documentId != null) {
+  		if($documentId !== null) {
   			$resourcePath = str_replace("{" . "documentId" . "}",
   			                            $documentId, $resourcePath);
   		}
@@ -2640,18 +782,15 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SignatureEnvelopeDocumentResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetSignedEnvelopeDocument
@@ -2662,23 +801,26 @@ class SignatureApi {
    * @return stream
 	 */
 
-   public function GetSignedEnvelopeDocument($userId, $envelopeId, $documentId) {
-  	  //parse inputs
+   public function GetSignedEnvelopeDocument($userId, $envelopeId, $documentId, FileStream $outFileStream) {
+      if( $userId === null || $envelopeId === null || $documentId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/{envelopeId}/document/{documentId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($envelopeId != null) {
+  		if($envelopeId !== null) {
   			$resourcePath = str_replace("{" . "envelopeId" . "}",
   			                            $envelopeId, $resourcePath);
   		}
-  		if($documentId != null) {
+  		if($documentId !== null) {
   			$resourcePath = str_replace("{" . "documentId" . "}",
   			                            $documentId, $resourcePath);
   		}
@@ -2686,18 +828,8 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'stream');
-  		return $responseObject;
-
+      return $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams, $outFileStream);
       }
   /**
 	 * DeleteSignatureEnvelopeDocument
@@ -2709,22 +841,25 @@ class SignatureApi {
 	 */
 
    public function DeleteSignatureEnvelopeDocument($userId, $envelopeId, $documentId) {
-  	  //parse inputs
+      if( $userId === null || $envelopeId === null || $documentId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/{envelopeId}/documents/{documentId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "DELETE";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($envelopeId != null) {
+  		if($envelopeId !== null) {
   			$resourcePath = str_replace("{" . "envelopeId" . "}",
   			                            $envelopeId, $resourcePath);
   		}
-  		if($documentId != null) {
+  		if($documentId !== null) {
   			$resourcePath = str_replace("{" . "documentId" . "}",
   			                            $documentId, $resourcePath);
   		}
@@ -2732,18 +867,15 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SignatureStatusResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetSignatureEnvelopeDocuments
@@ -2754,18 +886,21 @@ class SignatureApi {
 	 */
 
    public function GetSignatureEnvelopeDocuments($userId, $envelopeId) {
-  	  //parse inputs
+      if( $userId === null || $envelopeId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/{envelopeId}/documents");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($envelopeId != null) {
+  		if($envelopeId !== null) {
   			$resourcePath = str_replace("{" . "envelopeId" . "}",
   			                            $envelopeId, $resourcePath);
   		}
@@ -2773,18 +908,15 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SignatureEnvelopeDocumentsResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetSignedEnvelopeDocuments
@@ -2794,19 +926,22 @@ class SignatureApi {
    * @return stream
 	 */
 
-   public function GetSignedEnvelopeDocuments($userId, $envelopeId) {
-  	  //parse inputs
+   public function GetSignedEnvelopeDocuments($userId, $envelopeId, FileStream $outFileStream) {
+      if( $userId === null || $envelopeId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/{envelopeId}/documents/get");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($envelopeId != null) {
+  		if($envelopeId !== null) {
   			$resourcePath = str_replace("{" . "envelopeId" . "}",
   			                            $envelopeId, $resourcePath);
   		}
@@ -2814,18 +949,8 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'stream');
-  		return $responseObject;
-
+      return $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams, $outFileStream);
       }
   /**
 	 * AddSignatureEnvelopeField
@@ -2840,30 +965,33 @@ class SignatureApi {
 	 */
 
    public function AddSignatureEnvelopeField($userId, $envelopeId, $documentId, $recipientId, $fieldId, $body=null) {
-  	  //parse inputs
+      if( $userId === null || $envelopeId === null || $documentId === null || $recipientId === null || $fieldId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/{envelopeId}/documents/{documentId}/recipient/{recipientId}/field/{fieldId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($envelopeId != null) {
+  		if($envelopeId !== null) {
   			$resourcePath = str_replace("{" . "envelopeId" . "}",
   			                            $envelopeId, $resourcePath);
   		}
-  		if($documentId != null) {
+  		if($documentId !== null) {
   			$resourcePath = str_replace("{" . "documentId" . "}",
   			                            $documentId, $resourcePath);
   		}
-  		if($recipientId != null) {
+  		if($recipientId !== null) {
   			$resourcePath = str_replace("{" . "recipientId" . "}",
   			                            $recipientId, $resourcePath);
   		}
-  		if($fieldId != null) {
+  		if($fieldId !== null) {
   			$resourcePath = str_replace("{" . "fieldId" . "}",
   			                            $fieldId, $resourcePath);
   		}
@@ -2871,18 +999,67 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SignatureEnvelopeFieldsResponse');
-  		return $responseObject;
+  	  return $responseObject;
+      }
+  /**
+	 * AssignSignatureEnvelopeField
+	 * Assign signature envelope field
+   * userId, string: User GUID (required)
+   * envelopeId, string: Envelope GUID (required)
+   * documentId, string: Document GUID (required)
+   * fieldId, string: Field GUID (required)
+   * body, SignatureEnvelopeAssignFieldSettings: Settings of the field (optional)
+   * @return SignatureEnvelopeFieldResponse
+	 */
 
+   public function AssignSignatureEnvelopeField($userId, $envelopeId, $documentId, $fieldId, $body=null) {
+      if( $userId === null || $envelopeId === null || $documentId === null || $fieldId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/{envelopeId}/documents/{documentId}/field/{fieldId}");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "POST";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($envelopeId !== null) {
+  			$resourcePath = str_replace("{" . "envelopeId" . "}",
+  			                            $envelopeId, $resourcePath);
+  		}
+  		if($documentId !== null) {
+  			$resourcePath = str_replace("{" . "documentId" . "}",
+  			                            $documentId, $resourcePath);
+  		}
+  		if($fieldId !== null) {
+  			$resourcePath = str_replace("{" . "fieldId" . "}",
+  			                            $fieldId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureEnvelopeFieldResponse');
+  	  return $responseObject;
       }
   /**
 	 * FillEnvelopeField
@@ -2898,33 +1075,40 @@ class SignatureApi {
 	 */
 
    public function FillEnvelopeField($userId, $envelopeId, $documentId, $recipientId, $fieldId, $signatureId=null, $body=null) {
-  	  //parse inputs
+      if( $userId === null || $envelopeId === null || $documentId === null || $recipientId === null || $fieldId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/{envelopeId}/documents/{documentId}/recipient/{recipientId}/field/{fieldId}?signatureId={signatureId}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
       $queryParams = array();
       $headerParams = array();
 
-      if($signatureId != null) {
+      if($signatureId !== null) {
   		  $queryParams['signatureId'] = $this->apiClient->toPathValue($signatureId);
   		}
-  		if($userId != null) {
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($envelopeId != null) {
+  		if($envelopeId !== null) {
   			$resourcePath = str_replace("{" . "envelopeId" . "}",
   			                            $envelopeId, $resourcePath);
   		}
-  		if($documentId != null) {
+  		if($documentId !== null) {
   			$resourcePath = str_replace("{" . "documentId" . "}",
   			                            $documentId, $resourcePath);
   		}
-  		if($recipientId != null) {
+  		if($recipientId !== null) {
   			$resourcePath = str_replace("{" . "recipientId" . "}",
   			                            $recipientId, $resourcePath);
   		}
-  		if($fieldId != null) {
+  		if($fieldId !== null) {
   			$resourcePath = str_replace("{" . "fieldId" . "}",
   			                            $fieldId, $resourcePath);
   		}
@@ -2932,18 +1116,15 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SignatureEnvelopeFieldResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * ModifySignatureEnvelopeFieldLocation
@@ -2959,34 +1140,37 @@ class SignatureApi {
 	 */
 
    public function ModifySignatureEnvelopeFieldLocation($userId, $envelopeId, $documentId, $recipientId, $fieldId, $locationId, $body=null) {
-  	  //parse inputs
+      if( $userId === null || $envelopeId === null || $documentId === null || $recipientId === null || $fieldId === null || $locationId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/{envelopeId}/documents/{documentId}/recipient/{recipientId}/fields/{fieldId}/locations/{locationId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($envelopeId != null) {
+  		if($envelopeId !== null) {
   			$resourcePath = str_replace("{" . "envelopeId" . "}",
   			                            $envelopeId, $resourcePath);
   		}
-  		if($documentId != null) {
+  		if($documentId !== null) {
   			$resourcePath = str_replace("{" . "documentId" . "}",
   			                            $documentId, $resourcePath);
   		}
-  		if($recipientId != null) {
+  		if($recipientId !== null) {
   			$resourcePath = str_replace("{" . "recipientId" . "}",
   			                            $recipientId, $resourcePath);
   		}
-  		if($fieldId != null) {
+  		if($fieldId !== null) {
   			$resourcePath = str_replace("{" . "fieldId" . "}",
   			                            $fieldId, $resourcePath);
   		}
-  		if($locationId != null) {
+  		if($locationId !== null) {
   			$resourcePath = str_replace("{" . "locationId" . "}",
   			                            $locationId, $resourcePath);
   		}
@@ -2994,18 +1178,15 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SignatureEnvelopeFieldResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * DeleteSignatureEnvelopeFieldLocation
@@ -3018,26 +1199,29 @@ class SignatureApi {
 	 */
 
    public function DeleteSignatureEnvelopeFieldLocation($userId, $envelopeId, $fieldId, $locationId) {
-  	  //parse inputs
+      if( $userId === null || $envelopeId === null || $fieldId === null || $locationId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/{envelopeId}/fields/{fieldId}/locations/{locationId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "DELETE";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($envelopeId != null) {
+  		if($envelopeId !== null) {
   			$resourcePath = str_replace("{" . "envelopeId" . "}",
   			                            $envelopeId, $resourcePath);
   		}
-  		if($fieldId != null) {
+  		if($fieldId !== null) {
   			$resourcePath = str_replace("{" . "fieldId" . "}",
   			                            $fieldId, $resourcePath);
   		}
-  		if($locationId != null) {
+  		if($locationId !== null) {
   			$resourcePath = str_replace("{" . "locationId" . "}",
   			                            $locationId, $resourcePath);
   		}
@@ -3045,18 +1229,15 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SignatureStatusResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * ModifySignatureEnvelopeField
@@ -3070,26 +1251,29 @@ class SignatureApi {
 	 */
 
    public function ModifySignatureEnvelopeField($userId, $envelopeId, $documentId, $fieldId, $body=null) {
-  	  //parse inputs
+      if( $userId === null || $envelopeId === null || $documentId === null || $fieldId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/{envelopeId}/documents/{documentId}/field/{fieldId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($envelopeId != null) {
+  		if($envelopeId !== null) {
   			$resourcePath = str_replace("{" . "envelopeId" . "}",
   			                            $envelopeId, $resourcePath);
   		}
-  		if($documentId != null) {
+  		if($documentId !== null) {
   			$resourcePath = str_replace("{" . "documentId" . "}",
   			                            $documentId, $resourcePath);
   		}
-  		if($fieldId != null) {
+  		if($fieldId !== null) {
   			$resourcePath = str_replace("{" . "fieldId" . "}",
   			                            $fieldId, $resourcePath);
   		}
@@ -3097,18 +1281,15 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SignatureEnvelopeFieldResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * DeleteSignatureEnvelopeField
@@ -3120,22 +1301,25 @@ class SignatureApi {
 	 */
 
    public function DeleteSignatureEnvelopeField($userId, $envelopeId, $fieldId) {
-  	  //parse inputs
+      if( $userId === null || $envelopeId === null || $fieldId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/{envelopeId}/fields/{fieldId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "DELETE";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($envelopeId != null) {
+  		if($envelopeId !== null) {
   			$resourcePath = str_replace("{" . "envelopeId" . "}",
   			                            $envelopeId, $resourcePath);
   		}
-  		if($fieldId != null) {
+  		if($fieldId !== null) {
   			$resourcePath = str_replace("{" . "fieldId" . "}",
   			                            $fieldId, $resourcePath);
   		}
@@ -3143,18 +1327,15 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SignatureStatusResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetSignatureEnvelopeFields
@@ -3167,24 +1348,31 @@ class SignatureApi {
 	 */
 
    public function GetSignatureEnvelopeFields($userId, $envelopeId, $documentId=null, $recipientId=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/{envelopeId}/fields?document={documentId}&amp;recipient={recipientId}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+      if( $userId === null || $envelopeId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/{envelopeId}/fields?document={documentId}&recipient={recipientId}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($documentId != null) {
-  		  $queryParams['documentId'] = $this->apiClient->toPathValue($documentId);
+      if($documentId !== null) {
+  		  $queryParams['document'] = $this->apiClient->toPathValue($documentId);
   		}
-  		if($recipientId != null) {
-  		  $queryParams['recipientId'] = $this->apiClient->toPathValue($recipientId);
+  		if($recipientId !== null) {
+  		  $queryParams['recipient'] = $this->apiClient->toPathValue($recipientId);
   		}
-  		if($userId != null) {
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($envelopeId != null) {
+  		if($envelopeId !== null) {
   			$resourcePath = str_replace("{" . "envelopeId" . "}",
   			                            $envelopeId, $resourcePath);
   		}
@@ -3192,18 +1380,15 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SignatureEnvelopeFieldsResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetSignatureEnvelope
@@ -3214,18 +1399,21 @@ class SignatureApi {
 	 */
 
    public function GetSignatureEnvelope($userId, $envelopeId) {
-  	  //parse inputs
+      if( $userId === null || $envelopeId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/{envelopeId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($envelopeId != null) {
+  		if($envelopeId !== null) {
   			$resourcePath = str_replace("{" . "envelopeId" . "}",
   			                            $envelopeId, $resourcePath);
   		}
@@ -3233,18 +1421,15 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SignatureEnvelopeResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * ModifySignatureEnvelope
@@ -3256,18 +1441,21 @@ class SignatureApi {
 	 */
 
    public function ModifySignatureEnvelope($userId, $envelopeId, $body=null) {
-  	  //parse inputs
+      if( $userId === null || $envelopeId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/{envelopeId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($envelopeId != null) {
+  		if($envelopeId !== null) {
   			$resourcePath = str_replace("{" . "envelopeId" . "}",
   			                            $envelopeId, $resourcePath);
   		}
@@ -3275,60 +1463,64 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SignatureEnvelopeResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * AddSignatureEnvelopeRecipient
 	 * Add signature envelope recipient
    * userId, string: User GUID (required)
    * envelopeId, string: Envelope GUID (required)
+   * recipientEmail, string: Recipient email (required)
+   * recipientFirstName, string: Recipient first name (required)
+   * recipientLastName, string: Recipient last name (required)
    * order, int: Recipient order (optional)
-   * firstname, string: Recipient first name (required)
-   * email, string: Recipient email (required)
    * role, string: Recipient role id (required)
-   * lastname, string: Recipient last name (required)
    * @return SignatureEnvelopeRecipientResponse
 	 */
 
-   public function AddSignatureEnvelopeRecipient($userId, $envelopeId, $order=null, $firstname, $email, $role, $lastname) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/{envelopeId}/recipient?email={recipientEmail}&amp;firstname={recipientFirstName}&amp;lastname={recipientLastName}&amp;role={roleId}&amp;order={order}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+   public function AddSignatureEnvelopeRecipient($userId, $envelopeId, $recipientEmail, $recipientFirstName, $recipientLastName, $order=null, $role) {
+      if( $userId === null || $envelopeId === null || $recipientEmail === null || $recipientFirstName === null || $recipientLastName === null || $role === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/{envelopeId}/recipient?email={recipientEmail}&firstname={recipientFirstName}&lastname={recipientLastName}&role={roleId}&order={order}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
-      if($order != null) {
+      if($recipientEmail !== null) {
+  		  $queryParams['email'] = $this->apiClient->toPathValue($recipientEmail);
+  		}
+  		if($recipientFirstName !== null) {
+  		  $queryParams['firstname'] = $this->apiClient->toPathValue($recipientFirstName);
+  		}
+  		if($recipientLastName !== null) {
+  		  $queryParams['lastname'] = $this->apiClient->toPathValue($recipientLastName);
+  		}
+  		if($order !== null) {
   		  $queryParams['order'] = $this->apiClient->toPathValue($order);
   		}
-  		if($firstname != null) {
-  		  $queryParams['firstname'] = $this->apiClient->toPathValue($firstname);
-  		}
-  		if($email != null) {
-  		  $queryParams['email'] = $this->apiClient->toPathValue($email);
-  		}
-  		if($role != null) {
+  		if($role !== null) {
   		  $queryParams['role'] = $this->apiClient->toPathValue($role);
   		}
-  		if($lastname != null) {
-  		  $queryParams['lastname'] = $this->apiClient->toPathValue($lastname);
-  		}
-  		if($userId != null) {
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($envelopeId != null) {
+  		if($envelopeId !== null) {
   			$resourcePath = str_replace("{" . "envelopeId" . "}",
   			                            $envelopeId, $resourcePath);
   		}
@@ -3336,18 +1528,15 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SignatureEnvelopeRecipientResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * ModifySignatureEnvelopeRecipient
@@ -3355,46 +1544,53 @@ class SignatureApi {
    * userId, string: User GUID (required)
    * envelopeId, string: Envelope GUID (required)
    * recipientId, string: Recipient GUID (required)
+   * recipientEmail, string: Recipient email (required)
+   * recipientFirstName, string: Recipient first name (required)
+   * recipientLastName, string: Recipient last name (required)
    * order, int: Recipient order (optional)
-   * email, string: Recipient email (required)
-   * firstname, string: Recipient first name (required)
    * role, string: Recipient role id (required)
-   * lastname, string: Recipient last name (required)
    * @return SignatureEnvelopeRecipientResponse
 	 */
 
-   public function ModifySignatureEnvelopeRecipient($userId, $envelopeId, $recipientId, $order=null, $email, $firstname, $role, $lastname) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/{envelopeId}/recipient/{recipientId}?email={recipientEmail}&amp;firstname={recipientFirstName}&amp;lastname={recipientLastName}&amp;role={roleId}&amp;order={order}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+   public function ModifySignatureEnvelopeRecipient($userId, $envelopeId, $recipientId, $recipientEmail, $recipientFirstName, $recipientLastName, $order=null, $role) {
+      if( $userId === null || $envelopeId === null || $recipientId === null || $recipientEmail === null || $recipientFirstName === null || $recipientLastName === null || $role === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/{envelopeId}/recipient/{recipientId}?email={recipientEmail}&firstname={recipientFirstName}&lastname={recipientLastName}&role={roleId}&order={order}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
       $queryParams = array();
       $headerParams = array();
 
-      if($order != null) {
+      if($recipientEmail !== null) {
+  		  $queryParams['email'] = $this->apiClient->toPathValue($recipientEmail);
+  		}
+  		if($recipientFirstName !== null) {
+  		  $queryParams['firstname'] = $this->apiClient->toPathValue($recipientFirstName);
+  		}
+  		if($recipientLastName !== null) {
+  		  $queryParams['lastname'] = $this->apiClient->toPathValue($recipientLastName);
+  		}
+  		if($order !== null) {
   		  $queryParams['order'] = $this->apiClient->toPathValue($order);
   		}
-  		if($email != null) {
-  		  $queryParams['email'] = $this->apiClient->toPathValue($email);
-  		}
-  		if($firstname != null) {
-  		  $queryParams['firstname'] = $this->apiClient->toPathValue($firstname);
-  		}
-  		if($role != null) {
+  		if($role !== null) {
   		  $queryParams['role'] = $this->apiClient->toPathValue($role);
   		}
-  		if($lastname != null) {
-  		  $queryParams['lastname'] = $this->apiClient->toPathValue($lastname);
-  		}
-  		if($userId != null) {
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($envelopeId != null) {
+  		if($envelopeId !== null) {
   			$resourcePath = str_replace("{" . "envelopeId" . "}",
   			                            $envelopeId, $resourcePath);
   		}
-  		if($recipientId != null) {
+  		if($recipientId !== null) {
   			$resourcePath = str_replace("{" . "recipientId" . "}",
   			                            $recipientId, $resourcePath);
   		}
@@ -3402,18 +1598,15 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SignatureEnvelopeRecipientResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * DeleteSignatureEnvelopeRecipient
@@ -3425,22 +1618,25 @@ class SignatureApi {
 	 */
 
    public function DeleteSignatureEnvelopeRecipient($userId, $envelopeId, $recipientId) {
-  	  //parse inputs
+      if( $userId === null || $envelopeId === null || $recipientId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/{envelopeId}/recipients/{recipientId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "DELETE";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($envelopeId != null) {
+  		if($envelopeId !== null) {
   			$resourcePath = str_replace("{" . "envelopeId" . "}",
   			                            $envelopeId, $resourcePath);
   		}
-  		if($recipientId != null) {
+  		if($recipientId !== null) {
   			$resourcePath = str_replace("{" . "recipientId" . "}",
   			                            $recipientId, $resourcePath);
   		}
@@ -3448,18 +1644,15 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SignatureStatusResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetSignatureEnvelopeRecipients
@@ -3470,18 +1663,21 @@ class SignatureApi {
 	 */
 
    public function GetSignatureEnvelopeRecipients($userId, $envelopeId) {
-  	  //parse inputs
+      if( $userId === null || $envelopeId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/{envelopeId}/recipients");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($envelopeId != null) {
+  		if($envelopeId !== null) {
   			$resourcePath = str_replace("{" . "envelopeId" . "}",
   			                            $envelopeId, $resourcePath);
   		}
@@ -3489,18 +1685,15 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SignatureEnvelopeRecipientsResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * RenameSignatureEnvelope
@@ -3512,21 +1705,28 @@ class SignatureApi {
 	 */
 
    public function RenameSignatureEnvelope($userId, $envelopeId, $name) {
-  	  //parse inputs
+      if( $userId === null || $envelopeId === null || $name === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/{envelopeId}?name={name}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
       $queryParams = array();
       $headerParams = array();
 
-      if($name != null) {
+      if($name !== null) {
   		  $queryParams['name'] = $this->apiClient->toPathValue($name);
   		}
-  		if($userId != null) {
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($envelopeId != null) {
+  		if($envelopeId !== null) {
   			$resourcePath = str_replace("{" . "envelopeId" . "}",
   			                            $envelopeId, $resourcePath);
   		}
@@ -3534,18 +1734,15 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SignatureEnvelopeResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * RestartExpiredSignatureEnvelope
@@ -3556,18 +1753,21 @@ class SignatureApi {
 	 */
 
    public function RestartExpiredSignatureEnvelope($userId, $envelopeId) {
-  	  //parse inputs
+      if( $userId === null || $envelopeId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/{envelopeId}/restart");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($envelopeId != null) {
+  		if($envelopeId !== null) {
   			$resourcePath = str_replace("{" . "envelopeId" . "}",
   			                            $envelopeId, $resourcePath);
   		}
@@ -3575,40 +1775,41 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SignatureStatusResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * SignatureEnvelopeSend
 	 * Send envelope
    * userId, string: User GUID (required)
    * envelopeId, string: Envelope GUID (required)
-   * @return SignatureStatusResponse
+   * body, stream: Webhook Callback Url (required)
+   * @return SignatureEnvelopeSendResponse
 	 */
 
-   public function SignatureEnvelopeSend($userId, $envelopeId) {
-  	  //parse inputs
+   public function SignatureEnvelopeSend($userId, $envelopeId, $body) {
+      if( $userId === null || $envelopeId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/{envelopeId}/send");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($envelopeId != null) {
+  		if($envelopeId !== null) {
   			$resourcePath = str_replace("{" . "envelopeId" . "}",
   			                            $envelopeId, $resourcePath);
   		}
@@ -3616,18 +1817,15 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureStatusResponse');
-  		return $responseObject;
-
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureEnvelopeSendResponse');
+  	  return $responseObject;
       }
   /**
 	 * SignEnvelope
@@ -3639,22 +1837,25 @@ class SignatureApi {
 	 */
 
    public function SignEnvelope($userId, $envelopeId, $recipientId) {
-  	  //parse inputs
+      if( $userId === null || $envelopeId === null || $recipientId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/{envelopeId}/recipient/{recipientId}/sign");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($envelopeId != null) {
+  		if($envelopeId !== null) {
   			$resourcePath = str_replace("{" . "envelopeId" . "}",
   			                            $envelopeId, $resourcePath);
   		}
-  		if($recipientId != null) {
+  		if($recipientId !== null) {
   			$resourcePath = str_replace("{" . "recipientId" . "}",
   			                            $recipientId, $resourcePath);
   		}
@@ -3662,18 +1863,15 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SignatureStatusResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetSignatureEnvelopes
@@ -3684,41 +1882,48 @@ class SignatureApi {
    * DateTime, string: Filter envelopes by date (optional)
    * name, string: Filter envelopes by name (optional)
    * recipient, string: Filter envelopes by recipient email (optional)
-   * records, int: Show records count (optional)
    * document, string: Filter envelopes by original document md5 checksum (optional)
+   * records, int: Show records count (optional)
    * @return SignatureEnvelopesResponse
 	 */
 
-   public function GetSignatureEnvelopes($userId, $statusId=null, $page=null, $DateTime=null, $name=null, $recipient=null, $records=null, $document=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes?statusId={statusId}&amp;records={count}&amp;page={page}&amp;document={originalDocumentMD5}&amp;recipient={recipientEmail}&amp;date={date}&amp;name={name}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+   public function GetSignatureEnvelopes($userId, $statusId=null, $page=null, $DateTime=null, $name=null, $recipient=null, $document=null, $records=null) {
+      if( $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes?statusId={statusId}&records={count}&page={page}&document={originalDocumentMD5}&recipient={recipientEmail}&date={date}&name={name}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($statusId != null) {
+      if($statusId !== null) {
   		  $queryParams['statusId'] = $this->apiClient->toPathValue($statusId);
   		}
-  		if($page != null) {
+  		if($page !== null) {
   		  $queryParams['page'] = $this->apiClient->toPathValue($page);
   		}
-  		if($DateTime != null) {
+  		if($DateTime !== null) {
   		  $queryParams['date'] = $this->apiClient->toPathValue($DateTime);
   		}
-  		if($name != null) {
+  		if($name !== null) {
   		  $queryParams['name'] = $this->apiClient->toPathValue($name);
   		}
-  		if($recipient != null) {
+  		if($recipient !== null) {
   		  $queryParams['recipient'] = $this->apiClient->toPathValue($recipient);
   		}
-  		if($records != null) {
-  		  $queryParams['records'] = $this->apiClient->toPathValue($records);
-  		}
-  		if($document != null) {
+  		if($document !== null) {
   		  $queryParams['document'] = $this->apiClient->toPathValue($document);
   		}
-  		if($userId != null) {
+  		if($records !== null) {
+  		  $queryParams['records'] = $this->apiClient->toPathValue($records);
+  		}
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
@@ -3726,18 +1931,15 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SignatureEnvelopesResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetSignatureEnvelopeResources
@@ -3748,17 +1950,24 @@ class SignatureApi {
 	 */
 
    public function GetSignatureEnvelopeResources($userId, $statusIds=null) {
-  	  //parse inputs
+      if( $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/resources?statusIds={statusIds}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($statusIds != null) {
+      if($statusIds !== null) {
   		  $queryParams['statusIds'] = $this->apiClient->toPathValue($statusIds);
   		}
-  		if($userId != null) {
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
@@ -3766,18 +1975,15 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SignatureEnvelopeResourcesResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetRecipientSignatureEnvelopes
@@ -3790,23 +1996,30 @@ class SignatureApi {
 	 */
 
    public function GetRecipientSignatureEnvelopes($userId, $statusId=null, $page=null, $records=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/recipient?statusId={statusId}&amp;records={count}&amp;page={page}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+      if( $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/envelopes/recipient?statusId={statusId}&records={count}&page={page}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($statusId != null) {
+      if($statusId !== null) {
   		  $queryParams['statusId'] = $this->apiClient->toPathValue($statusId);
   		}
-  		if($page != null) {
+  		if($page !== null) {
   		  $queryParams['page'] = $this->apiClient->toPathValue($page);
   		}
-  		if($records != null) {
+  		if($records !== null) {
   		  $queryParams['records'] = $this->apiClient->toPathValue($records);
   		}
-  		if($userId != null) {
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
@@ -3814,92 +2027,134 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SignatureEnvelopesResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
-	 * GetContacts
-	 * Get contacts
+	 * ArchiveSignatureForm
+	 * Archive signature form
    * userId, string: User GUID (required)
-   * page, string: Page number (optional)
-   * firstName, string: Filter by firstName (optional)
-   * lastName, string: Filter by lastName (optional)
-   * email, string: Filter by email (optional)
-   * records, string: Records count to be returned (optional)
-   * @return SignatureContactsResponse
+   * formId, string: Form GUID (required)
+   * @return SignatureStatusResponse
 	 */
 
-   public function GetContacts($userId, $page=null, $firstName=null, $lastName=null, $email=null, $records=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/contacts?firstName={firstName}&amp;lastName={lastName}&amp;email={email}&amp;records={count}&amp;page={page}");
+   public function ArchiveSignatureForm($userId, $formId) {
+      if( $userId === null || $formId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}/archive");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "GET";
+  	  $method = "PUT";
       $queryParams = array();
       $headerParams = array();
 
-      if($page != null) {
-  		  $queryParams['page'] = $this->apiClient->toPathValue($page);
-  		}
-  		if($firstName != null) {
-  		  $queryParams['firstName'] = $this->apiClient->toPathValue($firstName);
-  		}
-  		if($lastName != null) {
-  		  $queryParams['lastName'] = $this->apiClient->toPathValue($lastName);
-  		}
-  		if($email != null) {
-  		  $queryParams['email'] = $this->apiClient->toPathValue($email);
-  		}
-  		if($records != null) {
-  		  $queryParams['records'] = $this->apiClient->toPathValue($records);
-  		}
-  		if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
+  		}
+  		if($formId !== null) {
+  			$resourcePath = str_replace("{" . "formId" . "}",
+  			                            $formId, $resourcePath);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureContactsResponse');
-  		return $responseObject;
-
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureStatusResponse');
+  	  return $responseObject;
       }
   /**
-	 * AddContact
-	 * Add contact
+	 * CompleteSignatureForm
+	 * Complete signature form
    * userId, string: User GUID (required)
-   * body, SignatureContactSettings: Contact data (required)
-   * @return SignatureContactResponse
+   * formId, string: Form GUID (required)
+   * @return SignatureStatusResponse
 	 */
 
-   public function AddContact($userId, $body) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/contact");
+   public function CompleteSignatureForm($userId, $formId) {
+      if( $userId === null || $formId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}/complete");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "PUT";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($formId !== null) {
+  			$resourcePath = str_replace("{" . "formId" . "}",
+  			                            $formId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureStatusResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * CreateSignatureForm
+	 * Create signature form
+   * userId, string: User GUID (required)
+   * name, string: Form name (optional)
+   * templateId, string: A templateGuid of the template which will be used to created the new form (optional)
+   * assemblyId, int: A guid of the assembly which will be used to created the new form (optional)
+   * body, SignatureFormSettings: Settings of the new form (optional)
+   * @return SignatureFormResponse
+	 */
+
+   public function CreateSignatureForm($userId, $name=null, $templateId=null, $assemblyId=null, $body=null) {
+      if( $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/form?name={name}&templateId={templateId}&assemblyId={assemblyId}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($name !== null) {
+  		  $queryParams['name'] = $this->apiClient->toPathValue($name);
+  		}
+  		if($templateId !== null) {
+  		  $queryParams['templateId'] = $this->apiClient->toPathValue($templateId);
+  		}
+  		if($assemblyId !== null) {
+  		  $queryParams['assemblyId'] = $this->apiClient->toPathValue($assemblyId);
+  		}
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
@@ -3907,119 +2162,768 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureContactResponse');
-  		return $responseObject;
-
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureFormResponse');
+  	  return $responseObject;
       }
   /**
-	 * ModifyContact
-	 * Update contact
+	 * DeleteSignatureForm
+	 * Delete signature form
    * userId, string: User GUID (required)
-   * contactId, string: Contact GUID (required)
-   * body, SignatureContactSettings: Contact data (optional)
-   * @return SignatureContactResponse
+   * formId, string: Form GUID (required)
+   * @return SignatureStatusResponse
 	 */
 
-   public function ModifyContact($userId, $contactId, $body=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/contacts/{contactId}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "POST";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($userId != null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		if($contactId != null) {
-  			$resourcePath = str_replace("{" . "contactId" . "}",
-  			                            $contactId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
+   public function DeleteSignatureForm($userId, $formId) {
+      if( $userId === null || $formId === null ) {
+        throw new ApiException("missing required parameters", 400);
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureContactResponse');
-  		return $responseObject;
-
-      }
-  /**
-	 * DeleteContact
-	 * Delete contact
-   * userId, string: User GUID (required)
-   * contactId, string: Contact GUID (required)
-   * @return SignatureContactResponse
-	 */
-
-   public function DeleteContact($userId, $contactId) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/contacts/{contactId}");
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "DELETE";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($contactId != null) {
-  			$resourcePath = str_replace("{" . "contactId" . "}",
-  			                            $contactId, $resourcePath);
+  		if($formId !== null) {
+  			$resourcePath = str_replace("{" . "formId" . "}",
+  			                            $formId, $resourcePath);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureContactResponse');
-  		return $responseObject;
-
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureStatusResponse');
+  	  return $responseObject;
       }
   /**
-	 * ImportContacts
-	 * Import contacts
+	 * AddSignatureFormDocument
+	 * Add document in form
    * userId, string: User GUID (required)
-   * body, List[SignatureContactSettings]: Array of SignatureContactSettings (optional)
-   * @return SignatureContactsImportResponse
+   * formId, string: Form GUID (required)
+   * documentId, string: Document GUID (required)
+   * order, int: Document order (optional)
+   * @return SignatureFormDocumentResponse
 	 */
 
-   public function ImportContacts($userId, $body=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/contacts");
+   public function AddSignatureFormDocument($userId, $formId, $documentId, $order=null) {
+      if( $userId === null || $formId === null || $documentId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}/document/{documentId}?order={order}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "POST";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($order !== null) {
+  		  $queryParams['order'] = $this->apiClient->toPathValue($order);
+  		}
+  		if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($formId !== null) {
+  			$resourcePath = str_replace("{" . "formId" . "}",
+  			                            $formId, $resourcePath);
+  		}
+  		if($documentId !== null) {
+  			$resourcePath = str_replace("{" . "documentId" . "}",
+  			                            $documentId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureFormDocumentResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * DeleteSignatureFormDocument
+	 * Delete document from form
+   * userId, string: User GUID (required)
+   * formId, string: Form GUID (required)
+   * documentId, string: Document GUID (required)
+   * @return SignatureStatusResponse
+	 */
+
+   public function DeleteSignatureFormDocument($userId, $formId, $documentId) {
+      if( $userId === null || $formId === null || $documentId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}/documents/{documentId}");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "DELETE";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($formId !== null) {
+  			$resourcePath = str_replace("{" . "formId" . "}",
+  			                            $formId, $resourcePath);
+  		}
+  		if($documentId !== null) {
+  			$resourcePath = str_replace("{" . "documentId" . "}",
+  			                            $documentId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureStatusResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * GetSignatureFormDocuments
+	 * Get documents in form
+   * userId, string: User GUID (required)
+   * formId, string: Form GUID (required)
+   * @return SignatureFormDocumentsResponse
+	 */
+
+   public function GetSignatureFormDocuments($userId, $formId) {
+      if( $userId === null || $formId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}/documents");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "GET";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($formId !== null) {
+  			$resourcePath = str_replace("{" . "formId" . "}",
+  			                            $formId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureFormDocumentsResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * AddSignatureFormField
+	 * Add signature field for document in form
+   * userId, string: User GUID (required)
+   * formId, string: Form GUID (required)
+   * documentId, string: Document GUID (required)
+   * fieldId, string: Field GUID (required)
+   * body, SignatureFormFieldSettings: Settings of the field (optional)
+   * @return SignatureFormFieldResponse
+	 */
+
+   public function AddSignatureFormField($userId, $formId, $documentId, $fieldId, $body=null) {
+      if( $userId === null || $formId === null || $documentId === null || $fieldId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}/documents/{documentId}/field/{fieldId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($formId !== null) {
+  			$resourcePath = str_replace("{" . "formId" . "}",
+  			                            $formId, $resourcePath);
+  		}
+  		if($documentId !== null) {
+  			$resourcePath = str_replace("{" . "documentId" . "}",
+  			                            $documentId, $resourcePath);
+  		}
+  		if($fieldId !== null) {
+  			$resourcePath = str_replace("{" . "fieldId" . "}",
+  			                            $fieldId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureFormFieldResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * ModifySignatureFormFieldLocation
+	 * Modify signature form field location
+   * userId, string: User GUID (required)
+   * formId, string: Form GUID (required)
+   * documentId, string: Document GUID (required)
+   * fieldId, string: Field GUID (required)
+   * locationId, string: Field location GUID (required)
+   * body, SignatureFormFieldLocationSettings: Settings of the field location (optional)
+   * @return SignatureFormFieldResponse
+	 */
+
+   public function ModifySignatureFormFieldLocation($userId, $formId, $documentId, $fieldId, $locationId, $body=null) {
+      if( $userId === null || $formId === null || $documentId === null || $fieldId === null || $locationId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}/documents/{documentId}/fields/{fieldId}/locations/{locationId}");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "PUT";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($formId !== null) {
+  			$resourcePath = str_replace("{" . "formId" . "}",
+  			                            $formId, $resourcePath);
+  		}
+  		if($documentId !== null) {
+  			$resourcePath = str_replace("{" . "documentId" . "}",
+  			                            $documentId, $resourcePath);
+  		}
+  		if($fieldId !== null) {
+  			$resourcePath = str_replace("{" . "fieldId" . "}",
+  			                            $fieldId, $resourcePath);
+  		}
+  		if($locationId !== null) {
+  			$resourcePath = str_replace("{" . "locationId" . "}",
+  			                            $locationId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureFormFieldResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * DeleteSignatureFormFieldLocation
+	 * Remove signature form field location
+   * userId, string: User GUID (required)
+   * formId, string: Form GUID (required)
+   * fieldId, string: Field GUID (required)
+   * locationId, string: Field location GUID (required)
+   * @return SignatureStatusResponse
+	 */
+
+   public function DeleteSignatureFormFieldLocation($userId, $formId, $fieldId, $locationId) {
+      if( $userId === null || $formId === null || $fieldId === null || $locationId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}/fields/{fieldId}/locations/{locationId}");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "DELETE";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($formId !== null) {
+  			$resourcePath = str_replace("{" . "formId" . "}",
+  			                            $formId, $resourcePath);
+  		}
+  		if($fieldId !== null) {
+  			$resourcePath = str_replace("{" . "fieldId" . "}",
+  			                            $fieldId, $resourcePath);
+  		}
+  		if($locationId !== null) {
+  			$resourcePath = str_replace("{" . "locationId" . "}",
+  			                            $locationId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureStatusResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * ModifySignatureFormField
+	 * Modify signature form field
+   * userId, string: User GUID (required)
+   * formId, string: Form GUID (required)
+   * documentId, string: Document GUID (required)
+   * fieldId, string: Field GUID (required)
+   * body, SignatureFormFieldSettings: Settings of the field (optional)
+   * @return SignatureFormFieldResponse
+	 */
+
+   public function ModifySignatureFormField($userId, $formId, $documentId, $fieldId, $body=null) {
+      if( $userId === null || $formId === null || $documentId === null || $fieldId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}/documents/{documentId}/field/{fieldId}");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "PUT";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($formId !== null) {
+  			$resourcePath = str_replace("{" . "formId" . "}",
+  			                            $formId, $resourcePath);
+  		}
+  		if($documentId !== null) {
+  			$resourcePath = str_replace("{" . "documentId" . "}",
+  			                            $documentId, $resourcePath);
+  		}
+  		if($fieldId !== null) {
+  			$resourcePath = str_replace("{" . "fieldId" . "}",
+  			                            $fieldId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureFormFieldResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * DeleteSignatureFormField
+	 * Delete signature form field
+   * userId, string: User GUID (required)
+   * formId, string: Form GUID (required)
+   * fieldId, string: Field GUID (required)
+   * @return SignatureStatusResponse
+	 */
+
+   public function DeleteSignatureFormField($userId, $formId, $fieldId) {
+      if( $userId === null || $formId === null || $fieldId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}/fields/{fieldId}");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "DELETE";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($formId !== null) {
+  			$resourcePath = str_replace("{" . "formId" . "}",
+  			                            $formId, $resourcePath);
+  		}
+  		if($fieldId !== null) {
+  			$resourcePath = str_replace("{" . "fieldId" . "}",
+  			                            $fieldId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureStatusResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * GetSignatureFormFields
+	 * Get form fields for document in form per participant
+   * userId, string: User GUID (required)
+   * formId, string: Form GUID (required)
+   * documentId, string: Document GUID (required)
+   * @return SignatureFormFieldsResponse
+	 */
+
+   public function GetSignatureFormFields($userId, $formId, $documentId) {
+      if( $userId === null || $formId === null || $documentId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}/documents/{documentId}/fields");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "GET";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($formId !== null) {
+  			$resourcePath = str_replace("{" . "formId" . "}",
+  			                            $formId, $resourcePath);
+  		}
+  		if($documentId !== null) {
+  			$resourcePath = str_replace("{" . "documentId" . "}",
+  			                            $documentId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureFormFieldsResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * GetSignatureForm
+	 * Get signature form
+   * userId, string: User GUID (required)
+   * formId, string: Form GUID (required)
+   * @return SignatureFormResponse
+	 */
+
+   public function GetSignatureForm($userId, $formId) {
+      if( $userId === null || $formId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "GET";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($formId !== null) {
+  			$resourcePath = str_replace("{" . "formId" . "}",
+  			                            $formId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureFormResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * ModifySignatureForm
+	 * Modify signature form
+   * userId, string: User GUID (required)
+   * formId, string: Form GUID (required)
+   * body, SignatureFormSettings: Settings of the form (optional)
+   * @return SignatureFormResponse
+	 */
+
+   public function ModifySignatureForm($userId, $formId, $body=null) {
+      if( $userId === null || $formId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "POST";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($formId !== null) {
+  			$resourcePath = str_replace("{" . "formId" . "}",
+  			                            $formId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureFormResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * PublishSignatureForm
+	 * Publish signature form
+   * userId, string: User GUID (required)
+   * formId, string: Form GUID (required)
+   * @return SignatureStatusResponse
+	 */
+
+   public function PublishSignatureForm($userId, $formId) {
+      if( $userId === null || $formId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}/publish");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "PUT";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($formId !== null) {
+  			$resourcePath = str_replace("{" . "formId" . "}",
+  			                            $formId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureStatusResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * RenameSignatureForm
+	 * Rename signature form
+   * userId, string: User GUID (required)
+   * formId, string: Form GUID (required)
+   * name, string: New form name (required)
+   * @return SignatureFormResponse
+	 */
+
+   public function RenameSignatureForm($userId, $formId, $name) {
+      if( $userId === null || $formId === null || $name === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}?new_name={name}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "PUT";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($name !== null) {
+  		  $queryParams['new_name'] = $this->apiClient->toPathValue($name);
+  		}
+  		if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($formId !== null) {
+  			$resourcePath = str_replace("{" . "formId" . "}",
+  			                            $formId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureFormResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * UpdateSignatureFormFromTemplate
+	 * Add signature form fields from template
+   * userId, string: User GUID (required)
+   * formId, string: Form GUID (required)
+   * templateId, string: Template GUID (required)
+   * @return SignatureFormResponse
+	 */
+
+   public function UpdateSignatureFormFromTemplate($userId, $formId, $templateId) {
+      if( $userId === null || $formId === null || $templateId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}/templates/{templateId}");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "POST";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($formId !== null) {
+  			$resourcePath = str_replace("{" . "formId" . "}",
+  			                            $formId, $resourcePath);
+  		}
+  		if($templateId !== null) {
+  			$resourcePath = str_replace("{" . "templateId" . "}",
+  			                            $templateId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureFormResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * GetSignatureForms
+	 * Get signature forms
+   * userId, string: User GUID (required)
+   * statusId, string: Filter forms by statusId (optional)
+   * page, int: Show records for page number (optional)
+   * DateTime, string: Filter forms by date (optional)
+   * name, string: Filter forms by name (optional)
+   * records, int: Show records count (optional)
+   * documentId, string: Filter forms by document GUID (optional)
+   * @return SignatureFormsResponse
+	 */
+
+   public function GetSignatureForms($userId, $statusId=null, $page=null, $DateTime=null, $name=null, $records=null, $documentId=null) {
+      if( $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms?statusId={statusId}&records={count}&page={page}&document={originalDocumentMD5}&date={date}&name={name}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "GET";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($statusId !== null) {
+  		  $queryParams['statusId'] = $this->apiClient->toPathValue($statusId);
+  		}
+  		if($page !== null) {
+  		  $queryParams['page'] = $this->apiClient->toPathValue($page);
+  		}
+  		if($DateTime !== null) {
+  		  $queryParams['date'] = $this->apiClient->toPathValue($DateTime);
+  		}
+  		if($name !== null) {
+  		  $queryParams['name'] = $this->apiClient->toPathValue($name);
+  		}
+  		if($records !== null) {
+  		  $queryParams['records'] = $this->apiClient->toPathValue($records);
+  		}
+  		if($documentId !== null) {
+  		  $queryParams['documentId'] = $this->apiClient->toPathValue($documentId);
+  		}
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
@@ -4027,18 +2931,337 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureContactsImportResponse');
-  		return $responseObject;
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureFormsResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * GetSignatureFormResources
+	 * Get form recources
+   * userId, string: User GUID (required)
+   * statusIds, string: Form status identifier - comma separated list (required)
+   * @return SignatureFormResourcesResponse
+	 */
 
+   public function GetSignatureFormResources($userId, $statusIds) {
+      if( $userId === null || $statusIds === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/resources?statusIds={statusIds}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "GET";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($statusIds !== null) {
+  		  $queryParams['statusIds'] = $this->apiClient->toPathValue($statusIds);
+  		}
+  		if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureFormResourcesResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * GetSignedFormDocuments
+	 * Get signed form documents
+   * userId, string: User GUID (required)
+   * formId, string: Form GUID (required)
+   * @return stream
+	 */
+
+   public function GetSignedFormDocuments($userId, $formId, FileStream $outFileStream) {
+      if( $userId === null || $formId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/forms/{formId}/documents/get");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "GET";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($formId !== null) {
+  			$resourcePath = str_replace("{" . "formId" . "}",
+  			                            $formId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      return $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams, $outFileStream);
+      }
+  /**
+	 * GetSignaturePredefinedLists
+	 * Get user predefined lists
+   * userId, string: User GUID (required)
+   * @return SignaturePredefinedListsResponse
+	 */
+
+   public function GetSignaturePredefinedLists($userId) {
+      if( $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/lists");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "GET";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignaturePredefinedListsResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * AddPredefinedList
+	 * Add predefined list
+   * userId, string: User GUID (required)
+   * body, SignaturePredefinedListSettings: List data (required)
+   * @return SignaturePredefinedListResponse
+	 */
+
+   public function AddPredefinedList($userId, $body) {
+      if( $userId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/list");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "POST";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignaturePredefinedListResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * DeletePredefinedList
+	 * Delete predefined list
+   * userId, string: User GUID (required)
+   * listId, string: List GUID (required)
+   * @return SignaturePredefinedListResponse
+	 */
+
+   public function DeletePredefinedList($userId, $listId) {
+      if( $userId === null || $listId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/lists/{listId}");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "DELETE";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($listId !== null) {
+  			$resourcePath = str_replace("{" . "listId" . "}",
+  			                            $listId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignaturePredefinedListResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * GetRolesList
+	 * Get signature roles
+   * userId, string: User GUID (required)
+   * id, string: Filter roles by id (optional)
+   * @return SignatureRolesResponse
+	 */
+
+   public function GetRolesList($userId, $id=null) {
+      if( $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/roles?id={roleId}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "GET";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($id !== null) {
+  		  $queryParams['id'] = $this->apiClient->toPathValue($id);
+  		}
+  		if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureRolesResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * CreateSignature
+	 * Create user signature
+   * userId, string: User GUID (required)
+   * name, string: Signature name (required)
+   * body, SignatureSignatureSettings: Settings of the field (optional)
+   * @return SignatureSignatureResponse
+	 */
+
+   public function CreateSignature($userId, $name, $body=null) {
+      if( $userId === null || $name === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/signature?name={name}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "POST";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($name !== null) {
+  		  $queryParams['name'] = $this->apiClient->toPathValue($name);
+  		}
+  		if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureSignatureResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * DeleteSignature
+	 * Delete user signature
+   * userId, string: User GUID (required)
+   * signatureId, string: Signature GUID (required)
+   * @return SignatureStatusResponse
+	 */
+
+   public function DeleteSignature($userId, $signatureId) {
+      if( $userId === null || $signatureId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/signatures/{signatureId}");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "DELETE";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($signatureId !== null) {
+  			$resourcePath = str_replace("{" . "signatureId" . "}",
+  			                            $signatureId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureStatusResponse');
+  	  return $responseObject;
       }
   /**
 	 * GetSignatures
@@ -4051,141 +3274,1072 @@ class SignatureApi {
 	 */
 
    public function GetSignatures($userId, $page=null, $name=null, $records=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/signatures?records={count}&amp;page={page}&amp;name={name}");
+      if( $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/signatures?records={count}&page={page}&name={name}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "GET";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($page !== null) {
+  		  $queryParams['page'] = $this->apiClient->toPathValue($page);
+  		}
+  		if($name !== null) {
+  		  $queryParams['name'] = $this->apiClient->toPathValue($name);
+  		}
+  		if($records !== null) {
+  		  $queryParams['records'] = $this->apiClient->toPathValue($records);
+  		}
+  		if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureSignaturesResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * GetSignatureTemplates
+	 * Get templates
+   * userId, string: User GUID (required)
+   * page, string: Page number (optional)
+   * documentGuid, string: Fitler templates by document originalMD5 (optional)
+   * recipientName, string: Filter templates by recipient nickname (optional)
+   * name, string: Filter templates by signatureTemplate name (optional)
+   * records, string: Records count (optional)
+   * @return SignatureTemplatesResponse
+	 */
+
+   public function GetSignatureTemplates($userId, $page=null, $documentGuid=null, $recipientName=null, $name=null, $records=null) {
+      if( $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates?records={count}&page={page}&documentGuid={documentGuid}&recipientName={recipientName}&name={name}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "GET";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($page !== null) {
+  		  $queryParams['page'] = $this->apiClient->toPathValue($page);
+  		}
+  		if($documentGuid !== null) {
+  		  $queryParams['documentGuid'] = $this->apiClient->toPathValue($documentGuid);
+  		}
+  		if($recipientName !== null) {
+  		  $queryParams['recipientName'] = $this->apiClient->toPathValue($recipientName);
+  		}
+  		if($name !== null) {
+  		  $queryParams['name'] = $this->apiClient->toPathValue($name);
+  		}
+  		if($records !== null) {
+  		  $queryParams['records'] = $this->apiClient->toPathValue($records);
+  		}
+  		if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureTemplatesResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * GetSignatureTemplate
+	 * Get template
+   * userId, string: User GUID (required)
+   * templateId, string: Template GUID (required)
+   * @return SignatureTemplateResponse
+	 */
+
+   public function GetSignatureTemplate($userId, $templateId) {
+      if( $userId === null || $templateId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($page != null) {
-  		  $queryParams['page'] = $this->apiClient->toPathValue($page);
-  		}
-  		if($name != null) {
-  		  $queryParams['name'] = $this->apiClient->toPathValue($name);
-  		}
-  		if($records != null) {
-  		  $queryParams['records'] = $this->apiClient->toPathValue($records);
-  		}
-  		if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
+  		}
+  		if($templateId !== null) {
+  			$resourcePath = str_replace("{" . "templateId" . "}",
+  			                            $templateId, $resourcePath);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureSignaturesResponse');
-  		return $responseObject;
-
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureTemplateResponse');
+  	  return $responseObject;
       }
   /**
-	 * DeleteSignature
-	 * Delete user signature
+	 * CreateSignatureTemplate
+	 * Create template
    * userId, string: User GUID (required)
-   * signatureId, string: Signature GUID (required)
-   * @return SignatureStatusResponse
+   * name, string: Template name (optional)
+   * templateId, string: Template GUID of the template that will be used to create the new template (optional)
+   * body, SignatureTemplateSettings: Settings of the template (optional)
+   * envelopetId, string: Envelope GUID of the envelope that will be used to create the new template (required)
+   * @return SignatureTemplateResponse
 	 */
 
-   public function DeleteSignature($userId, $signatureId) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/signatures/{signatureId}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "DELETE";
+   public function CreateSignatureTemplate($userId, $name=null, $templateId=null, $body=null, $envelopetId) {
+      if( $userId === null || $envelopetId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/template?name={name}&templateId={templateId}&envelopeId={envelopeId}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($name !== null) {
+  		  $queryParams['name'] = $this->apiClient->toPathValue($name);
+  		}
+  		if($templateId !== null) {
+  		  $queryParams['templateId'] = $this->apiClient->toPathValue($templateId);
+  		}
+  		if($envelopetId !== null) {
+  		  $queryParams['envelopetId'] = $this->apiClient->toPathValue($envelopetId);
+  		}
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
-  		}
-  		if($signatureId != null) {
-  			$resourcePath = str_replace("{" . "signatureId" . "}",
-  			                            $signatureId, $resourcePath);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureStatusResponse');
-  		return $responseObject;
-
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureTemplateResponse');
+  	  return $responseObject;
       }
   /**
-	 * CreateSignature
-	 * Create user signature
+	 * ModifySignatureTemplate
+	 * Modify template
    * userId, string: User GUID (required)
-   * name, string: Signature name (required)
-   * body, SignatureSignatureSettings: Settings of the field (optional)
-   * @return SignatureSignatureResponse
+   * templateId, string: Template GUID (required)
+   * body, SignatureTemplateSettings: Settings of the template (optional)
+   * @return SignatureTemplateResponse
 	 */
 
-   public function CreateSignature($userId, $name, $body=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/signature?name={name}");
+   public function ModifySignatureTemplate($userId, $templateId, $body=null) {
+      if( $userId === null || $templateId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
-      if($name != null) {
-  		  $queryParams['name'] = $this->apiClient->toPathValue($name);
-  		}
-  		if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
+  		}
+  		if($templateId !== null) {
+  			$resourcePath = str_replace("{" . "templateId" . "}",
+  			                            $templateId, $resourcePath);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignatureSignatureResponse');
-  		return $responseObject;
-
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureTemplateResponse');
+  	  return $responseObject;
       }
   /**
-	 * GetSignaturePredefinedLists
-	 * Get user predefined lists
+	 * RenameSignatureTemplate
+	 * Rename template
    * userId, string: User GUID (required)
-   * @return SignaturePredefinedListsResponse
+   * templateId, string: Template GUID (required)
+   * name, string: New template name (required)
+   * @return SignatureTemplateResponse
 	 */
 
-   public function GetSignaturePredefinedLists($userId) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/signature/{userId}/lists");
+   public function RenameSignatureTemplate($userId, $templateId, $name) {
+      if( $userId === null || $templateId === null || $name === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}?name={name}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "PUT";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($name !== null) {
+  		  $queryParams['name'] = $this->apiClient->toPathValue($name);
+  		}
+  		if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($templateId !== null) {
+  			$resourcePath = str_replace("{" . "templateId" . "}",
+  			                            $templateId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureTemplateResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * DeleteSignatureTemplate
+	 * Delete template
+   * userId, string: User GUID (required)
+   * templateId, string: Template GUID (required)
+   * @return SignatureStatusResponse
+	 */
+
+   public function DeleteSignatureTemplate($userId, $templateId) {
+      if( $userId === null || $templateId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "DELETE";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($templateId !== null) {
+  			$resourcePath = str_replace("{" . "templateId" . "}",
+  			                            $templateId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureStatusResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * AddSignatureTemplateRecipient
+	 * Add recipient to the template
+   * userId, string: User GUID (required)
+   * templateId, string: Template GUID (required)
+   * nickname, string: Nickname of the recipient (required)
+   * roleId, string: Role GUID (required)
+   * order, string: Display order of the recipient (optional)
+   * @return SignatureTemplateResponse
+	 */
+
+   public function AddSignatureTemplateRecipient($userId, $templateId, $nickname, $roleId, $order=null) {
+      if( $userId === null || $templateId === null || $nickname === null || $roleId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}/recipient?nickname={nickname}&role={roleId}&order={order}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "POST";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($nickname !== null) {
+  		  $queryParams['nickname'] = $this->apiClient->toPathValue($nickname);
+  		}
+  		if($roleId !== null) {
+  		  $queryParams['role'] = $this->apiClient->toPathValue($roleId);
+  		}
+  		if($order !== null) {
+  		  $queryParams['order'] = $this->apiClient->toPathValue($order);
+  		}
+  		if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($templateId !== null) {
+  			$resourcePath = str_replace("{" . "templateId" . "}",
+  			                            $templateId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureTemplateResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * GetSignatureTemplateRecipients
+	 * Get template recipients
+   * userId, string: User GUID (required)
+   * templateId, string: Template GUID (required)
+   * @return SignatureTemplateRecipientsResponse
+	 */
+
+   public function GetSignatureTemplateRecipients($userId, $templateId) {
+      if( $userId === null || $templateId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}/recipients");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($templateId !== null) {
+  			$resourcePath = str_replace("{" . "templateId" . "}",
+  			                            $templateId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureTemplateRecipientsResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * DeleteSignatureTemplateRecipient
+	 * Remove recipient from template
+   * userId, string: User GUID (required)
+   * templateId, string: Template GUID (required)
+   * recipientId, string: Recipient GUID (required)
+   * @return SignatureStatusResponse
+	 */
+
+   public function DeleteSignatureTemplateRecipient($userId, $templateId, $recipientId) {
+      if( $userId === null || $templateId === null || $recipientId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}/recipients/{recipientId}");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "DELETE";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($templateId !== null) {
+  			$resourcePath = str_replace("{" . "templateId" . "}",
+  			                            $templateId, $resourcePath);
+  		}
+  		if($recipientId !== null) {
+  			$resourcePath = str_replace("{" . "recipientId" . "}",
+  			                            $recipientId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureStatusResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * ModifySignatureTemplateRecipient
+	 * Update template recipient
+   * userId, string: User GUID (required)
+   * templateId, string: Template GUID (required)
+   * recipientId, string: Recipient GUID (required)
+   * nickname, string: Nickname of the recipient (required)
+   * roleId, string: Role GUID (required)
+   * order, string: Display order of the recipient (optional)
+   * @return SignatureTemplateResponse
+	 */
+
+   public function ModifySignatureTemplateRecipient($userId, $templateId, $recipientId, $nickname, $roleId, $order=null) {
+      if( $userId === null || $templateId === null || $recipientId === null || $nickname === null || $roleId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}/recipient/{recipientId}?nickname={nickname}&role={roleId}&order={order}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "PUT";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($nickname !== null) {
+  		  $queryParams['nickname'] = $this->apiClient->toPathValue($nickname);
+  		}
+  		if($roleId !== null) {
+  		  $queryParams['role'] = $this->apiClient->toPathValue($roleId);
+  		}
+  		if($order !== null) {
+  		  $queryParams['order'] = $this->apiClient->toPathValue($order);
+  		}
+  		if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($templateId !== null) {
+  			$resourcePath = str_replace("{" . "templateId" . "}",
+  			                            $templateId, $resourcePath);
+  		}
+  		if($recipientId !== null) {
+  			$resourcePath = str_replace("{" . "recipientId" . "}",
+  			                            $recipientId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureTemplateResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * AddSignatureTemplateDocument
+	 * Add document to template
+   * userId, string: User GUID (required)
+   * templateId, string: Template GUID (required)
+   * documentId, string: Document GUID (required)
+   * order, string: Display order of the document (optional)
+   * @return SignatureTemplateDocumentResponse
+	 */
+
+   public function AddSignatureTemplateDocument($userId, $templateId, $documentId, $order=null) {
+      if( $userId === null || $templateId === null || $documentId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}/document/{documentId}?order={order}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "POST";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($order !== null) {
+  		  $queryParams['order'] = $this->apiClient->toPathValue($order);
+  		}
+  		if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($templateId !== null) {
+  			$resourcePath = str_replace("{" . "templateId" . "}",
+  			                            $templateId, $resourcePath);
+  		}
+  		if($documentId !== null) {
+  			$resourcePath = str_replace("{" . "documentId" . "}",
+  			                            $documentId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureTemplateDocumentResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * GetSignatureTemplateDocuments
+	 * Get documents in template
+   * userId, string: User GUID (required)
+   * templateId, string: Template GUID (required)
+   * @return SignatureTemplateDocumentsResponse
+	 */
+
+   public function GetSignatureTemplateDocuments($userId, $templateId) {
+      if( $userId === null || $templateId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}/documents");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "GET";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($templateId !== null) {
+  			$resourcePath = str_replace("{" . "templateId" . "}",
+  			                            $templateId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureTemplateDocumentsResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * DeleteSignatureTemplateDocument
+	 * Remove document from template
+   * userId, string: User GUID (required)
+   * templateId, string: Template GUID (required)
+   * documentId, string: Document GUID (required)
+   * @return SignatureStatusResponse
+	 */
+
+   public function DeleteSignatureTemplateDocument($userId, $templateId, $documentId) {
+      if( $userId === null || $templateId === null || $documentId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}/documents/{documentId}");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "DELETE";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($templateId !== null) {
+  			$resourcePath = str_replace("{" . "templateId" . "}",
+  			                            $templateId, $resourcePath);
+  		}
+  		if($documentId !== null) {
+  			$resourcePath = str_replace("{" . "documentId" . "}",
+  			                            $documentId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureStatusResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * AddSignatureTemplateField
+	 * Add signature template field
+   * userId, string: User GUID (required)
+   * templateId, string: Template GUID (required)
+   * documentId, string: Document GUID (required)
+   * recipientId, string: Recipient GUID (required)
+   * fieldId, string: Field GUID (required)
+   * body, SignatureTemplateFieldSettings: Settings of the field (optional)
+   * @return SignatureTemplateFieldResponse
+	 */
+
+   public function AddSignatureTemplateField($userId, $templateId, $documentId, $recipientId, $fieldId, $body=null) {
+      if( $userId === null || $templateId === null || $documentId === null || $recipientId === null || $fieldId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}/documents/{documentId}/recipient/{recipientId}/field/{fieldId}");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "POST";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($templateId !== null) {
+  			$resourcePath = str_replace("{" . "templateId" . "}",
+  			                            $templateId, $resourcePath);
+  		}
+  		if($documentId !== null) {
+  			$resourcePath = str_replace("{" . "documentId" . "}",
+  			                            $documentId, $resourcePath);
+  		}
+  		if($recipientId !== null) {
+  			$resourcePath = str_replace("{" . "recipientId" . "}",
+  			                            $recipientId, $resourcePath);
+  		}
+  		if($fieldId !== null) {
+  			$resourcePath = str_replace("{" . "fieldId" . "}",
+  			                            $fieldId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureTemplateFieldResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * AssignSignatureTemplateField
+	 * Assign signature template field
+   * userId, string: User GUID (required)
+   * templateId, string: Template GUID (required)
+   * documentId, string: Document GUID (required)
+   * fieldId, string: Field GUID (required)
+   * body, SignatureTemplateAssignFieldSettings: Settings of the field (optional)
+   * @return SignatureTemplateFieldResponse
+	 */
+
+   public function AssignSignatureTemplateField($userId, $templateId, $documentId, $fieldId, $body=null) {
+      if( $userId === null || $templateId === null || $documentId === null || $fieldId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}/documents/{documentId}/field/{fieldId}");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "POST";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($templateId !== null) {
+  			$resourcePath = str_replace("{" . "templateId" . "}",
+  			                            $templateId, $resourcePath);
+  		}
+  		if($documentId !== null) {
+  			$resourcePath = str_replace("{" . "documentId" . "}",
+  			                            $documentId, $resourcePath);
+  		}
+  		if($fieldId !== null) {
+  			$resourcePath = str_replace("{" . "fieldId" . "}",
+  			                            $fieldId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureTemplateFieldResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * ModifySignatureTemplateField
+	 * Modify signature template field
+   * userId, string: User GUID (required)
+   * templateId, string: Template GUID (required)
+   * documentId, string: Document GUID (required)
+   * fieldId, string: Field GUID (required)
+   * body, SignatureTemplateFieldSettings: Settings of the field (optional)
+   * @return SignatureTemplateFieldResponse
+	 */
+
+   public function ModifySignatureTemplateField($userId, $templateId, $documentId, $fieldId, $body=null) {
+      if( $userId === null || $templateId === null || $documentId === null || $fieldId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}/documents/{documentId}/field/{fieldId}");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "PUT";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($templateId !== null) {
+  			$resourcePath = str_replace("{" . "templateId" . "}",
+  			                            $templateId, $resourcePath);
+  		}
+  		if($documentId !== null) {
+  			$resourcePath = str_replace("{" . "documentId" . "}",
+  			                            $documentId, $resourcePath);
+  		}
+  		if($fieldId !== null) {
+  			$resourcePath = str_replace("{" . "fieldId" . "}",
+  			                            $fieldId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureTemplateFieldResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * DeleteSignatureTemplateFieldLocation
+	 * Delete signature template field location
+   * userId, string: User GUID (required)
+   * templateId, string: Template GUID (required)
+   * fieldId, string: Field GUID (required)
+   * locationId, string: Field location GUID (required)
+   * @return SignatureStatusResponse
+	 */
+
+   public function DeleteSignatureTemplateFieldLocation($userId, $templateId, $fieldId, $locationId) {
+      if( $userId === null || $templateId === null || $fieldId === null || $locationId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}/fields/{fieldId}/locations/{locationId}");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "DELETE";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($templateId !== null) {
+  			$resourcePath = str_replace("{" . "templateId" . "}",
+  			                            $templateId, $resourcePath);
+  		}
+  		if($fieldId !== null) {
+  			$resourcePath = str_replace("{" . "fieldId" . "}",
+  			                            $fieldId, $resourcePath);
+  		}
+  		if($locationId !== null) {
+  			$resourcePath = str_replace("{" . "locationId" . "}",
+  			                            $locationId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureStatusResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * ModifySignatureTemplateFieldLocation
+	 * Modify signature template field location
+   * userId, string: User GUID (required)
+   * templateId, string: Template GUID (required)
+   * documentId, string: Document GUID (required)
+   * recipientId, string: Recipient GUID (required)
+   * fieldId, string: Field GUID (required)
+   * locationId, string: Field location GUID (required)
+   * body, SignatureTemplateFieldLocationSettings: Settings of the field location (optional)
+   * @return SignatureTemplateFieldResponse
+	 */
+
+   public function ModifySignatureTemplateFieldLocation($userId, $templateId, $documentId, $recipientId, $fieldId, $locationId, $body=null) {
+      if( $userId === null || $templateId === null || $documentId === null || $recipientId === null || $fieldId === null || $locationId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}/documents/{documentId}/recipient/{recipientId}/fields/{fieldId}/locations/{locationId}");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "PUT";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($templateId !== null) {
+  			$resourcePath = str_replace("{" . "templateId" . "}",
+  			                            $templateId, $resourcePath);
+  		}
+  		if($documentId !== null) {
+  			$resourcePath = str_replace("{" . "documentId" . "}",
+  			                            $documentId, $resourcePath);
+  		}
+  		if($recipientId !== null) {
+  			$resourcePath = str_replace("{" . "recipientId" . "}",
+  			                            $recipientId, $resourcePath);
+  		}
+  		if($fieldId !== null) {
+  			$resourcePath = str_replace("{" . "fieldId" . "}",
+  			                            $fieldId, $resourcePath);
+  		}
+  		if($locationId !== null) {
+  			$resourcePath = str_replace("{" . "locationId" . "}",
+  			                            $locationId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureTemplateFieldResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * GetSignatureTemplateFields
+	 * Get template fields
+   * userId, string: User GUID (required)
+   * templateId, string: Template GUID (required)
+   * documentId, string: Document GUID (required)
+   * recipientId, string: Recipient GUID (required)
+   * @return SignatureTemplateFieldsResponse
+	 */
+
+   public function GetSignatureTemplateFields($userId, $templateId, $documentId, $recipientId) {
+      if( $userId === null || $templateId === null || $documentId === null || $recipientId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}/fields?document={documentId}&recipient={recipientId}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "GET";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($documentId !== null) {
+  		  $queryParams['document'] = $this->apiClient->toPathValue($documentId);
+  		}
+  		if($recipientId !== null) {
+  		  $queryParams['recipient'] = $this->apiClient->toPathValue($recipientId);
+  		}
+  		if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($templateId !== null) {
+  			$resourcePath = str_replace("{" . "templateId" . "}",
+  			                            $templateId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureTemplateFieldsResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * DeleteSignatureTemplateField
+	 * Delete signature template field
+   * userId, string: User GUID (required)
+   * templateId, string: Template GUID (required)
+   * fieldId, string: Field GUID (required)
+   * @return SignatureTemplateResponse
+	 */
+
+   public function DeleteSignatureTemplateField($userId, $templateId, $fieldId) {
+      if( $userId === null || $templateId === null || $fieldId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/{templateId}/fields/{fieldId}");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "DELETE";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($templateId !== null) {
+  			$resourcePath = str_replace("{" . "templateId" . "}",
+  			                            $templateId, $resourcePath);
+  		}
+  		if($fieldId !== null) {
+  			$resourcePath = str_replace("{" . "fieldId" . "}",
+  			                            $fieldId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureTemplateResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * GetSignatureTemplateResources
+	 * Get template recources
+   * userId, string: User GUID (required)
+   * @return SignatureTemplateResourcesResponse
+	 */
+
+   public function GetSignatureTemplateResources($userId) {
+      if( $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/templates/resources");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "GET";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
@@ -4193,18 +4347,59 @@ class SignatureApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'SignaturePredefinedListsResponse');
-  		return $responseObject;
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureTemplateResourcesResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * GetFieldsList
+	 * Get signature fields
+   * userId, string: User GUID (required)
+   * fieldId, string: Filter fields by id (optional)
+   * @return SignatureFieldsResponse
+	 */
 
+   public function GetFieldsList($userId, $fieldId=null) {
+      if( $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/signature/{userId}/fields?id={fieldId}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "GET";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($fieldId !== null) {
+  		  $queryParams['id'] = $this->apiClient->toPathValue($fieldId);
+  		}
+  		if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SignatureFieldsResponse');
+  	  return $responseObject;
       }
   
 }

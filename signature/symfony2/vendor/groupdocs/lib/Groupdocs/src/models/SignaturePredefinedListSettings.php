@@ -24,14 +24,14 @@
 class SignaturePredefinedListSettings {
 
   static $swaggerTypes = array(
-      'values' => 'string',
       'name' => 'string',
+      'values' => 'string',
       'defaultValue' => 'string'
 
     );
 
-  public $values; // string
   public $name; // string
+  public $values; // string
   public $defaultValue; // string
   }
 

@@ -26,12 +26,14 @@ class UpdateJobResponse {
   static $swaggerTypes = array(
       'result' => 'UpdateJobResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // UpdateJobResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

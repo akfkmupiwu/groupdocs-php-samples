@@ -26,12 +26,14 @@ class CompressResponse {
   static $swaggerTypes = array(
       'result' => 'CompressRequestResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // CompressRequestResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

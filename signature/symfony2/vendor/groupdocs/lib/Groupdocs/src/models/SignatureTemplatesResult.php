@@ -24,12 +24,12 @@
 class SignatureTemplatesResult {
 
   static $swaggerTypes = array(
-      'templates' => 'array[SignatureTemplateInfo]',
-      'templatesCount' => 'int'
+      'templatesCount' => 'int',
+      'templates' => 'array[SignatureTemplateInfo]'
 
     );
 
-  public $templates; // array[SignatureTemplateInfo]
   public $templatesCount; // int
+  public $templates; // array[SignatureTemplateInfo]
   }
 

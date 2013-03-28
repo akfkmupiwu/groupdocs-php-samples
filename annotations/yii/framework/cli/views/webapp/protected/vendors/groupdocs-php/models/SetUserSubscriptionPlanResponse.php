@@ -26,12 +26,14 @@ class SetUserSubscriptionPlanResponse {
   static $swaggerTypes = array(
       'result' => 'SetUserSubscriptionPlanResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // SetUserSubscriptionPlanResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

@@ -27,6 +27,10 @@ class SharedApi {
 	  $this->apiClient = $apiClient;
 	}
 
+	public static function newInstance($apiClient) {
+	  return new self($apiClient);
+	}
+
     public function setBasePath($basePath) {
 	  $this->basePath = $basePath;
 	}
@@ -44,42 +48,37 @@ class SharedApi {
    * @return stream
 	 */
 
-   public function Download($guid, $fileName, $render=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/shared/files/{guid}?filename={fileName}&amp;render={render}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+   public function Download($guid, $fileName, $render=null, FileStream $outFileStream) {
+      if( $guid === null || $fileName === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/shared/files/{guid}?filename={fileName}&render={render}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($guid != null) {
+      if($fileName !== null) {
+  		  $queryParams['filename'] = $this->apiClient->toPathValue($fileName);
+  		}
+  		if($render !== null) {
+  		  $queryParams['render'] = $this->apiClient->toPathValue($render);
+  		}
+  		if($guid !== null) {
   			$resourcePath = str_replace("{" . "guid" . "}",
   			                            $guid, $resourcePath);
-  		}
-  		if($fileName != null) {
-  			$resourcePath = str_replace("{" . "fileName" . "}",
-  			                            $fileName, $resourcePath);
-  		}
-  		if($render != null) {
-  			$resourcePath = str_replace("{" . "render" . "}",
-  			                            $render, $resourcePath);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'stream');
-  		return $responseObject;
-
+      return $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams, $outFileStream);
       }
   /**
 	 * GetXml
@@ -88,15 +87,18 @@ class SharedApi {
    * @return stream
 	 */
 
-   public function GetXml($guid) {
-  	  //parse inputs
+   public function GetXml($guid, FileStream $outFileStream) {
+      if( $guid === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/shared/files/{guid}/xml");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($guid != null) {
+      if($guid !== null) {
   			$resourcePath = str_replace("{" . "guid" . "}",
   			                            $guid, $resourcePath);
   		}
@@ -104,18 +106,8 @@ class SharedApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'stream');
-  		return $responseObject;
-
+      return $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams, $outFileStream);
       }
   /**
 	 * GetPackage
@@ -124,15 +116,18 @@ class SharedApi {
    * @return stream
 	 */
 
-   public function GetPackage($path) {
-  	  //parse inputs
+   public function GetPackage($path, FileStream $outFileStream) {
+      if( $path === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/shared/packages/{*path}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($path != null) {
+      if($path !== null) {
   			$resourcePath = str_replace("{" . "path" . "}",
   			                            $path, $resourcePath);
   		}
@@ -140,18 +135,8 @@ class SharedApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'stream');
-  		return $responseObject;
-
+      return $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams, $outFileStream);
       }
   
 }

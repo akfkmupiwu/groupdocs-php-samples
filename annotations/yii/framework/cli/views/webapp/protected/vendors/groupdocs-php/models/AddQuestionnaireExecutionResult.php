@@ -24,14 +24,14 @@
 class AddQuestionnaireExecutionResult {
 
   static $swaggerTypes = array(
-      'execution_guid' => 'string',
       'collector_id' => 'float',
-      'execution_id' => 'float'
+      'execution_id' => 'float',
+      'execution_guid' => 'string'
 
     );
 
-  public $execution_guid; // string
   public $collector_id; // float
   public $execution_id; // float
+  public $execution_guid; // string
   }
 

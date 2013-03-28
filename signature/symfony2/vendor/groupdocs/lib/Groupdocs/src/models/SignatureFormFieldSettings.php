@@ -24,46 +24,48 @@
 class SignatureFormFieldSettings {
 
   static $swaggerTypes = array(
-      'locationHeight' => 'float',
-      'fontName' => 'string',
-      'fontColor' => 'string',
-      'forceNewField' => 'bool',
-      'regularExpression' => 'string',
+      'name' => 'string',
       'mandatory' => 'bool',
-      'locationX' => 'float',
-      'fontBold' => 'bool',
-      'fontSize' => 'float',
-      'locationY' => 'float',
-      'acceptableValues' => 'string',
-      'fontItalic' => 'bool',
-      'fontUnderline' => 'bool',
       'order' => 'int',
       'page' => 'int',
-      'name' => 'string',
+      'locationX' => 'float',
+      'locationY' => 'float',
       'locationWidth' => 'float',
+      'locationHeight' => 'float',
+      'regularExpression' => 'string',
+      'fontName' => 'string',
+      'fontColor' => 'string',
+      'fontSize' => 'float',
+      'fontBold' => 'bool',
+      'fontItalic' => 'bool',
+      'fontUnderline' => 'bool',
+      'forceNewField' => 'bool',
+      'acceptableValues' => 'string',
       'defaultValue' => 'string',
-      'tooltip' => 'string'
+      'tooltip' => 'string',
+      'align' => 'int'
 
     );
 
-  public $locationHeight; // float
-  public $fontName; // string
-  public $fontColor; // string
-  public $forceNewField; // bool
-  public $regularExpression; // string
+  public $name; // string
   public $mandatory; // bool
-  public $locationX; // float
-  public $fontBold; // bool
-  public $fontSize; // float
-  public $locationY; // float
-  public $acceptableValues; // string
-  public $fontItalic; // bool
-  public $fontUnderline; // bool
   public $order; // int
   public $page; // int
-  public $name; // string
+  public $locationX; // float
+  public $locationY; // float
   public $locationWidth; // float
+  public $locationHeight; // float
+  public $regularExpression; // string
+  public $fontName; // string
+  public $fontColor; // string
+  public $fontSize; // float
+  public $fontBold; // bool
+  public $fontItalic; // bool
+  public $fontUnderline; // bool
+  public $forceNewField; // bool
+  public $acceptableValues; // string
   public $defaultValue; // string
   public $tooltip; // string
+  public $align; // int
   }
 

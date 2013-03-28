@@ -26,12 +26,14 @@ class GetStorageProvidersResponse {
   static $swaggerTypes = array(
       'result' => 'GetStorageProvidersResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // GetStorageProvidersResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

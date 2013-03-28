@@ -27,6 +27,10 @@ class ComparisonApi {
 	  $this->apiClient = $apiClient;
 	}
 
+	public static function newInstance($apiClient) {
+	  return new self($apiClient);
+	}
+
     public function setBasePath($basePath) {
 	  $this->basePath = $basePath;
 	}
@@ -35,41 +39,6 @@ class ComparisonApi {
 	  $this->basePath;
 	}
 
-  /**
-	 * DownloadResult
-	 * Download comparison result file
-   * userId, string: User GUID (required)
-   * resultFileId, string: Comparison result file GUID (required)
-   * format, string: Comparison result file format (optional)
-   * @return stream
-	 */
-
-   public function DownloadResult($userId, $resultFileId, $format=null, FileStream $outFileStream) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/comparison/{userId}/comparison/download?resultFileId={resultFileId}&format={format}");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
-	  $resourcePath = str_replace("{format}", "json", $resourcePath);
-  	  $method = "GET";
-      $queryParams = array();
-      $headerParams = array();
-
-      if($resultFileId !== null) {
-  		  $queryParams['resultFileId'] = $this->apiClient->toPathValue($resultFileId);
-  		}
-  		if($format !== null) {
-  		  $queryParams['format'] = $this->apiClient->toPathValue($format);
-  		}
-  		if($userId !== null) {
-  			$resourcePath = str_replace("{" . "userId" . "}",
-  			                            $userId, $resourcePath);
-  		}
-  		//make the API Call
-      if (! isset($body)) {
-        $body = null;
-      }
-      return $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams, $outFileStream);
-      }
   /**
 	 * Compare
 	 * Compare
@@ -81,9 +50,15 @@ class ComparisonApi {
 	 */
 
    public function Compare($userId, $sourceFileId, $targetFileId, $callbackUrl) {
-  	  //parse inputs
+      if( $userId === null || $sourceFileId === null || $targetFileId === null || $callbackUrl === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/comparison/{userId}/comparison/compare?source={sourceFileId}&target={targetFileId}&callback={callbackUrl}");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
@@ -125,9 +100,15 @@ class ComparisonApi {
 	 */
 
    public function GetChanges($userId, $resultFileId) {
-  	  //parse inputs
+      if( $userId === null || $resultFileId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/comparison/{userId}/comparison/changes?resultFileId={resultFileId}");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
@@ -164,9 +145,15 @@ class ComparisonApi {
 	 */
 
    public function UpdateChanges($userId, $resultFileId, $body) {
-  	  //parse inputs
+      if( $userId === null || $resultFileId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/comparison/{userId}/comparison/changes?resultFileId={resultFileId}");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
       $queryParams = array();
@@ -202,9 +189,15 @@ class ComparisonApi {
 	 */
 
    public function GetDocumentDetails($userId, $guid) {
-  	  //parse inputs
+      if( $userId === null || $guid === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/comparison/{userId}/comparison/document?guid={guid}");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
@@ -230,6 +223,47 @@ class ComparisonApi {
   	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'DocumentDetailsResponse');
   	  return $responseObject;
+      }
+  /**
+	 * DownloadResult
+	 * Download comparison result file
+   * userId, string: User GUID (required)
+   * resultFileId, string: Comparison result file GUID (required)
+   * format, string: Comparison result file format (optional)
+   * @return stream
+	 */
+
+   public function DownloadResult($userId, $resultFileId, $format=null, FileStream $outFileStream) {
+      if( $userId === null || $resultFileId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/comparison/{userId}/comparison/download?resultFileId={resultFileId}&format={format}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "GET";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($resultFileId !== null) {
+  		  $queryParams['resultFileId'] = $this->apiClient->toPathValue($resultFileId);
+  		}
+  		if($format !== null) {
+  		  $queryParams['format'] = $this->apiClient->toPathValue($format);
+  		}
+  		if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      return $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams, $outFileStream);
       }
   
 }

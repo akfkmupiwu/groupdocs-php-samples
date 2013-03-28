@@ -27,6 +27,10 @@ class StorageApi {
 	  $this->apiClient = $apiClient;
 	}
 
+	public static function newInstance($apiClient) {
+	  return new self($apiClient);
+	}
+
     public function setBasePath($basePath) {
 	  $this->basePath = $basePath;
 	}
@@ -43,14 +47,17 @@ class StorageApi {
 	 */
 
    public function GetStorageInfo($userId) {
-  	  //parse inputs
+      if( $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/storage/{userId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
@@ -58,18 +65,15 @@ class StorageApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'StorageInfoResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * ListEntities
@@ -87,65 +91,62 @@ class StorageApi {
 	 */
 
    public function ListEntities($userId, $path=null, $pageIndex=null, $pageSize=null, $orderBy=null, $orderAsc=null, $filter=null, $fileTypes=null, $extended=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/storage/{userId}/folders/{*path}?page={pageIndex}&amp;count={pageSize}&amp;order_by={orderBy}&amp;order_asc={orderAsc}&amp;filter={filter}&amp;file_types={fileTypes}&amp;extended={extended}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+      if( $userId === null || $path === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/storage/{userId}/folders/{*path}?page={pageIndex}&count={pageSize}&order_by={orderBy}&order_asc={orderAsc}&filter={filter}&file_types={fileTypes}&extended={extended}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($pageIndex !== null) {
+  		  $queryParams['page'] = $this->apiClient->toPathValue($pageIndex);
+  		}
+  		if($pageSize !== null) {
+  		  $queryParams['count'] = $this->apiClient->toPathValue($pageSize);
+  		}
+  		if($orderBy !== null) {
+  		  $queryParams['order_by'] = $this->apiClient->toPathValue($orderBy);
+  		}
+  		if($orderAsc !== null) {
+  		  $queryParams['order_asc'] = $this->apiClient->toPathValue($orderAsc);
+  		}
+  		if($filter !== null) {
+  		  $queryParams['filter'] = $this->apiClient->toPathValue($filter);
+  		}
+  		if($fileTypes !== null) {
+  		  $queryParams['file_types'] = $this->apiClient->toPathValue($fileTypes);
+  		}
+  		if($extended !== null) {
+  		  $queryParams['extended'] = $this->apiClient->toPathValue($extended);
+  		}
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($path != null) {
+  		if($path !== null) {
   			$resourcePath = str_replace("{" . "path" . "}",
   			                            $path, $resourcePath);
-  		}
-  		if($pageIndex != null) {
-  			$resourcePath = str_replace("{" . "pageIndex" . "}",
-  			                            $pageIndex, $resourcePath);
-  		}
-  		if($pageSize != null) {
-  			$resourcePath = str_replace("{" . "pageSize" . "}",
-  			                            $pageSize, $resourcePath);
-  		}
-  		if($orderBy != null) {
-  			$resourcePath = str_replace("{" . "orderBy" . "}",
-  			                            $orderBy, $resourcePath);
-  		}
-  		if($orderAsc != null) {
-  			$resourcePath = str_replace("{" . "orderAsc" . "}",
-  			                            $orderAsc, $resourcePath);
-  		}
-  		if($filter != null) {
-  			$resourcePath = str_replace("{" . "filter" . "}",
-  			                            $filter, $resourcePath);
-  		}
-  		if($fileTypes != null) {
-  			$resourcePath = str_replace("{" . "fileTypes" . "}",
-  			                            $fileTypes, $resourcePath);
-  		}
-  		if($extended != null) {
-  			$resourcePath = str_replace("{" . "extended" . "}",
-  			                            $extended, $resourcePath);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'ListEntitiesResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetFile
@@ -155,19 +156,22 @@ class StorageApi {
    * @return stream
 	 */
 
-   public function GetFile($userId, $fileId) {
-  	  //parse inputs
+   public function GetFile($userId, $fileId, FileStream $outFileStream) {
+      if( $userId === null || $fileId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/storage/{userId}/files/{fileId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($fileId != null) {
+  		if($fileId !== null) {
   			$resourcePath = str_replace("{" . "fileId" . "}",
   			                            $fileId, $resourcePath);
   		}
@@ -175,18 +179,8 @@ class StorageApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'stream');
-  		return $responseObject;
-
+      return $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams, $outFileStream);
       }
   /**
 	 * GetSharedFile
@@ -196,19 +190,22 @@ class StorageApi {
    * @return stream
 	 */
 
-   public function GetSharedFile($userEmail, $filePath) {
-  	  //parse inputs
+   public function GetSharedFile($userEmail, $filePath, FileStream $outFileStream) {
+      if( $userEmail === null || $filePath === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/storage/shared/{userEmail}/{*filePath}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($userEmail != null) {
+      if($userEmail !== null) {
   			$resourcePath = str_replace("{" . "userEmail" . "}",
   			                            $userEmail, $resourcePath);
   		}
-  		if($filePath != null) {
+  		if($filePath !== null) {
   			$resourcePath = str_replace("{" . "filePath" . "}",
   			                            $filePath, $resourcePath);
   		}
@@ -216,18 +213,8 @@ class StorageApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
-  		                                      $queryParams, $body, $headerParams);
-
-
-      if(! $response){
-          return null;
-        }
-
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'stream');
-  		return $responseObject;
-
+      return $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams, $outFileStream);
       }
   /**
 	 * Upload
@@ -240,41 +227,44 @@ class StorageApi {
 	 */
 
    public function Upload($userId, $path, $description=null, $body) {
-  	  //parse inputs
+      if( $userId === null || $path === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/storage/{userId}/folders/{*path}?description={description}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($description !== null) {
+  		  $queryParams['description'] = $this->apiClient->toPathValue($description);
+  		}
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($path != null) {
+  		if($path !== null) {
   			$resourcePath = str_replace("{" . "path" . "}",
   			                            $path, $resourcePath);
-  		}
-  		if($description != null) {
-  			$resourcePath = str_replace("{" . "description" . "}",
-  			                            $description, $resourcePath);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'UploadResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * Decompress
@@ -288,45 +278,47 @@ class StorageApi {
 	 */
 
    public function Decompress($userId, $path, $description=null, $archiveType=null, $body) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/storage/{userId}/decompress/{*path}?description={description}&amp;archiveType={archiveType}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+      if( $userId === null || $path === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/storage/{userId}/decompress/{*path}?description={description}&archiveType={archiveType}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($description !== null) {
+  		  $queryParams['description'] = $this->apiClient->toPathValue($description);
+  		}
+  		if($archiveType !== null) {
+  		  $queryParams['archiveType'] = $this->apiClient->toPathValue($archiveType);
+  		}
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($path != null) {
+  		if($path !== null) {
   			$resourcePath = str_replace("{" . "path" . "}",
   			                            $path, $resourcePath);
-  		}
-  		if($description != null) {
-  			$resourcePath = str_replace("{" . "description" . "}",
-  			                            $description, $resourcePath);
-  		}
-  		if($archiveType != null) {
-  			$resourcePath = str_replace("{" . "archiveType" . "}",
-  			                            $archiveType, $resourcePath);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'UploadResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * UploadWeb
@@ -337,37 +329,40 @@ class StorageApi {
 	 */
 
    public function UploadWeb($userId, $url) {
-  	  //parse inputs
+      if( $userId === null || $url === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/storage/{userId}/urls?url={url}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($url !== null) {
+  		  $queryParams['url'] = $this->apiClient->toPathValue($url);
+  		}
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
-  		}
-  		if($url != null) {
-  			$resourcePath = str_replace("{" . "url" . "}",
-  			                            $url, $resourcePath);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'UploadResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * UploadGoogle
@@ -379,41 +374,44 @@ class StorageApi {
 	 */
 
    public function UploadGoogle($userId, $path, $fileId=null) {
-  	  //parse inputs
+      if( $userId === null || $path === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/storage/{userId}/google/files/{*path}?file_id={fileId}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($fileId !== null) {
+  		  $queryParams['file_id'] = $this->apiClient->toPathValue($fileId);
+  		}
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($path != null) {
+  		if($path !== null) {
   			$resourcePath = str_replace("{" . "path" . "}",
   			                            $path, $resourcePath);
-  		}
-  		if($fileId != null) {
-  			$resourcePath = str_replace("{" . "fileId" . "}",
-  			                            $fileId, $resourcePath);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'UploadResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * Delete
@@ -424,18 +422,21 @@ class StorageApi {
 	 */
 
    public function Delete($userId, $fileId) {
-  	  //parse inputs
+      if( $userId === null || $fileId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/storage/{userId}/files/{fileId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "DELETE";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($fileId != null) {
+  		if($fileId !== null) {
   			$resourcePath = str_replace("{" . "fileId" . "}",
   			                            $fileId, $resourcePath);
   		}
@@ -443,18 +444,15 @@ class StorageApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'DeleteResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * DeleteFromFolder
@@ -465,18 +463,21 @@ class StorageApi {
 	 */
 
    public function DeleteFromFolder($userId, $path) {
-  	  //parse inputs
+      if( $userId === null || $path === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/storage/{userId}/folders/{*path}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "DELETE";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($path != null) {
+  		if($path !== null) {
   			$resourcePath = str_replace("{" . "path" . "}",
   			                            $path, $resourcePath);
   		}
@@ -484,18 +485,15 @@ class StorageApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'DeleteResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * MoveFile
@@ -503,53 +501,56 @@ class StorageApi {
    * userId, string: User GUID (required)
    * path, string: Path (required)
    * mode, string: Mode (optional)
-   * Groupdocs_Copy, string: File ID (copy) (optional)
    * Groupdocs_Move, string: File ID (move) (optional)
+   * Groupdocs_Copy, string: File ID (copy) (optional)
    * @return FileMoveResponse
 	 */
 
-   public function MoveFile($userId, $path, $mode=null, $Groupdocs_Copy=null, $Groupdocs_Move=null) {
-  	  //parse inputs
+   public function MoveFile($userId, $path, $mode=null, $Groupdocs_Move=null, $Groupdocs_Copy=null) {
+      if( $userId === null || $path === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/storage/{userId}/files/{*path}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
       $queryParams = array();
       $headerParams = array();
 
-      if($Groupdocs_Copy != null) {
-  		 	$headerParams['Groupdocs-Copy'] = $this->apiClient->toPathValue($Groupdocs_Copy);
+      if($mode !== null) {
+  		  $queryParams['mode'] = $this->apiClient->toPathValue($mode);
   		}
-      if($Groupdocs_Move != null) {
+  		if($Groupdocs_Move !== null) {
   		 	$headerParams['Groupdocs-Move'] = $this->apiClient->toPathValue($Groupdocs_Move);
   		}
-      if($userId != null) {
+      if($Groupdocs_Copy !== null) {
+  		 	$headerParams['Groupdocs-Copy'] = $this->apiClient->toPathValue($Groupdocs_Copy);
+  		}
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($path != null) {
+  		if($path !== null) {
   			$resourcePath = str_replace("{" . "path" . "}",
   			                            $path, $resourcePath);
-  		}
-  		if($mode != null) {
-  			$resourcePath = str_replace("{" . "mode" . "}",
-  			                            $mode, $resourcePath);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'FileMoveResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * MoveFolder
@@ -563,47 +564,50 @@ class StorageApi {
 	 */
 
    public function MoveFolder($userId, $path, $mode=null, $Groupdocs_Move=null, $Groupdocs_Copy=null) {
-  	  //parse inputs
+      if( $userId === null || $path === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/storage/{userId}/folders/{*path}?override_mode={mode}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
       $queryParams = array();
       $headerParams = array();
 
-      if($Groupdocs_Move != null) {
+      if($mode !== null) {
+  		  $queryParams['override_mode'] = $this->apiClient->toPathValue($mode);
+  		}
+  		if($Groupdocs_Move !== null) {
   		 	$headerParams['Groupdocs-Move'] = $this->apiClient->toPathValue($Groupdocs_Move);
   		}
-      if($Groupdocs_Copy != null) {
+      if($Groupdocs_Copy !== null) {
   		 	$headerParams['Groupdocs-Copy'] = $this->apiClient->toPathValue($Groupdocs_Copy);
   		}
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($path != null) {
+  		if($path !== null) {
   			$resourcePath = str_replace("{" . "path" . "}",
   			                            $path, $resourcePath);
-  		}
-  		if($mode != null) {
-  			$resourcePath = str_replace("{" . "mode" . "}",
-  			                            $mode, $resourcePath);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'FolderMoveResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * Create
@@ -614,18 +618,21 @@ class StorageApi {
 	 */
 
    public function Create($userId, $path) {
-  	  //parse inputs
+      if( $userId === null || $path === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/storage/{userId}/paths/{*path}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($path != null) {
+  		if($path !== null) {
   			$resourcePath = str_replace("{" . "path" . "}",
   			                            $path, $resourcePath);
   		}
@@ -633,18 +640,15 @@ class StorageApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'CreateFolderResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * Compress
@@ -656,22 +660,25 @@ class StorageApi {
 	 */
 
    public function Compress($userId, $fileId, $archiveType=null) {
-  	  //parse inputs
+      if( $userId === null || $fileId === null || $archiveType === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/storage/{userId}/files/{fileId}/archive/{archiveType}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($fileId != null) {
+  		if($fileId !== null) {
   			$resourcePath = str_replace("{" . "fileId" . "}",
   			                            $fileId, $resourcePath);
   		}
-  		if($archiveType != null) {
+  		if($archiveType !== null) {
   			$resourcePath = str_replace("{" . "archiveType" . "}",
   			                            $archiveType, $resourcePath);
   		}
@@ -679,18 +686,15 @@ class StorageApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'CompressResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * CreatePackage
@@ -703,41 +707,44 @@ class StorageApi {
 	 */
 
    public function CreatePackage($userId, $packageName, $storeRelativePath=null, $body=null) {
-  	  //parse inputs
+      if( $userId === null || $packageName === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/storage/{userId}/packages/{packageName}?storeRelativePath={storeRelativePath}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($storeRelativePath !== null) {
+  		  $queryParams['storeRelativePath'] = $this->apiClient->toPathValue($storeRelativePath);
+  		}
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($packageName != null) {
+  		if($packageName !== null) {
   			$resourcePath = str_replace("{" . "packageName" . "}",
   			                            $packageName, $resourcePath);
-  		}
-  		if($storeRelativePath != null) {
-  			$resourcePath = str_replace("{" . "storeRelativePath" . "}",
-  			                            $storeRelativePath, $resourcePath);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'CreatePackageResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * MoveToTrash
@@ -748,18 +755,21 @@ class StorageApi {
 	 */
 
    public function MoveToTrash($userId, $path) {
-  	  //parse inputs
+      if( $userId === null || $path === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/storage/{userId}/trash/{*path}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($path != null) {
+  		if($path !== null) {
   			$resourcePath = str_replace("{" . "path" . "}",
   			                            $path, $resourcePath);
   		}
@@ -767,18 +777,15 @@ class StorageApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'FolderMoveResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * RestoreFromTrash
@@ -789,18 +796,21 @@ class StorageApi {
 	 */
 
    public function RestoreFromTrash($userId, $path) {
-  	  //parse inputs
+      if( $userId === null || $path === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/storage/{userId}/trash/{*path}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "DELETE";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($path != null) {
+  		if($path !== null) {
   			$resourcePath = str_replace("{" . "path" . "}",
   			                            $path, $resourcePath);
   		}
@@ -808,18 +818,15 @@ class StorageApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'DeleteResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   
 }

@@ -24,14 +24,14 @@
 class UserPasswordInfo {
 
   static $swaggerTypes = array(
-      'reset_token' => 'string',
       'old_pswd_salt' => 'string',
-      'new_pswd_salt' => 'string'
+      'new_pswd_salt' => 'string',
+      'reset_token' => 'string'
 
     );
 
-  public $reset_token; // string
   public $old_pswd_salt; // string
   public $new_pswd_salt; // string
+  public $reset_token; // string
   }
 

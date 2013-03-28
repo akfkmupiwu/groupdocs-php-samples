@@ -24,16 +24,16 @@
 class JobErrorInfo {
 
   static $swaggerTypes = array(
-      'error_code' => 'int',
-      'expected_format' => 'string',
+      'job_id' => 'float',
       'original_document_id' => 'float',
-      'job_id' => 'float'
+      'error_code' => 'int',
+      'expected_format' => 'string'
 
     );
 
+  public $job_id; // float
+  public $original_document_id; // float
   public $error_code; // int
   public $expected_format; // string
-  public $original_document_id; // float
-  public $job_id; // float
   }
 

@@ -24,32 +24,32 @@
 class DocumentInfo {
 
   static $swaggerTypes = array(
-      'guid' => 'string',
-      'id' => 'float',
-      'document_path' => 'string',
       'name' => 'string',
+      'version' => 'int',
+      'size' => 'string',
+      'type' => 'string',
       'type_str' => 'string',
       'file_type_str' => 'string',
+      'document_path' => 'string',
       'access' => 'string',
-      'type' => 'string',
       'url' => 'string',
       'file_type' => 'string',
-      'size' => 'string',
-      'version' => 'int'
+      'id' => 'float',
+      'guid' => 'string'
 
     );
 
-  public $guid; // string
-  public $id; // float
-  public $document_path; // string
   public $name; // string
+  public $version; // int
+  public $size; // string
+  public $type; // string
   public $type_str; // string
   public $file_type_str; // string
+  public $document_path; // string
   public $access; // string
-  public $type; // string
   public $url; // string
   public $file_type; // string
-  public $size; // string
-  public $version; // int
+  public $id; // float
+  public $guid; // string
   }
 

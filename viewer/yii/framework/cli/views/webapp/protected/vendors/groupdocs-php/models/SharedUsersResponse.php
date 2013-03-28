@@ -26,12 +26,14 @@ class SharedUsersResponse {
   static $swaggerTypes = array(
       'result' => 'SharedUsersResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // SharedUsersResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

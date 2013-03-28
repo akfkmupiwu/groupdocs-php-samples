@@ -24,12 +24,12 @@
 class FileMoveResult {
 
   static $swaggerTypes = array(
-      'dst_file' => 'DocumentInfo',
-      'src_file' => 'DocumentInfo'
+      'src_file' => 'DocumentInfo',
+      'dst_file' => 'DocumentInfo'
 
     );
 
-  public $dst_file; // DocumentInfo
   public $src_file; // DocumentInfo
+  public $dst_file; // DocumentInfo
   }
 

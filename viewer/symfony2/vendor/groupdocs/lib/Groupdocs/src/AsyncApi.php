@@ -27,6 +27,10 @@ class AsyncApi {
 	  $this->apiClient = $apiClient;
 	}
 
+	public static function newInstance($apiClient) {
+	  return new self($apiClient);
+	}
+
     public function setBasePath($basePath) {
 	  $this->basePath = $basePath;
 	}
@@ -44,18 +48,21 @@ class AsyncApi {
 	 */
 
    public function GetJob($userId, $jobId) {
-  	  //parse inputs
+      if( $userId === null || $jobId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/async/{userId}/jobs/{jobId}?format=xml");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($jobId != null) {
+  		if($jobId !== null) {
   			$resourcePath = str_replace("{" . "jobId" . "}",
   			                            $jobId, $resourcePath);
   		}
@@ -63,18 +70,15 @@ class AsyncApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'GetJobResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetJobJson
@@ -85,18 +89,21 @@ class AsyncApi {
 	 */
 
    public function GetJobJson($userId, $jobId) {
-  	  //parse inputs
+      if( $userId === null || $jobId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/async/{userId}/jobs/{jobId}?format=json");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($jobId != null) {
+  		if($jobId !== null) {
   			$resourcePath = str_replace("{" . "jobId" . "}",
   			                            $jobId, $resourcePath);
   		}
@@ -104,59 +111,67 @@ class AsyncApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'GetJobResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetJobResources
 	 * Get job resources
    * userId, string: User GUID (required)
    * statusIds, string: Comma separated job status identifiers (required)
+   * actions, string: Actions (optional)
+   * excludedActions, string: Excluded actions (optional)
    * @return GetJobResourcesResponse
 	 */
 
-   public function GetJobResources($userId, $statusIds) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/async/{userId}/jobs/resources?statusIds={statusIds}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+   public function GetJobResources($userId, $statusIds, $actions=null, $excludedActions=null) {
+      if( $userId === null || $statusIds === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/async/{userId}/jobs/resources?statusIds={statusIds}&actions={actions}&excluded_actions={excludedActions}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($statusIds !== null) {
+  		  $queryParams['statusIds'] = $this->apiClient->toPathValue($statusIds);
+  		}
+  		if($actions !== null) {
+  		  $queryParams['actions'] = $this->apiClient->toPathValue($actions);
+  		}
+  		if($excludedActions !== null) {
+  		  $queryParams['excluded_actions'] = $this->apiClient->toPathValue($excludedActions);
+  		}
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
-  		}
-  		if($statusIds != null) {
-  			$resourcePath = str_replace("{" . "statusIds" . "}",
-  			                            $statusIds, $resourcePath);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'GetJobResourcesResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetJobDocuments
@@ -168,41 +183,44 @@ class AsyncApi {
 	 */
 
    public function GetJobDocuments($userId, $jobId, $format=null) {
-  	  //parse inputs
+      if( $userId === null || $jobId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/async/{userId}/jobs/{jobId}/documents?format={format}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($format !== null) {
+  		  $queryParams['format'] = $this->apiClient->toPathValue($format);
+  		}
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($jobId != null) {
+  		if($jobId !== null) {
   			$resourcePath = str_replace("{" . "jobId" . "}",
   			                            $jobId, $resourcePath);
-  		}
-  		if($format != null) {
-  			$resourcePath = str_replace("{" . "format" . "}",
-  			                            $format, $resourcePath);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'GetJobDocumentsResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * CreateJob
@@ -213,14 +231,17 @@ class AsyncApi {
 	 */
 
    public function CreateJob($userId, $body) {
-  	  //parse inputs
+      if( $userId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/async/{userId}/jobs");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
@@ -228,18 +249,15 @@ class AsyncApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'CreateJobResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * DeleteJob
@@ -250,18 +268,21 @@ class AsyncApi {
 	 */
 
    public function DeleteJob($userId, $jobGuid) {
-  	  //parse inputs
+      if( $userId === null || $jobGuid === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/async/{userId}/jobs/{jobGuid}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "DELETE";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($jobGuid != null) {
+  		if($jobGuid !== null) {
   			$resourcePath = str_replace("{" . "jobGuid" . "}",
   			                            $jobGuid, $resourcePath);
   		}
@@ -269,18 +290,15 @@ class AsyncApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'DeleteResult');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * AddJobDocument
@@ -294,49 +312,51 @@ class AsyncApi {
 	 */
 
    public function AddJobDocument($userId, $jobId, $fileId, $checkOwnership, $formats=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/async/{userId}/jobs/{jobId}/files/{fileId}?check_ownership={checkOwnership}&amp;out_formats={formats}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+      if( $userId === null || $jobId === null || $fileId === null || $checkOwnership === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/async/{userId}/jobs/{jobId}/files/{fileId}?check_ownership={checkOwnership}&out_formats={formats}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($checkOwnership !== null) {
+  		  $queryParams['check_ownership'] = $this->apiClient->toPathValue($checkOwnership);
+  		}
+  		if($formats !== null) {
+  		  $queryParams['out_formats'] = $this->apiClient->toPathValue($formats);
+  		}
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($jobId != null) {
+  		if($jobId !== null) {
   			$resourcePath = str_replace("{" . "jobId" . "}",
   			                            $jobId, $resourcePath);
   		}
-  		if($fileId != null) {
+  		if($fileId !== null) {
   			$resourcePath = str_replace("{" . "fileId" . "}",
   			                            $fileId, $resourcePath);
-  		}
-  		if($checkOwnership != null) {
-  			$resourcePath = str_replace("{" . "checkOwnership" . "}",
-  			                            $checkOwnership, $resourcePath);
-  		}
-  		if($formats != null) {
-  			$resourcePath = str_replace("{" . "formats" . "}",
-  			                            $formats, $resourcePath);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'AddJobDocumentResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * DeleteJobDocument
@@ -348,22 +368,25 @@ class AsyncApi {
 	 */
 
    public function DeleteJobDocument($userId, $jobGuid, $documentId) {
-  	  //parse inputs
+      if( $userId === null || $jobGuid === null || $documentId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/async/{userId}/jobs/{jobGuid}/documents/{documentId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "DELETE";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($jobGuid != null) {
+  		if($jobGuid !== null) {
   			$resourcePath = str_replace("{" . "jobGuid" . "}",
   			                            $jobGuid, $resourcePath);
   		}
-  		if($documentId != null) {
+  		if($documentId !== null) {
   			$resourcePath = str_replace("{" . "documentId" . "}",
   			                            $documentId, $resourcePath);
   		}
@@ -371,18 +394,15 @@ class AsyncApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'DeleteResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * AddJobDocumentUrl
@@ -395,45 +415,47 @@ class AsyncApi {
 	 */
 
    public function AddJobDocumentUrl($userId, $jobId, $absoluteUrl, $formats=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/async/{userId}/jobs/{jobId}/urls?absolute_url={absoluteUrl}&amp;out_formats={formats}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+      if( $userId === null || $jobId === null || $absoluteUrl === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/async/{userId}/jobs/{jobId}/urls?absolute_url={absoluteUrl}&out_formats={formats}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($absoluteUrl !== null) {
+  		  $queryParams['absolute_url'] = $this->apiClient->toPathValue($absoluteUrl);
+  		}
+  		if($formats !== null) {
+  		  $queryParams['out_formats'] = $this->apiClient->toPathValue($formats);
+  		}
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($jobId != null) {
+  		if($jobId !== null) {
   			$resourcePath = str_replace("{" . "jobId" . "}",
   			                            $jobId, $resourcePath);
-  		}
-  		if($absoluteUrl != null) {
-  			$resourcePath = str_replace("{" . "absoluteUrl" . "}",
-  			                            $absoluteUrl, $resourcePath);
-  		}
-  		if($formats != null) {
-  			$resourcePath = str_replace("{" . "formats" . "}",
-  			                            $formats, $resourcePath);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'AddJobDocumentResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * UpdateJob
@@ -445,18 +467,21 @@ class AsyncApi {
 	 */
 
    public function UpdateJob($userId, $jobId, $body) {
-  	  //parse inputs
+      if( $userId === null || $jobId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/async/{userId}/jobs/{jobId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($jobId != null) {
+  		if($jobId !== null) {
   			$resourcePath = str_replace("{" . "jobId" . "}",
   			                            $jobId, $resourcePath);
   		}
@@ -464,18 +489,15 @@ class AsyncApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'UpdateJobResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetJobs
@@ -491,57 +513,55 @@ class AsyncApi {
 	 */
 
    public function GetJobs($userId, $pageIndex=null, $pageSize=null, $DateTime=null, $statusIds=null, $actions=null, $excludedActions=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/async/{userId}/jobs?page={pageIndex}&amp;count={pageSize}&amp;date={date}&amp;statusIds={statusIds}&amp;actions={actions}&amp;excluded_actions={excludedActions}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+      if( $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/async/{userId}/jobs?page={pageIndex}&count={pageSize}&date={date}&statusIds={statusIds}&actions={actions}&excluded_actions={excludedActions}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($pageIndex !== null) {
+  		  $queryParams['page'] = $this->apiClient->toPathValue($pageIndex);
+  		}
+  		if($pageSize !== null) {
+  		  $queryParams['count'] = $this->apiClient->toPathValue($pageSize);
+  		}
+  		if($DateTime !== null) {
+  		  $queryParams['date'] = $this->apiClient->toPathValue($DateTime);
+  		}
+  		if($statusIds !== null) {
+  		  $queryParams['statusIds'] = $this->apiClient->toPathValue($statusIds);
+  		}
+  		if($actions !== null) {
+  		  $queryParams['actions'] = $this->apiClient->toPathValue($actions);
+  		}
+  		if($excludedActions !== null) {
+  		  $queryParams['excluded_actions'] = $this->apiClient->toPathValue($excludedActions);
+  		}
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
-  		}
-  		if($pageIndex != null) {
-  			$resourcePath = str_replace("{" . "pageIndex" . "}",
-  			                            $pageIndex, $resourcePath);
-  		}
-  		if($pageSize != null) {
-  			$resourcePath = str_replace("{" . "pageSize" . "}",
-  			                            $pageSize, $resourcePath);
-  		}
-  		if($DateTime != null) {
-  			$resourcePath = str_replace("{" . "date" . "}",
-  			                            $DateTime, $resourcePath);
-  		}
-  		if($statusIds != null) {
-  			$resourcePath = str_replace("{" . "statusIds" . "}",
-  			                            $statusIds, $resourcePath);
-  		}
-  		if($actions != null) {
-  			$resourcePath = str_replace("{" . "actions" . "}",
-  			                            $actions, $resourcePath);
-  		}
-  		if($excludedActions != null) {
-  			$resourcePath = str_replace("{" . "excludedActions" . "}",
-  			                            $excludedActions, $resourcePath);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'GetJobsResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetJobsDocuments
@@ -557,123 +577,120 @@ class AsyncApi {
 	 */
 
    public function GetJobsDocuments($userId, $pageIndex=null, $pageSize=null, $actions=null, $excludedActions=null, $orderBy=null, $orderAsc=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/async/{userId}/jobs/documents?page={pageIndex}&amp;count={pageSize}&amp;actions={actions}&amp;excluded_actions={excludedActions}&amp;order_by={orderBy}&amp;order_asc={orderAsc}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+      if( $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/async/{userId}/jobs/documents?page={pageIndex}&count={pageSize}&actions={actions}&excluded_actions={excludedActions}&order_by={orderBy}&order_asc={orderAsc}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($pageIndex !== null) {
+  		  $queryParams['page'] = $this->apiClient->toPathValue($pageIndex);
+  		}
+  		if($pageSize !== null) {
+  		  $queryParams['count'] = $this->apiClient->toPathValue($pageSize);
+  		}
+  		if($actions !== null) {
+  		  $queryParams['actions'] = $this->apiClient->toPathValue($actions);
+  		}
+  		if($excludedActions !== null) {
+  		  $queryParams['excluded_actions'] = $this->apiClient->toPathValue($excludedActions);
+  		}
+  		if($orderBy !== null) {
+  		  $queryParams['order_by'] = $this->apiClient->toPathValue($orderBy);
+  		}
+  		if($orderAsc !== null) {
+  		  $queryParams['order_asc'] = $this->apiClient->toPathValue($orderAsc);
+  		}
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
-  		}
-  		if($pageIndex != null) {
-  			$resourcePath = str_replace("{" . "pageIndex" . "}",
-  			                            $pageIndex, $resourcePath);
-  		}
-  		if($pageSize != null) {
-  			$resourcePath = str_replace("{" . "pageSize" . "}",
-  			                            $pageSize, $resourcePath);
-  		}
-  		if($actions != null) {
-  			$resourcePath = str_replace("{" . "actions" . "}",
-  			                            $actions, $resourcePath);
-  		}
-  		if($excludedActions != null) {
-  			$resourcePath = str_replace("{" . "excludedActions" . "}",
-  			                            $excludedActions, $resourcePath);
-  		}
-  		if($orderBy != null) {
-  			$resourcePath = str_replace("{" . "orderBy" . "}",
-  			                            $orderBy, $resourcePath);
-  		}
-  		if($orderAsc != null) {
-  			$resourcePath = str_replace("{" . "orderAsc" . "}",
-  			                            $orderAsc, $resourcePath);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'GetJobsDocumentsResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * Convert
 	 * Convert
    * userId, string: User GUID (required)
    * fileId, string: File GUID (required)
-   * targetType, string: Target type (optional)
    * emailResults, string: Email results (optional)
    * description, string: Description (optional)
    * printScript, bool: Print (optional)
    * callbackUrl, string: Callback url (optional)
+   * new_type, string: Target type (optional)
    * @return ConvertResponse
 	 */
 
-   public function Convert($userId, $fileId, $targetType=null, $emailResults=null, $description=null, $printScript=null, $callbackUrl=null) {
-  	  //parse inputs
-  	  $resourcePath = str_replace("*", "", "/async/{userId}/files/{fileId}?new_type={targetType}&amp;email_results={emailResults}&amp;new_description={description}&amp;print_script={printScript}&amp;callback={callbackUrl}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+   public function Convert($userId, $fileId, $emailResults=null, $description=null, $printScript=null, $callbackUrl=null, $new_type=null) {
+      if( $userId === null || $fileId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/async/{userId}/files/{fileId}?new_type={targetType}&email_results={emailResults}&new_description={description}&print_script={printScript}&callback={callbackUrl}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId != null) {
+      if($emailResults !== null) {
+  		  $queryParams['email_results'] = $this->apiClient->toPathValue($emailResults);
+  		}
+  		if($description !== null) {
+  		  $queryParams['new_description'] = $this->apiClient->toPathValue($description);
+  		}
+  		if($printScript !== null) {
+  		  $queryParams['print_script'] = $this->apiClient->toPathValue($printScript);
+  		}
+  		if($callbackUrl !== null) {
+  		  $queryParams['callback'] = $this->apiClient->toPathValue($callbackUrl);
+  		}
+  		if($new_type !== null) {
+  		  $queryParams['new_type'] = $this->apiClient->toPathValue($new_type);
+  		}
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($fileId != null) {
+  		if($fileId !== null) {
   			$resourcePath = str_replace("{" . "fileId" . "}",
   			                            $fileId, $resourcePath);
-  		}
-  		if($targetType != null) {
-  			$resourcePath = str_replace("{" . "targetType" . "}",
-  			                            $targetType, $resourcePath);
-  		}
-  		if($emailResults != null) {
-  			$resourcePath = str_replace("{" . "emailResults" . "}",
-  			                            $emailResults, $resourcePath);
-  		}
-  		if($description != null) {
-  			$resourcePath = str_replace("{" . "description" . "}",
-  			                            $description, $resourcePath);
-  		}
-  		if($printScript != null) {
-  			$resourcePath = str_replace("{" . "printScript" . "}",
-  			                            $printScript, $resourcePath);
-  		}
-  		if($callbackUrl != null) {
-  			$resourcePath = str_replace("{" . "callbackUrl" . "}",
-  			                            $callbackUrl, $resourcePath);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'ConvertResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   
 }

@@ -24,38 +24,38 @@
 class SignatureSignatureInfo {
 
   static $swaggerTypes = array(
-      'position' => 'string',
-      'lastName' => 'string',
-      'companyName' => 'string',
       'id' => 'string',
-      'signatureImageFileId' => 'float',
+      'userGuid' => 'string',
       'recipientId' => 'float',
-      'createdTimeStamp' => 'DateTime',
-      'initialsImageUrl' => 'string',
       'name' => 'string',
-      'initialsImageFileId' => 'float',
-      'fullName' => 'string',
-      'signatureImageUrl' => 'string',
+      'companyName' => 'string',
+      'position' => 'string',
       'firstName' => 'string',
+      'lastName' => 'string',
+      'fullName' => 'string',
       'textInitials' => 'string',
-      'userGuid' => 'string'
+      'signatureImageFileId' => 'float',
+      'initialsImageFileId' => 'float',
+      'signatureImageUrl' => 'string',
+      'initialsImageUrl' => 'string',
+      'createdTimeStamp' => 'DateTime'
 
     );
 
-  public $position; // string
-  public $lastName; // string
-  public $companyName; // string
   public $id; // string
-  public $signatureImageFileId; // float
-  public $recipientId; // float
-  public $createdTimeStamp; // DateTime
-  public $initialsImageUrl; // string
-  public $name; // string
-  public $initialsImageFileId; // float
-  public $fullName; // string
-  public $signatureImageUrl; // string
-  public $firstName; // string
-  public $textInitials; // string
   public $userGuid; // string
+  public $recipientId; // float
+  public $name; // string
+  public $companyName; // string
+  public $position; // string
+  public $firstName; // string
+  public $lastName; // string
+  public $fullName; // string
+  public $textInitials; // string
+  public $signatureImageFileId; // float
+  public $initialsImageFileId; // float
+  public $signatureImageUrl; // string
+  public $initialsImageUrl; // string
+  public $createdTimeStamp; // DateTime
   }
 

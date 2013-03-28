@@ -26,12 +26,14 @@ class SignatureContactResponse {
   static $swaggerTypes = array(
       'result' => 'SignatureContactResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // SignatureContactResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

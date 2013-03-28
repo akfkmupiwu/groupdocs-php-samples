@@ -26,12 +26,14 @@ class SignatureTemplateDocumentsResponse {
   static $swaggerTypes = array(
       'result' => 'SignatureTemplateDocumentsResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // SignatureTemplateDocumentsResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

@@ -25,11 +25,15 @@ class SignatureSignDocumentSettings {
 
   static $swaggerTypes = array(
       'documents' => 'array[SignatureSignDocumentDocumentSettings]',
-      'signers' => 'array[SignatureSignDocumentSignerSettings]'
+      'signers' => 'array[SignatureSignDocumentSignerSettings]',
+      'waterMarkText' => 'string',
+      'waterMarkImage' => 'string'
 
     );
 
   public $documents; // array[SignatureSignDocumentDocumentSettings]
   public $signers; // array[SignatureSignDocumentSignerSettings]
+  public $waterMarkText; // string
+  public $waterMarkImage; // string
   }
 

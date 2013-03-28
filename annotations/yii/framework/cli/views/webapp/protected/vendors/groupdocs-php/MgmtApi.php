@@ -27,6 +27,10 @@ class MgmtApi {
 	  $this->apiClient = $apiClient;
 	}
 
+	public static function newInstance($apiClient) {
+	  return new self($apiClient);
+	}
+
     public function setBasePath($basePath) {
 	  $this->basePath = $basePath;
 	}
@@ -43,7 +47,10 @@ class MgmtApi {
 	 */
 
    public function GetUserProfile($userId) {
-  	  //parse inputs
+      if( $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/mgmt/{userId}/profile");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
@@ -58,18 +65,15 @@ class MgmtApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'UserInfoResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * UpdateUserProfile
@@ -80,7 +84,10 @@ class MgmtApi {
 	 */
 
    public function UpdateUserProfile($userId, $body) {
-  	  //parse inputs
+      if( $userId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/mgmt/{userId}/profile");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
@@ -95,18 +102,15 @@ class MgmtApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'UpdateUserResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * ChangeUserPassword
@@ -117,7 +121,10 @@ class MgmtApi {
 	 */
 
    public function ChangeUserPassword($userId, $body) {
-  	  //parse inputs
+      if( $userId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/mgmt/{userId}/profile/password");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
@@ -132,18 +139,15 @@ class MgmtApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'ChangePasswordResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetUserProfileByResetToken
@@ -154,37 +158,40 @@ class MgmtApi {
 	 */
 
    public function GetUserProfileByResetToken($callerId, $token) {
-  	  //parse inputs
+      if( $callerId === null || $token === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/mgmt/{callerId}/reset-tokens?token={token}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($callerId !== null) {
+      if($token !== null) {
+  		  $queryParams['token'] = $this->apiClient->toPathValue($token);
+  		}
+  		if($callerId !== null) {
   			$resourcePath = str_replace("{" . "callerId" . "}",
   			                            $callerId, $resourcePath);
-  		}
-  		if($token !== null) {
-  			$resourcePath = str_replace("{" . "token" . "}",
-  			                            $token, $resourcePath);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'UserInfoResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetUserProfileByVerifToken
@@ -195,37 +202,40 @@ class MgmtApi {
 	 */
 
    public function GetUserProfileByVerifToken($callerId, $token) {
-  	  //parse inputs
+      if( $callerId === null || $token === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/mgmt/{callerId}/verif-tokens?token={token}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($callerId !== null) {
+      if($token !== null) {
+  		  $queryParams['token'] = $this->apiClient->toPathValue($token);
+  		}
+  		if($callerId !== null) {
   			$resourcePath = str_replace("{" . "callerId" . "}",
   			                            $callerId, $resourcePath);
-  		}
-  		if($token !== null) {
-  			$resourcePath = str_replace("{" . "token" . "}",
-  			                            $token, $resourcePath);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'UserInfoResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetUserProfileByClaimedToken
@@ -236,37 +246,40 @@ class MgmtApi {
 	 */
 
    public function GetUserProfileByClaimedToken($callerId, $token) {
-  	  //parse inputs
+      if( $callerId === null || $token === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/mgmt/{callerId}/claimed-tokens?token={token}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($callerId !== null) {
+      if($token !== null) {
+  		  $queryParams['token'] = $this->apiClient->toPathValue($token);
+  		}
+  		if($callerId !== null) {
   			$resourcePath = str_replace("{" . "callerId" . "}",
   			                            $callerId, $resourcePath);
-  		}
-  		if($token !== null) {
-  			$resourcePath = str_replace("{" . "token" . "}",
-  			                            $token, $resourcePath);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'UserInfoResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetAlienUserProfile
@@ -277,7 +290,10 @@ class MgmtApi {
 	 */
 
    public function GetAlienUserProfile($callerId, $userId) {
-  	  //parse inputs
+      if( $callerId === null || $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/mgmt/{callerId}/users/{userId}/profile");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
@@ -296,18 +312,15 @@ class MgmtApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'UserInfoResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * UpdateAlienUserProfile
@@ -319,7 +332,10 @@ class MgmtApi {
 	 */
 
    public function UpdateAlienUserProfile($callerId, $userId, $body) {
-  	  //parse inputs
+      if( $callerId === null || $userId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/mgmt/{callerId}/users/{userId}/profile");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
@@ -338,18 +354,15 @@ class MgmtApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'UpdateUserResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * CreateUser
@@ -360,7 +373,10 @@ class MgmtApi {
 	 */
 
    public function CreateUser($callerId, $body) {
-  	  //parse inputs
+      if( $callerId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/mgmt/{callerId}/users");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
@@ -375,18 +391,15 @@ class MgmtApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'CreateUserResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * CreateUserLogin
@@ -398,14 +411,24 @@ class MgmtApi {
 	 */
 
    public function CreateUserLogin($callerId, $userId, $password) {
-  	  //parse inputs
+      if( $callerId === null || $userId === null || $password === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/mgmt/{callerId}/users/{userId}/logins");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
-      if($callerId !== null) {
+      if($password !== null) {
+  		  $queryParams['password'] = $this->apiClient->toPathValue($password);
+  		}
+  		if($callerId !== null) {
   			$resourcePath = str_replace("{" . "callerId" . "}",
   			                            $callerId, $resourcePath);
   		}
@@ -413,26 +436,19 @@ class MgmtApi {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
-  		if($password !== null) {
-  			$resourcePath = str_replace("{" . "password" . "}",
-  			                            $password, $resourcePath);
-  		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'UserInfoResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * ChangeAlienUserPassword
@@ -444,7 +460,10 @@ class MgmtApi {
 	 */
 
    public function ChangeAlienUserPassword($callerId, $userId, $body) {
-  	  //parse inputs
+      if( $callerId === null || $userId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/mgmt/{callerId}/users/{userId}/password");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
@@ -463,18 +482,15 @@ class MgmtApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'ChangePasswordResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * ResetUserPassword
@@ -485,7 +501,10 @@ class MgmtApi {
 	 */
 
    public function ResetUserPassword($callerId, $userId) {
-  	  //parse inputs
+      if( $callerId === null || $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/mgmt/{callerId}/users/{userId}/password");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "DELETE";
@@ -504,18 +523,15 @@ class MgmtApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'ResetPasswordResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetStorageProviders
@@ -525,7 +541,10 @@ class MgmtApi {
 	 */
 
    public function GetStorageProviders($userId) {
-  	  //parse inputs
+      if( $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/mgmt/{userId}/storages");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
@@ -540,18 +559,15 @@ class MgmtApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'GetStorageProvidersResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * AddStorageProvider
@@ -563,7 +579,10 @@ class MgmtApi {
 	 */
 
    public function AddStorageProvider($userId, $provider, $body) {
-  	  //parse inputs
+      if( $userId === null || $provider === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/mgmt/{userId}/storages/{provider}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
@@ -582,18 +601,15 @@ class MgmtApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'AddStorageProviderResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * UpdateStorageProvider
@@ -605,7 +621,10 @@ class MgmtApi {
 	 */
 
    public function UpdateStorageProvider($userId, $provider, $body) {
-  	  //parse inputs
+      if( $userId === null || $provider === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/mgmt/{userId}/storages/{provider}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
@@ -624,18 +643,15 @@ class MgmtApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'UpdateStorageProviderResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetRoles
@@ -645,7 +661,10 @@ class MgmtApi {
 	 */
 
    public function GetRoles($userId) {
-  	  //parse inputs
+      if( $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/mgmt/{userId}/roles");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
@@ -660,18 +679,15 @@ class MgmtApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'GetRolesResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetUserRoles
@@ -682,7 +698,10 @@ class MgmtApi {
 	 */
 
    public function GetUserRoles($callerId, $userId) {
-  	  //parse inputs
+      if( $callerId === null || $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/mgmt/{callerId}/users/{userId}/roles");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
@@ -701,18 +720,15 @@ class MgmtApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'GetRolesResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * SetUserRoles
@@ -724,7 +740,10 @@ class MgmtApi {
 	 */
 
    public function SetUserRoles($callerId, $userId, $body) {
-  	  //parse inputs
+      if( $callerId === null || $userId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/mgmt/{callerId}/users/{userId}/roles");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
@@ -743,18 +762,15 @@ class MgmtApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SetUserRolesResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetAccount
@@ -764,7 +780,10 @@ class MgmtApi {
 	 */
 
    public function GetAccount($userId) {
-  	  //parse inputs
+      if( $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/mgmt/{userId}/account");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
@@ -779,18 +798,15 @@ class MgmtApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'GetAccountResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * DeleteAccount
@@ -800,7 +816,10 @@ class MgmtApi {
 	 */
 
    public function DeleteAccount($userId) {
-  	  //parse inputs
+      if( $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/mgmt/{userId}/account");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "DELETE";
@@ -815,18 +834,15 @@ class MgmtApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'DeleteAccountResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetAccountUsers
@@ -836,7 +852,10 @@ class MgmtApi {
 	 */
 
    public function GetAccountUsers($adminId) {
-  	  //parse inputs
+      if( $adminId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/mgmt/{adminId}/account/users");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
@@ -851,18 +870,15 @@ class MgmtApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'GetAccountUsersResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * UpdateAccountUser
@@ -874,7 +890,10 @@ class MgmtApi {
 	 */
 
    public function UpdateAccountUser($adminId, $userName, $body) {
-  	  //parse inputs
+      if( $adminId === null || $userName === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/mgmt/{adminId}/account/users/{userName}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
@@ -893,18 +912,15 @@ class MgmtApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'UpdateAccountUserResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * DeleteAccountUser
@@ -915,7 +931,10 @@ class MgmtApi {
 	 */
 
    public function DeleteAccountUser($adminId, $userName) {
-  	  //parse inputs
+      if( $adminId === null || $userName === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/mgmt/{adminId}/account/users/{userName}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "DELETE";
@@ -934,18 +953,15 @@ class MgmtApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'DeleteAccountUserResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetUserEmbedKey
@@ -956,7 +972,10 @@ class MgmtApi {
 	 */
 
    public function GetUserEmbedKey($userId, $area) {
-  	  //parse inputs
+      if( $userId === null || $area === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/mgmt/{userId}/embedkey/{area}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
@@ -975,18 +994,15 @@ class MgmtApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'GetUserEmbedKeyResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetUserEmbedKeyFromGuid
@@ -997,7 +1013,10 @@ class MgmtApi {
 	 */
 
    public function GetUserEmbedKeyFromGuid($callerId, $guid) {
-  	  //parse inputs
+      if( $callerId === null || $guid === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/mgmt/{callerId}/embedkey/guid/{guid}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
@@ -1016,18 +1035,15 @@ class MgmtApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'GetUserEmbedKeyResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GenerateKeyForUser
@@ -1038,7 +1054,10 @@ class MgmtApi {
 	 */
 
    public function GenerateKeyForUser($userId, $area) {
-  	  //parse inputs
+      if( $userId === null || $area === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/mgmt/{userId}/embedkey/new/{area}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
@@ -1057,18 +1076,15 @@ class MgmtApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'GetUserEmbedKeyResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   
 }

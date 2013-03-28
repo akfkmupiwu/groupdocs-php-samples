@@ -25,23 +25,23 @@ class SignatureFormDocumentInfo {
 
   static $swaggerTypes = array(
       'id' => 'string',
-      'documentGuid' => 'string',
-      'order' => 'int',
-      'originalDocumentGuid' => 'string',
       'name' => 'string',
-      'assignedDateTime' => 'string',
       'formGuid' => 'string',
-      'originalDocumentMD5' => 'string'
+      'documentGuid' => 'string',
+      'originalDocumentGuid' => 'string',
+      'originalDocumentMD5' => 'string',
+      'assignedDateTime' => 'string',
+      'order' => 'int'
 
     );
 
   public $id; // string
-  public $documentGuid; // string
-  public $order; // int
-  public $originalDocumentGuid; // string
   public $name; // string
-  public $assignedDateTime; // string
   public $formGuid; // string
+  public $documentGuid; // string
+  public $originalDocumentGuid; // string
   public $originalDocumentMD5; // string
+  public $assignedDateTime; // string
+  public $order; // int
   }
 

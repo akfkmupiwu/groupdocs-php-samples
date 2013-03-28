@@ -27,6 +27,10 @@ class MergeApi {
 	  $this->apiClient = $apiClient;
 	}
 
+	public static function newInstance($apiClient) {
+	  return new self($apiClient);
+	}
+
     public function setBasePath($basePath) {
 	  $this->basePath = $basePath;
 	}
@@ -39,14 +43,17 @@ class MergeApi {
 	 * AddJobDocumentDataSource
 	 * Add job document datasource
    * userId, string: User GUID (required)
-   * jobId, string: Job indetifier (required)
-   * fileId, string: File indetifier (required)
-   * datasourceId, string: Datasource indetifier (required)
+   * jobId, int: Job indetifier (required)
+   * fileId, int: File indetifier (required)
+   * datasourceId, int: Datasource indetifier (required)
    * @return AddDocumentDataSourceResponse
 	 */
 
    public function AddJobDocumentDataSource($userId, $jobId, $fileId, $datasourceId) {
-  	  //parse inputs
+      if( $userId === null || $jobId === null || $fileId === null || $datasourceId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/jobs/{jobId}/files/{fileId}/datasources/{datasourceId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
@@ -73,18 +80,15 @@ class MergeApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'AddDocumentDataSourceResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * AddJobDocumentDataSourceFields
@@ -97,7 +101,10 @@ class MergeApi {
 	 */
 
    public function AddJobDocumentDataSourceFields($userId, $jobId, $fileId, $body) {
-  	  //parse inputs
+      if( $userId === null || $jobId === null || $fileId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/jobs/{jobId}/files/{fileId}/datasources");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
@@ -120,18 +127,15 @@ class MergeApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'AddDocumentDataSourceResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * FillQuestionnaire
@@ -145,14 +149,27 @@ class MergeApi {
 	 */
 
    public function FillQuestionnaire($userId, $collectorId, $datasourceId, $targetType=null, $emailResults=null) {
-  	  //parse inputs
+      if( $userId === null || $collectorId === null || $datasourceId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/questionnaires/collectors/{collectorId}/datasources/{datasourceId}?new_type={targetType}&email_results={emailResults}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId !== null) {
+      if($targetType !== null) {
+  		  $queryParams['new_type'] = $this->apiClient->toPathValue($targetType);
+  		}
+  		if($emailResults !== null) {
+  		  $queryParams['email_results'] = $this->apiClient->toPathValue($emailResults);
+  		}
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
@@ -164,30 +181,77 @@ class MergeApi {
   			$resourcePath = str_replace("{" . "datasourceId" . "}",
   			                            $datasourceId, $resourcePath);
   		}
-  		if($targetType !== null) {
-  			$resourcePath = str_replace("{" . "targetType" . "}",
-  			                            $targetType, $resourcePath);
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'MergeTemplateResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * FillExecution
+	 * Scheduled questionnaire execution fullfilment job
+   * userId, string: User global unique identifier (required)
+   * executionId, string: Execution global unique identifier to fill (required)
+   * datasourceId, string: Datasource identifier (required)
+   * targetType, string: Filled document type (optional)
+   * emailResults, string: Email results (optional)
+   * @return MergeTemplateResponse
+	 */
+
+   public function FillExecution($userId, $executionId, $datasourceId, $targetType=null, $emailResults=null) {
+      if( $userId === null || $executionId === null || $datasourceId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/merge/{userId}/questionnaires/executions/{executionId}/datasources/{datasourceId}?new_type={targetType}&email_results={emailResults}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "POST";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($targetType !== null) {
+  		  $queryParams['new_type'] = $this->apiClient->toPathValue($targetType);
   		}
   		if($emailResults !== null) {
-  			$resourcePath = str_replace("{" . "emailResults" . "}",
-  			                            $emailResults, $resourcePath);
+  		  $queryParams['email_results'] = $this->apiClient->toPathValue($emailResults);
+  		}
+  		if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($executionId !== null) {
+  			$resourcePath = str_replace("{" . "executionId" . "}",
+  			                            $executionId, $resourcePath);
+  		}
+  		if($datasourceId !== null) {
+  			$resourcePath = str_replace("{" . "datasourceId" . "}",
+  			                            $datasourceId, $resourcePath);
   		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'MergeTemplateResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * MergeDatasource
@@ -201,14 +265,27 @@ class MergeApi {
 	 */
 
    public function MergeDatasource($userId, $fileId, $datasourceId, $targetType=null, $emailResults=null) {
-  	  //parse inputs
+      if( $userId === null || $fileId === null || $datasourceId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/files/{fileId}/datasources/{datasourceId}?new_type={targetType}&email_results={emailResults}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId !== null) {
+      if($targetType !== null) {
+  		  $queryParams['new_type'] = $this->apiClient->toPathValue($targetType);
+  		}
+  		if($emailResults !== null) {
+  		  $queryParams['email_results'] = $this->apiClient->toPathValue($emailResults);
+  		}
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
@@ -220,30 +297,19 @@ class MergeApi {
   			$resourcePath = str_replace("{" . "datasourceId" . "}",
   			                            $datasourceId, $resourcePath);
   		}
-  		if($targetType !== null) {
-  			$resourcePath = str_replace("{" . "targetType" . "}",
-  			                            $targetType, $resourcePath);
-  		}
-  		if($emailResults !== null) {
-  			$resourcePath = str_replace("{" . "emailResults" . "}",
-  			                            $emailResults, $resourcePath);
-  		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'MergeTemplateResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * MergeDatasourceFields
@@ -258,14 +324,30 @@ class MergeApi {
 	 */
 
    public function MergeDatasourceFields($userId, $fileId, $targetType=null, $emailResults=null, $assemblyName=null, $body) {
-  	  //parse inputs
+      if( $userId === null || $fileId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/files/{fileId}/datasources?new_type={targetType}&email_results={emailResults}&assembly_name={assemblyName}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId !== null) {
+      if($targetType !== null) {
+  		  $queryParams['new_type'] = $this->apiClient->toPathValue($targetType);
+  		}
+  		if($emailResults !== null) {
+  		  $queryParams['email_results'] = $this->apiClient->toPathValue($emailResults);
+  		}
+  		if($assemblyName !== null) {
+  		  $queryParams['assembly_name'] = $this->apiClient->toPathValue($assemblyName);
+  		}
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
@@ -273,34 +355,19 @@ class MergeApi {
   			$resourcePath = str_replace("{" . "fileId" . "}",
   			                            $fileId, $resourcePath);
   		}
-  		if($targetType !== null) {
-  			$resourcePath = str_replace("{" . "targetType" . "}",
-  			                            $targetType, $resourcePath);
-  		}
-  		if($emailResults !== null) {
-  			$resourcePath = str_replace("{" . "emailResults" . "}",
-  			                            $emailResults, $resourcePath);
-  		}
-  		if($assemblyName !== null) {
-  			$resourcePath = str_replace("{" . "assemblyName" . "}",
-  			                            $assemblyName, $resourcePath);
-  		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'MergeTemplateResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetQuestionnaire
@@ -311,7 +378,10 @@ class MergeApi {
 	 */
 
    public function GetQuestionnaire($userId, $questionnaireId) {
-  	  //parse inputs
+      if( $userId === null || $questionnaireId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/questionnaires/{questionnaireId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
@@ -330,18 +400,15 @@ class MergeApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'GetQuestionnaireResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetQuestionnaires
@@ -354,9 +421,15 @@ class MergeApi {
 	 */
 
    public function GetQuestionnaires($userId, $status=null, $pageNumber=null, $pageSize=null) {
-  	  //parse inputs
+      if( $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/questionnaires?status={status}&page_number={pageNumber}&page_size={pageSize}");
-  	  $resourcePath = substr($resourcePath, 0, strpos($resourcePath, "?"));
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
 	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
@@ -366,10 +439,10 @@ class MergeApi {
   		  $queryParams['status'] = $this->apiClient->toPathValue($status);
   		}
   		if($pageNumber !== null) {
-  		  $queryParams['pageNumber'] = $this->apiClient->toPathValue($pageNumber);
+  		  $queryParams['page_number'] = $this->apiClient->toPathValue($pageNumber);
   		}
   		if($pageSize !== null) {
-  		  $queryParams['pageSize'] = $this->apiClient->toPathValue($pageSize);
+  		  $queryParams['page_size'] = $this->apiClient->toPathValue($pageSize);
   		}
   		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
@@ -379,18 +452,15 @@ class MergeApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'GetQuestionnairesResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * CreateQuestionnaire
@@ -401,7 +471,10 @@ class MergeApi {
 	 */
 
    public function CreateQuestionnaire($userId, $body) {
-  	  //parse inputs
+      if( $userId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/questionnaires");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
@@ -416,18 +489,15 @@ class MergeApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'CreateQuestionnaireResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * UpdateQuestionnaire
@@ -439,7 +509,10 @@ class MergeApi {
 	 */
 
    public function UpdateQuestionnaire($userId, $questionnaireId, $body) {
-  	  //parse inputs
+      if( $userId === null || $questionnaireId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/questionnaires/{questionnaireId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
@@ -458,18 +531,15 @@ class MergeApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'UpdateQuestionnaireResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * DeleteQuestionnaire
@@ -480,7 +550,10 @@ class MergeApi {
 	 */
 
    public function DeleteQuestionnaire($userId, $questionnaireId) {
-  	  //parse inputs
+      if( $userId === null || $questionnaireId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/questionnaires/{questionnaireId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "DELETE";
@@ -499,18 +572,15 @@ class MergeApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'DeleteQuestionnaireResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetDocumentQuestionnaires
@@ -521,7 +591,10 @@ class MergeApi {
 	 */
 
    public function GetDocumentQuestionnaires($userId, $fileId) {
-  	  //parse inputs
+      if( $userId === null || $fileId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/files/{fileId}/questionnaires");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
@@ -540,18 +613,15 @@ class MergeApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'GetDocumentQuestionnairesResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * CreateDocumentQuestionnaire
@@ -563,7 +633,10 @@ class MergeApi {
 	 */
 
    public function CreateDocumentQuestionnaire($userId, $fileId, $body) {
-  	  //parse inputs
+      if( $userId === null || $fileId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/files/{fileId}/questionnaires");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
@@ -582,18 +655,15 @@ class MergeApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'AddDocumentQuestionnaireResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * AddDocumentQuestionnaire
@@ -605,7 +675,10 @@ class MergeApi {
 	 */
 
    public function AddDocumentQuestionnaire($userId, $fileId, $questionnaireId) {
-  	  //parse inputs
+      if( $userId === null || $fileId === null || $questionnaireId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/files/{fileId}/questionnaires/{questionnaireId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
@@ -628,18 +701,15 @@ class MergeApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'AddDocumentQuestionnaireResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * DeleteDocumentQuestionnaire
@@ -651,7 +721,10 @@ class MergeApi {
 	 */
 
    public function DeleteDocumentQuestionnaire($userId, $fileId, $questionnaireId) {
-  	  //parse inputs
+      if( $userId === null || $fileId === null || $questionnaireId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/files/{fileId}/questionnaires/{questionnaireId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "DELETE";
@@ -674,18 +747,15 @@ class MergeApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'DeleteDocumentQuestionnaireResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * AddDataSource
@@ -696,7 +766,10 @@ class MergeApi {
 	 */
 
    public function AddDataSource($userId, $body) {
-  	  //parse inputs
+      if( $userId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/datasources");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
@@ -711,18 +784,15 @@ class MergeApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'AddDatasourceResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * UpdateDataSource
@@ -734,7 +804,10 @@ class MergeApi {
 	 */
 
    public function UpdateDataSource($userId, $datasourceId, $body) {
-  	  //parse inputs
+      if( $userId === null || $datasourceId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/datasources/{datasourceId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
@@ -753,18 +826,15 @@ class MergeApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'AddDatasourceResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * UpdateDataSourceFields
@@ -776,7 +846,10 @@ class MergeApi {
 	 */
 
    public function UpdateDataSourceFields($userId, $datasourceId, $body) {
-  	  //parse inputs
+      if( $userId === null || $datasourceId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/datasources/{datasourceId}/fields");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
@@ -795,18 +868,15 @@ class MergeApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'AddDatasourceResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * DeleteDataSource
@@ -817,7 +887,10 @@ class MergeApi {
 	 */
 
    public function DeleteDataSource($userId, $datasourceId) {
-  	  //parse inputs
+      if( $userId === null || $datasourceId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/datasources/{datasourceId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "DELETE";
@@ -836,18 +909,15 @@ class MergeApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'DeleteDatasourceResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetDataSource
@@ -859,14 +929,24 @@ class MergeApi {
 	 */
 
    public function GetDataSource($userId, $datasourceId, $fields=null) {
-  	  //parse inputs
+      if( $userId === null || $datasourceId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/datasources/{datasourceId}?field={fields}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId !== null) {
+      if($fields !== null) {
+  		  $queryParams['field'] = $this->apiClient->toPathValue($fields);
+  		}
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
@@ -874,26 +954,19 @@ class MergeApi {
   			$resourcePath = str_replace("{" . "datasourceId" . "}",
   			                            $datasourceId, $resourcePath);
   		}
-  		if($fields !== null) {
-  			$resourcePath = str_replace("{" . "fields" . "}",
-  			                            $fields, $resourcePath);
-  		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'GetDatasourceResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetQuestionnaireDataSources
@@ -905,14 +978,24 @@ class MergeApi {
 	 */
 
    public function GetQuestionnaireDataSources($userId, $questionnaireId, $includeFields=null) {
-  	  //parse inputs
+      if( $userId === null || $questionnaireId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/questionnaires/{questionnaireId}/datasources?include_fields={includeFields}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId !== null) {
+      if($includeFields !== null) {
+  		  $queryParams['include_fields'] = $this->apiClient->toPathValue($includeFields);
+  		}
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
@@ -920,26 +1003,19 @@ class MergeApi {
   			$resourcePath = str_replace("{" . "questionnaireId" . "}",
   			                            $questionnaireId, $resourcePath);
   		}
-  		if($includeFields !== null) {
-  			$resourcePath = str_replace("{" . "includeFields" . "}",
-  			                            $includeFields, $resourcePath);
-  		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'GetDatasourcesResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * AddQuestionnaireExecution
@@ -951,7 +1027,10 @@ class MergeApi {
 	 */
 
    public function AddQuestionnaireExecution($userId, $collectorId, $body) {
-  	  //parse inputs
+      if( $userId === null || $collectorId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/questionnaires/collectors/{collectorId}/executions");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
@@ -970,18 +1049,15 @@ class MergeApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'AddQuestionnaireExecutionResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetQuestionnaireCollectorExecutions
@@ -992,7 +1068,10 @@ class MergeApi {
 	 */
 
    public function GetQuestionnaireCollectorExecutions($userId, $collectorId) {
-  	  //parse inputs
+      if( $userId === null || $collectorId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/questionnaires/collectors/{collectorId}/executions");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
@@ -1011,18 +1090,15 @@ class MergeApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'GetQuestionnaireExecutionsResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetQuestionnaireExecutions
@@ -1033,7 +1109,10 @@ class MergeApi {
 	 */
 
    public function GetQuestionnaireExecutions($userId, $questionnaireId) {
-  	  //parse inputs
+      if( $userId === null || $questionnaireId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/questionnaires/{questionnaireId}/executions");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
@@ -1052,18 +1131,56 @@ class MergeApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'GetQuestionnaireExecutionsResponse');
-  		return $responseObject;
+  	  return $responseObject;
+      }
+  /**
+	 * GetQuestionnaireExecution
+	 * Get questionnaire execution
+   * userId, string: User GUID (required)
+   * executionId, string: Questionnaire execution global unique identifier (required)
+   * @return GetQuestionnaireExecutionResponse
+	 */
 
+   public function GetQuestionnaireExecution($userId, $executionId) {
+      if( $userId === null || $executionId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/merge/{userId}/questionnaires/executions/{executionId}");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "GET";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($executionId !== null) {
+  			$resourcePath = str_replace("{" . "executionId" . "}",
+  			                            $executionId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'GetQuestionnaireExecutionResponse');
+  	  return $responseObject;
       }
   /**
 	 * DeleteQuestionnaireExecution
@@ -1074,7 +1191,10 @@ class MergeApi {
 	 */
 
    public function DeleteQuestionnaireExecution($userId, $executionId) {
-  	  //parse inputs
+      if( $userId === null || $executionId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/questionnaires/executions/{executionId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "DELETE";
@@ -1093,18 +1213,15 @@ class MergeApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'DeleteQuestionnaireExecutionResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * UpdateQuestionnaireExecution
@@ -1116,7 +1233,10 @@ class MergeApi {
 	 */
 
    public function UpdateQuestionnaireExecution($userId, $executionId, $body) {
-  	  //parse inputs
+      if( $userId === null || $executionId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/questionnaires/executions/{executionId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
@@ -1135,18 +1255,15 @@ class MergeApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'UpdateQuestionnaireExecutionResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * UpdateQuestionnaireExecutionStatus
@@ -1158,7 +1275,10 @@ class MergeApi {
 	 */
 
    public function UpdateQuestionnaireExecutionStatus($userId, $executionId, $body) {
-  	  //parse inputs
+      if( $userId === null || $executionId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/questionnaires/executions/{executionId}/status");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
@@ -1177,18 +1297,15 @@ class MergeApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'UpdateQuestionnaireExecutionResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetQuestionnaireCollectors
@@ -1199,7 +1316,10 @@ class MergeApi {
 	 */
 
    public function GetQuestionnaireCollectors($userId, $questionnaireId) {
-  	  //parse inputs
+      if( $userId === null || $questionnaireId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/questionnaires/{questionnaireId}/collectors");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
@@ -1218,18 +1338,15 @@ class MergeApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'GetQuestionnaireCollectorsResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetQuestionnaireCollector
@@ -1240,7 +1357,10 @@ class MergeApi {
 	 */
 
    public function GetQuestionnaireCollector($userId, $collectorId) {
-  	  //parse inputs
+      if( $userId === null || $collectorId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/questionnaires/collectors/{collectorId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
@@ -1259,18 +1379,15 @@ class MergeApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'GetQuestionnaireCollectorResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * AddQuestionnaireCollector
@@ -1282,7 +1399,10 @@ class MergeApi {
 	 */
 
    public function AddQuestionnaireCollector($userId, $questionnaireId, $body) {
-  	  //parse inputs
+      if( $userId === null || $questionnaireId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/questionnaires/{questionnaireId}/collectors");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "POST";
@@ -1301,18 +1421,15 @@ class MergeApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'AddQuestionnaireCollectorResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * UpdateQuestionnaireCollector
@@ -1324,7 +1441,10 @@ class MergeApi {
 	 */
 
    public function UpdateQuestionnaireCollector($userId, $collectorId, $body) {
-  	  //parse inputs
+      if( $userId === null || $collectorId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/questionnaires/collectors/{collectorId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
@@ -1343,18 +1463,15 @@ class MergeApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'UpdateQuestionnaireCollectorResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * DeleteQuestionnaireCollector
@@ -1365,7 +1482,10 @@ class MergeApi {
 	 */
 
    public function DeleteQuestionnaireCollector($userId, $collectorId) {
-  	  //parse inputs
+      if( $userId === null || $collectorId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/questionnaires/collectors/{collectorId}");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "DELETE";
@@ -1384,18 +1504,15 @@ class MergeApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'DeleteQuestionnaireCollectorResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetTemplates
@@ -1405,7 +1522,10 @@ class MergeApi {
 	 */
 
    public function GetTemplates($userId) {
-  	  //parse inputs
+      if( $userId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/templates");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
@@ -1420,18 +1540,15 @@ class MergeApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'GetTemplatesResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetQuestionnaireFields
@@ -1443,14 +1560,24 @@ class MergeApi {
 	 */
 
    public function GetQuestionnaireFields($userId, $questionnaireId, $includeGeometry=null) {
-  	  //parse inputs
+      if( $userId === null || $questionnaireId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/questionnaires/{questionnaireId}/fields?include_geometry={includeGeometry}");
-  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
       $queryParams = array();
       $headerParams = array();
 
-      if($userId !== null) {
+      if($includeGeometry !== null) {
+  		  $queryParams['include_geometry'] = $this->apiClient->toPathValue($includeGeometry);
+  		}
+  		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
   			                            $userId, $resourcePath);
   		}
@@ -1458,26 +1585,19 @@ class MergeApi {
   			$resourcePath = str_replace("{" . "questionnaireId" . "}",
   			                            $questionnaireId, $resourcePath);
   		}
-  		if($includeGeometry !== null) {
-  			$resourcePath = str_replace("{" . "includeGeometry" . "}",
-  			                            $includeGeometry, $resourcePath);
-  		}
   		//make the API Call
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'TemplateFieldsResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * GetQuestionnaireMetadata
@@ -1488,7 +1608,10 @@ class MergeApi {
 	 */
 
    public function GetQuestionnaireMetadata($userId, $questionnaireId) {
-  	  //parse inputs
+      if( $userId === null || $questionnaireId === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/questionnaires/{questionnaireId}/metadata");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "GET";
@@ -1507,18 +1630,15 @@ class MergeApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'GetQuestionnaireMetadataResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   /**
 	 * UpdateQuestionnaireMetadata
@@ -1530,7 +1650,10 @@ class MergeApi {
 	 */
 
    public function UpdateQuestionnaireMetadata($userId, $questionnaireId, $body) {
-  	  //parse inputs
+      if( $userId === null || $questionnaireId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
   	  $resourcePath = str_replace("*", "", "/merge/{userId}/questionnaires/{questionnaireId}/metadata");
   	  $resourcePath = str_replace("{format}", "json", $resourcePath);
   	  $method = "PUT";
@@ -1549,18 +1672,15 @@ class MergeApi {
       if (! isset($body)) {
         $body = null;
       }
-  		$response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams);
-
-
       if(! $response){
-          return null;
-        }
+        return null;
+      }
 
-  		$responseObject = $this->apiClient->deserialize($response,
+  	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'UpdateQuestionnaireResponse');
-  		return $responseObject;
-
+  	  return $responseObject;
       }
   
 }

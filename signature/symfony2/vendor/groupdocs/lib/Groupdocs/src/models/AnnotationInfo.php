@@ -24,32 +24,40 @@
 class AnnotationInfo {
 
   static $swaggerTypes = array(
-      'createdOn' => 'string',
       'guid' => 'string',
-      'sessionGuid' => 'string',
       'documentGuid' => 'string',
+      'sessionGuid' => 'string',
+      'creatorGuid' => 'string',
+      'box' => 'Rectangle',
       'annotationPosition' => 'Point',
       'range' => 'Range',
-      'creatorGuid' => 'string',
       'svgPath' => 'string',
-      'replies' => 'array[AnnotationReplyInfo]',
-      'box' => 'Rectangle',
+      'type' => 'string',
       'access' => 'string',
-      'type' => 'string'
+      'replies' => 'array[AnnotationReplyInfo]',
+      'createdOn' => 'string',
+      'fontColor' => 'int',
+      'fieldText' => 'string',
+      'fontFamily' => 'string',
+      'fontSize' => 'float'
 
     );
 
-  public $createdOn; // string
   public $guid; // string
-  public $sessionGuid; // string
   public $documentGuid; // string
+  public $sessionGuid; // string
+  public $creatorGuid; // string
+  public $box; // Rectangle
   public $annotationPosition; // Point
   public $range; // Range
-  public $creatorGuid; // string
   public $svgPath; // string
-  public $replies; // array[AnnotationReplyInfo]
-  public $box; // Rectangle
-  public $access; // string
   public $type; // string
+  public $access; // string
+  public $replies; // array[AnnotationReplyInfo]
+  public $createdOn; // string
+  public $fontColor; // int
+  public $fieldText; // string
+  public $fontFamily; // string
+  public $fontSize; // float
   }
 

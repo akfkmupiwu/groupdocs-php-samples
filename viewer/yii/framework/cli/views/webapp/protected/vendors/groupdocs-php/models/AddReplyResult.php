@@ -24,14 +24,14 @@
 class AddReplyResult {
 
   static $swaggerTypes = array(
-      'replyDateTime' => 'DateTime',
+      'replyGuid' => 'string',
       'annotationGuid' => 'string',
-      'replyGuid' => 'string'
+      'replyDateTime' => 'DateTime'
 
     );
 
-  public $replyDateTime; // DateTime
-  public $annotationGuid; // string
   public $replyGuid; // string
+  public $annotationGuid; // string
+  public $replyDateTime; // DateTime
   }
 

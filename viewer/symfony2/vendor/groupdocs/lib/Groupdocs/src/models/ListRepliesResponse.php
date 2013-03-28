@@ -26,12 +26,14 @@ class ListRepliesResponse {
   static $swaggerTypes = array(
       'result' => 'ListRepliesResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // ListRepliesResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

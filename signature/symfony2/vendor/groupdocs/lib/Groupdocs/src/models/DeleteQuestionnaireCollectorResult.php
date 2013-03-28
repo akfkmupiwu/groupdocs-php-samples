@@ -24,12 +24,12 @@
 class DeleteQuestionnaireCollectorResult {
 
   static $swaggerTypes = array(
-      'collector_id' => 'float',
-      'questionnaire_id' => 'float'
+      'questionnaire_id' => 'float',
+      'collector_id' => 'float'
 
     );
 
-  public $collector_id; // float
   public $questionnaire_id; // float
+  public $collector_id; // float
   }
 

@@ -24,12 +24,12 @@
 class GetPlanResult {
 
   static $swaggerTypes = array(
-      'name' => 'string',
-      'ref_id' => 'string'
+      'ref_id' => 'string',
+      'name' => 'string'
 
     );
 
-  public $name; // string
   public $ref_id; // string
+  public $name; // string
   }
 

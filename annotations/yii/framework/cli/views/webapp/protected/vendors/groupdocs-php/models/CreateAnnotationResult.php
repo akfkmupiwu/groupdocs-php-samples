@@ -25,19 +25,21 @@ class CreateAnnotationResult {
 
   static $swaggerTypes = array(
       'id' => 'float',
-      'sessionGuid' => 'string',
-      'documentGuid' => 'string',
       'annotationGuid' => 'string',
+      'replyGuid' => 'string',
+      'documentGuid' => 'string',
+      'sessionGuid' => 'string',
       'access' => 'string',
-      'replyGuid' => 'string'
+      'serverTime' => 'string'
 
     );
 
   public $id; // float
-  public $sessionGuid; // string
-  public $documentGuid; // string
   public $annotationGuid; // string
-  public $access; // string
   public $replyGuid; // string
+  public $documentGuid; // string
+  public $sessionGuid; // string
+  public $access; // string
+  public $serverTime; // string
   }
 

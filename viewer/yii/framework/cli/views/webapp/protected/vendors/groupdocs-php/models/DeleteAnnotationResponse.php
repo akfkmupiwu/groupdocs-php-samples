@@ -26,12 +26,14 @@ class DeleteAnnotationResponse {
   static $swaggerTypes = array(
       'result' => 'DeleteAnnotationResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // DeleteAnnotationResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

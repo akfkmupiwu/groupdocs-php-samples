@@ -24,16 +24,16 @@
 class TemplateInfo {
 
   static $swaggerTypes = array(
-      'guid' => 'string',
-      'id' => 'float',
       'name' => 'string',
-      'field_count' => 'int'
+      'field_count' => 'int',
+      'id' => 'float',
+      'guid' => 'string'
 
     );
 
-  public $guid; // string
-  public $id; // float
   public $name; // string
   public $field_count; // int
+  public $id; // float
+  public $guid; // string
   }
 

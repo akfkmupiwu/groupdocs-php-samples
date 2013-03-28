@@ -26,12 +26,14 @@ class CreatePackageResponse {
   static $swaggerTypes = array(
       'result' => 'CreatePackageResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // CreatePackageResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 

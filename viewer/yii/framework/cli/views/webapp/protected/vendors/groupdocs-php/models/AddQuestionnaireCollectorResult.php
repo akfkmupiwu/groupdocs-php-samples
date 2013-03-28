@@ -24,14 +24,14 @@
 class AddQuestionnaireCollectorResult {
 
   static $swaggerTypes = array(
+      'questionnaire_id' => 'float',
       'collector_id' => 'float',
-      'collector_guid' => 'string',
-      'questionnaire_id' => 'float'
+      'collector_guid' => 'string'
 
     );
 
+  public $questionnaire_id; // float
   public $collector_id; // float
   public $collector_guid; // string
-  public $questionnaire_id; // float
   }
 

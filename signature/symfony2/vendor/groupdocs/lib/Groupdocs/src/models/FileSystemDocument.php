@@ -24,40 +24,40 @@
 class FileSystemDocument {
 
   static $swaggerTypes = array(
-      'sharers' => 'array[UserInfo]',
-      'modified_on' => 'string',
-      'created_on' => 'string',
-      'type' => 'string',
-      'access' => 'string',
-      'supported_types' => 'array[string]',
       'url' => 'string',
       'version' => 'int',
+      'type' => 'string',
       'file_type' => 'string',
       'size' => 'string',
+      'thumbnail' => 'string',
+      'supported_types' => 'array[string]',
       'id' => 'float',
       'guid' => 'string',
-      'thumbnail' => 'string',
-      'dir' => 'bool',
       'name' => 'string',
-      'owner' => 'UserInfo'
+      'access' => 'string',
+      'owner' => 'UserInfo',
+      'sharers' => 'array[UserInfo]',
+      'dir' => 'bool',
+      'modified_on' => 'string',
+      'created_on' => 'string'
 
     );
 
-  public $sharers; // array[UserInfo]
-  public $modified_on; // string
-  public $created_on; // string
-  public $type; // string
-  public $access; // string
-  public $supported_types; // array[string]
   public $url; // string
   public $version; // int
+  public $type; // string
   public $file_type; // string
   public $size; // string
+  public $thumbnail; // string
+  public $supported_types; // array[string]
   public $id; // float
   public $guid; // string
-  public $thumbnail; // string
-  public $dir; // bool
   public $name; // string
+  public $access; // string
   public $owner; // UserInfo
+  public $sharers; // array[UserInfo]
+  public $dir; // bool
+  public $modified_on; // string
+  public $created_on; // string
   }
 

@@ -26,12 +26,14 @@ class AddQuestionnaireCollectorResponse {
   static $swaggerTypes = array(
       'result' => 'AddQuestionnaireCollectorResult',
       'status' => 'string',
-      'error_message' => 'string'
+      'error_message' => 'string',
+      'composedOn' => 'string'
 
     );
 
   public $result; // AddQuestionnaireCollectorResult
   public $status; // string
   public $error_message; // string
+  public $composedOn; // string
   }
 
