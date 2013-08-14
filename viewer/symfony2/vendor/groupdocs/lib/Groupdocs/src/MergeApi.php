@@ -145,15 +145,16 @@ class MergeApi {
    * datasourceId, string: Datasource identifier (required)
    * targetType, string: Filled document type (optional)
    * emailResults, string: Email results (optional)
+   * callbackUrl, string: Callback url (optional)
    * @return MergeTemplateResponse
 	 */
 
-   public function FillQuestionnaire($userId, $collectorId, $datasourceId, $targetType=null, $emailResults=null) {
+   public function FillQuestionnaire($userId, $collectorId, $datasourceId, $targetType=null, $emailResults=null, $callbackUrl=null) {
       if( $userId === null || $collectorId === null || $datasourceId === null ) {
         throw new ApiException("missing required parameters", 400);
       }
       //parse inputs
-  	  $resourcePath = str_replace("*", "", "/merge/{userId}/questionnaires/collectors/{collectorId}/datasources/{datasourceId}?new_type={targetType}&email_results={emailResults}");
+  	  $resourcePath = str_replace("*", "", "/merge/{userId}/questionnaires/collectors/{collectorId}/datasources/{datasourceId}?new_type={targetType}&email_results={emailResults}&callback={callbackUrl}");
   	  $pos = strpos($resourcePath, "?");
 	  if($pos !== false){
   	  	$resourcePath = substr($resourcePath, 0, $pos);
@@ -168,6 +169,9 @@ class MergeApi {
   		}
   		if($emailResults !== null) {
   		  $queryParams['email_results'] = $this->apiClient->toPathValue($emailResults);
+  		}
+  		if($callbackUrl !== null) {
+  		  $queryParams['callback'] = $this->apiClient->toPathValue($callbackUrl);
   		}
   		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
@@ -203,15 +207,16 @@ class MergeApi {
    * datasourceId, string: Datasource identifier (required)
    * targetType, string: Filled document type (optional)
    * emailResults, string: Email results (optional)
+   * callbackUrl, string: Callback url (optional)
    * @return MergeTemplateResponse
 	 */
 
-   public function FillExecution($userId, $executionId, $datasourceId, $targetType=null, $emailResults=null) {
+   public function FillExecution($userId, $executionId, $datasourceId, $targetType=null, $emailResults=null, $callbackUrl=null) {
       if( $userId === null || $executionId === null || $datasourceId === null ) {
         throw new ApiException("missing required parameters", 400);
       }
       //parse inputs
-  	  $resourcePath = str_replace("*", "", "/merge/{userId}/questionnaires/executions/{executionId}/datasources/{datasourceId}?new_type={targetType}&email_results={emailResults}");
+  	  $resourcePath = str_replace("*", "", "/merge/{userId}/questionnaires/executions/{executionId}/datasources/{datasourceId}?new_type={targetType}&email_results={emailResults}&callback={callbackUrl}");
   	  $pos = strpos($resourcePath, "?");
 	  if($pos !== false){
   	  	$resourcePath = substr($resourcePath, 0, $pos);
@@ -226,6 +231,9 @@ class MergeApi {
   		}
   		if($emailResults !== null) {
   		  $queryParams['email_results'] = $this->apiClient->toPathValue($emailResults);
+  		}
+  		if($callbackUrl !== null) {
+  		  $queryParams['callback'] = $this->apiClient->toPathValue($callbackUrl);
   		}
   		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",

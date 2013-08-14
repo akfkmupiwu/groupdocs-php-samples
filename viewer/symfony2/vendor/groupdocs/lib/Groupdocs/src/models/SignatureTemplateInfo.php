@@ -38,7 +38,8 @@ class SignatureTemplateInfo {
       'documentsPages' => 'float',
       'recipients' => 'array[SignatureTemplateRecipientInfo]',
       'waterMarkText' => 'string',
-      'waterMarkImage' => 'string'
+      'waterMarkImage' => 'string',
+      'fieldsCount' => 'float'
 
     );
 
@@ -57,5 +58,6 @@ class SignatureTemplateInfo {
   public $recipients; // array[SignatureTemplateRecipientInfo]
   public $waterMarkText; // string
   public $waterMarkImage; // string
+  public $fieldsCount; // float
   }
 

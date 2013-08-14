@@ -32,7 +32,8 @@ class StorageProviderInfo {
       'privateKey' => 'string',
       'rootFolder' => 'string',
       'isPrimary' => 'bool',
-      'serviceHost' => 'string'
+      'serviceHost' => 'string',
+      'syncOptions' => 'string'
 
     );
 
@@ -45,5 +46,6 @@ class StorageProviderInfo {
   public $rootFolder; // string
   public $isPrimary; // bool
   public $serviceHost; // string
+  public $syncOptions; // string
   }
 

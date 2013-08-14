@@ -39,7 +39,8 @@ class SignatureEnvelopeFieldInfo {
       'fieldType' => 'int',
       'acceptableValues' => 'string',
       'defaultValue' => 'string',
-      'tooltip' => 'string'
+      'tooltip' => 'string',
+      'guidanceText' => 'string'
 
     );
 
@@ -59,5 +60,6 @@ class SignatureEnvelopeFieldInfo {
   public $acceptableValues; // string
   public $defaultValue; // string
   public $tooltip; // string
+  public $guidanceText; // string
   }
 

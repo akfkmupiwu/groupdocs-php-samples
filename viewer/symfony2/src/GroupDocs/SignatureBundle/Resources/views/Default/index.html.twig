@@ -1,0 +1,130 @@
+{% extends "AcmeDemoBundle::layout.html.twig" %}
+{% block title "Groupdocs Sign Document" %}
+
+{% block head %}
+    <style type='text/css'>
+        body
+        {
+            font-family: sans-serif;
+        }
+    </style>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="http://dev-apps.groupdocs.com/content/signaturewidgets/groupdocs.sign.js"></script>
+ {% endblock %}
+
+{% block content %}
+    <h1>GroupDocs Signature Example</h1>
+    <p>Welcome to {{ name }} example! Please enter your ClientID and PrivateKey, choose document to sign and signature image.
+     Press "Upload and sign the document" and wait a few seconds - signed document will be downloaded from the GroupDocs and showed in the iframe bellow.</p>
+
+    <div id="files_form">
+    <form action='#' onsubmit="return false;">
+        <label for='client_id'>GroupDocs Client ID</label>
+        <br />
+        <input type='text', id='client_id' />
+        <br />
+        <label for='private_key'>GroupDocs Private Key</label>
+        <br />
+        <input type='text', id='private_key' />
+        <br />
+        <label for='file_document'>Document to sign</label>
+        <br />
+        <input type='file' id='fi_document'  />
+        <br />
+        <label for='file_signature'>Signature</label>
+        <br />
+        <input type='file' id='fi_signature'  />
+        <br /><br />
+
+        <input type='button' id='btnLoad' value='Upload and sign the document' onclick='loadFile();'>
+    </form>
+    <iframe id="viewer" src="" frameborder="0" width="600" height="500"></iframe>
+    </div>
+
+    <script type='text/javascript'>
+
+        function loadFile() {
+            var inputDocument, inputSignature, fileDocument, fileSignature, frDocument, frSignature;
+
+            if (typeof window.FileReader !== 'function') {
+                $("body").append("p", "The file API isn't supported on this browser yet.");
+                return;
+            }
+
+            inputDocument = document.getElementById('fi_document');
+            if (!inputDocument) {
+                $("body").append("p", "Um, couldn't find the fileinput element.");
+            }
+            else if (!inputDocument.files) {
+                $("body").append("p", "This browser doesn't seem to support the `files` property of file inputs.");
+            }
+            else if (!inputDocument.files[0]) {
+                $("#files_form").append("<p class='error'>Please select a file before clicking 'Load'</p>");
+            }
+            else {
+                $('#viewer').fadeOut("slow");
+                fileDocument = inputDocument.files[0];
+                frDocument = new FileReader();
+                frDocument.onload = receivedDocument;
+                frDocument.readAsDataURL(fileDocument);
+            }
+
+            function receivedDocument() {
+
+                inputSignature = document.getElementById('fi_signature');
+                if (!inputSignature) {
+                    $("body").append("Um, couldn't find the fileinput element.");
+                }
+                else if (!inputSignature.files) {
+                    $("body").append("p", "This browser doesn't seem to support the `files` property of file inputs.");
+                }
+                else if (!inputSignature.files[0]) {
+                    $("body").append("<p>Please select a file before clicking 'Load'</p>");
+                }
+                else {
+                    fileSignature = inputSignature.files[0];
+                    frSignature = new FileReader();
+                    frSignature.onload = receivedSignature;
+                    frSignature.readAsDataURL(fileSignature);
+                }
+            }
+
+            function receivedSignature() {
+                var span = document.createElement('span');
+                span.innerHTML = ['<img class="thumb" width="100" src="', frSignature.result, '"/>'].join('');
+                signDocument();
+            }
+
+            function signDocument() {
+                $("body").sign({
+                    userId: $('#client_id').val(),
+                    privateKey: $('#private_key').val(),
+                    signMethod: "/web/app_dev.php/groupdocs/PublicSignDocument",
+                    onError: function (e, data) {
+                        alert(data);
+                    },
+                    onSigned: function (e, data) {
+                        var result = data;
+                        $("#viewer").attr("src", "https://apps.groupdocs.com/document-viewer/Embed/" + data.documentId);
+                        $('#viewer').fadeIn("slow");
+                    }
+                });
+                $("body").sign("addDocument", {
+                    name: fileDocument.name,
+                    data: frDocument.result
+                });
+                $("body").sign("addSigner", {
+                    name: 'Marketplace Team',
+                    top: 0.03319,
+                    left: 0.52171,
+                    width: 100,
+                    height: 40,
+                    data: frSignature.result
+                });
+                $("body").sign("sign");
+            }
+        }
+    </script>
+{% endblock %}
+

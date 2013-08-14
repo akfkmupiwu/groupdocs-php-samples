@@ -27,6 +27,7 @@ class SignatureEnvelopeInfo {
       'id' => 'string',
       'name' => 'string',
       'creationDateTime' => 'string',
+      'updatedDateTime' => 'string',
       'ownerGuid' => 'string',
       'status' => 'int',
       'statusDateTime' => 'string',
@@ -41,13 +42,18 @@ class SignatureEnvelopeInfo {
       'documentsPages' => 'float',
       'recipients' => 'array[SignatureEnvelopeRecipientInfo]',
       'waterMarkText' => 'string',
-      'waterMarkImage' => 'string'
+      'waterMarkImage' => 'string',
+      'attachSignedDocument' => 'bool',
+      'includeViewLink' => 'bool',
+      'canBeCommented' => 'bool',
+      'inPersonSign' => 'bool'
 
     );
 
   public $id; // string
   public $name; // string
   public $creationDateTime; // string
+  public $updatedDateTime; // string
   public $ownerGuid; // string
   public $status; // int
   public $statusDateTime; // string
@@ -63,5 +69,9 @@ class SignatureEnvelopeInfo {
   public $recipients; // array[SignatureEnvelopeRecipientInfo]
   public $waterMarkText; // string
   public $waterMarkImage; // string
+  public $attachSignedDocument; // bool
+  public $includeViewLink; // bool
+  public $canBeCommented; // bool
+  public $inPersonSign; // bool
   }
 

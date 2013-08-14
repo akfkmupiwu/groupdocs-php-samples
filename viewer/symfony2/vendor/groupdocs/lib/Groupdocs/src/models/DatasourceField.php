@@ -27,7 +27,8 @@ class DatasourceField {
       'name' => 'string',
       'values' => 'string',
       'contentType' => 'string',
-      'type' => 'string'
+      'type' => 'string',
+      'nested_fields' => 'array[DatasourceField]'
 
     );
 
@@ -35,5 +36,6 @@ class DatasourceField {
   public $values; // string
   public $contentType; // string
   public $type; // string
+  public $nested_fields; // array[DatasourceField]
   }
 

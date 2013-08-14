@@ -40,7 +40,9 @@ class SignatureFieldInfo {
       'fieldType' => 'int',
       'acceptableValues' => 'string',
       'defaultValue' => 'string',
-      'align' => 'int'
+      'align' => 'int',
+      'minGraphSizeW' => 'int',
+      'minGraphSizeH' => 'int'
 
     );
 
@@ -61,5 +63,7 @@ class SignatureFieldInfo {
   public $acceptableValues; // string
   public $defaultValue; // string
   public $align; // int
+  public $minGraphSizeW; // int
+  public $minGraphSizeH; // int
   }
 
