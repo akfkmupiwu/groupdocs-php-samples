@@ -24,7 +24,7 @@ class SiteController extends Controller {
             $apiKey = strip_tags(stripslashes(trim($model->api_key)));
             
             // file doc manipulation
-            if (!empty($_FILES["GroupdocsForm"])) {
+            if (!empty($_FILES["GroupdocsForm"]) && $_FILES["GroupdocsForm"]["tmp_name"]["file"] != "") {
 				// now uploaded file has priority
 				$model->file_id = '';
               
@@ -43,7 +43,7 @@ class SiteController extends Controller {
                 $signer = new GroupDocsRequestSigner($apiKey);
                 $apiClient = new APIClient($signer); // PHP SDK V1.1
                 $api = new StorageAPI($apiClient);
-                $result = $api->Upload($clientID, $name, 'uploaded', FileStream::fromFile($tmp_name));
+                $result = $api->Upload($clientID, $name, 'uploaded', "", FileStream::fromFile($tmp_name));
                
             }
 
@@ -75,6 +75,7 @@ class SiteController extends Controller {
                 $apiKey = stripslashes(strip_tags($_GET['api_key']));
                 $fileId = stripslashes(strip_tags($_GET['file_id']));
             //  GroupDocs SDK include
+            
                 Yii::import('application.vendors.groupdocs-php.models.ListAnnotationsResult');
                 Yii::import('application.vendors.groupdocs-php.models.ListAnnotationsResponse');
                 Yii::import('application.vendors.groupdocs-php.models.AnnotationInfo');
@@ -92,6 +93,7 @@ class SiteController extends Controller {
                 $apiClient = new APIClient($signer); // PHP SDK V1.1
                 $antApi = new AntApi($apiClient);
                 $annotations = $antApi->ListAnnotations($clientId, $fileId);
+                
             //  build view
                 $annotationsView = array();
                 if(isset($annotations->result->annotations) && $annotations->result->annotations){

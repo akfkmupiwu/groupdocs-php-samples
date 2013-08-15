@@ -82,9 +82,10 @@ $this->breadcrumbs = array(
 
 <?php 
 if($iframe){
+ 
     // Pull Annotations button ?>
     <hr/>
-    <input type="button" value="Pull Annotations" onclick="pullAnnot('<?=$model->client_id?>','<?=$model->api_key?>','<?=$model->file?>')"/>
+    <input type="button" value="Pull Annotations" onclick="pullAnnot('<?php echo $model->client_id?>','<?php echo $model->api_key?>','<?php echo $model->file_id?>')"/>
     <div class="annotations"></div>
     <?php
     // Iframe
@@ -94,6 +95,7 @@ if($iframe){
 
 <script>
     function pullAnnot(client_id,api_key,file_id){
+        
         if(!file_id) {
             $('iframe').each(function(key,ob) {
                 var str = ob.src;

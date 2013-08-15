@@ -26,18 +26,18 @@ class SignatureRoleInfo {
   static $swaggerTypes = array(
       'id' => 'string',
       'name' => 'string',
-      'canEdit' => 'int',
-      'canSign' => 'int',
-      'canAnnotate' => 'int',
-      'canDelegate' => 'int'
+      'canEdit' => 'bool',
+      'canSign' => 'bool',
+      'canAnnotate' => 'bool',
+      'canDelegate' => 'bool'
 
     );
 
   public $id; // string
   public $name; // string
-  public $canEdit; // int
-  public $canSign; // int
-  public $canAnnotate; // int
-  public $canDelegate; // int
+  public $canEdit; // bool
+  public $canSign; // bool
+  public $canAnnotate; // bool
+  public $canDelegate; // bool
   }
 

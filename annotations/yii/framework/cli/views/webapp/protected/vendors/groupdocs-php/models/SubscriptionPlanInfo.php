@@ -32,7 +32,11 @@ class SubscriptionPlanInfo {
       'number' => 'string',
       'expirationDate' => 'DateTime',
       'cvv' => 'string',
-      'address' => 'BillingAddressInfo'
+      'address' => 'BillingAddressInfo',
+      'price' => 'float',
+      'currencyCode' => 'string',
+      'billingPeriod' => 'int',
+      'promoCode' => 'string'
 
     );
 
@@ -45,5 +49,9 @@ class SubscriptionPlanInfo {
   public $expirationDate; // DateTime
   public $cvv; // string
   public $address; // BillingAddressInfo
+  public $price; // float
+  public $currencyCode; // string
+  public $billingPeriod; // int
+  public $promoCode; // string
   }
 

@@ -30,7 +30,8 @@ class QuestionInfo {
       'required' => 'bool',
       'disabled' => 'bool',
       'type' => 'string',
-      'answers' => 'array[AnswerInfo]'
+      'answers' => 'array[AnswerInfo]',
+      'conditions' => 'array[ConditionInfo]'
 
     );
 
@@ -41,5 +42,6 @@ class QuestionInfo {
   public $disabled; // bool
   public $type; // string
   public $answers; // array[AnswerInfo]
+  public $conditions; // array[ConditionInfo]
   }
 
