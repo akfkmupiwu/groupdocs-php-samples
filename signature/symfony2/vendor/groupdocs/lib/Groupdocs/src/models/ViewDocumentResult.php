@@ -34,6 +34,7 @@ class ViewDocumentResult {
       'token' => 'string',
       'pageHtml' => 'string',
       'pageCss' => 'string',
+      'password' => 'string',
       'id' => 'float',
       'guid' => 'string'
 
@@ -49,6 +50,7 @@ class ViewDocumentResult {
   public $token; // string
   public $pageHtml; // string
   public $pageCss; // string
+  public $password; // string
   public $id; // float
   public $guid; // string
   }

@@ -110,6 +110,35 @@ class SharedApi {
   		                                      $queryParams, $body, $headerParams, $outFileStream);
       }
   /**
+	 * GetHtml
+	 * Get html
+   * guid, string: GUID (required)
+   * @return stream
+	 */
+
+   public function GetHtml($guid, FileStream $outFileStream) {
+      if( $guid === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/shared/files/{guid}/html");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "GET";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($guid !== null) {
+  			$resourcePath = str_replace("{" . "guid" . "}",
+  			                            $guid, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      return $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams, $outFileStream);
+      }
+  /**
 	 * GetPackage
 	 * Get package
    * path, string: Path (required)
@@ -137,6 +166,43 @@ class SharedApi {
       }
       return $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
   		                                      $queryParams, $body, $headerParams, $outFileStream);
+      }
+  /**
+	 * LoginUser
+	 * Logins user using user name and password
+   * userName, string: User name (required)
+   * body, string: Password (required)
+   * @return UserInfoResponse
+	 */
+
+   public function LoginUser($userName, $body) {
+      if( $userName === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/shared/users/{userName}/logins");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "POST";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userName !== null) {
+  			$resourcePath = str_replace("{" . "userName" . "}",
+  			                            $userName, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'UserInfoResponse');
+  	  return $responseObject;
       }
   
 }

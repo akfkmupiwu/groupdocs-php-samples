@@ -34,7 +34,10 @@ class QuestionnaireMetadata {
       'modified' => 'string',
       'expires' => 'string',
       'folder' => 'string',
-      'emails' => 'string'
+      'emails' => 'string',
+      'output_format' => 'string',
+      'open_on_completion' => 'bool',
+      'allowed_operations' => 'int'
 
     );
 
@@ -49,5 +52,8 @@ class QuestionnaireMetadata {
   public $expires; // string
   public $folder; // string
   public $emails; // string
+  public $output_format; // string
+  public $open_on_completion; // bool
+  public $allowed_operations; // int
   }
 

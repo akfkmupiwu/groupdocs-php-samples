@@ -15,18 +15,18 @@
 
 {% block content %}
     <h1>GroupDocs Signature Example</h1>
-    <p>Welcome to {{ name }} example! Please enter your ClientID and PrivateKey, choose document to sign and signature image.
+     <p>Welcome to {{ name }} example! Please enter your ClientID and PrivateKey, choose document to sign and signature image.
      Press "Upload and sign the document" and wait a few seconds - signed document will be downloaded from the GroupDocs and showed in the iframe bellow.</p>
 
     <div id="files_form">
     <form action='#' onsubmit="return false;">
         <label for='client_id'>GroupDocs Client ID</label>
         <br />
-        <input type='text', id='client_id' />
+        <input type='text' id='client_id' />
         <br />
         <label for='private_key'>GroupDocs Private Key</label>
         <br />
-        <input type='text', id='private_key' />
+        <input type='text' id='private_key' />
         <br />
         <label for='file_document'>Document to sign</label>
         <br />

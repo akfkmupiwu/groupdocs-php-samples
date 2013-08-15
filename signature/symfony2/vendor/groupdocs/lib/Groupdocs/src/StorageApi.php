@@ -222,16 +222,17 @@ class StorageApi {
    * userId, string: User GUID (required)
    * path, string: Path (required)
    * description, string: Description (optional)
+   * callbackUrl, string: Callback url (optional)
    * body, stream: Stream (required)
    * @return UploadResponse
 	 */
 
-   public function Upload($userId, $path, $description=null, $body) {
+   public function Upload($userId, $path, $description=null, $callbackUrl=null, $body) {
       if( $userId === null || $path === null || $body === null ) {
         throw new ApiException("missing required parameters", 400);
       }
       //parse inputs
-  	  $resourcePath = str_replace("*", "", "/storage/{userId}/folders/{*path}?description={description}");
+  	  $resourcePath = str_replace("*", "", "/storage/{userId}/folders/{*path}?description={description}&callbackUrl={callbackUrl}");
   	  $pos = strpos($resourcePath, "?");
 	  if($pos !== false){
   	  	$resourcePath = substr($resourcePath, 0, $pos);
@@ -243,6 +244,9 @@ class StorageApi {
 
       if($description !== null) {
   		  $queryParams['description'] = $this->apiClient->toPathValue($description);
+  		}
+  		if($callbackUrl !== null) {
+  		  $queryParams['callbackUrl'] = $this->apiClient->toPathValue($callbackUrl);
   		}
   		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
@@ -501,12 +505,12 @@ class StorageApi {
    * userId, string: User GUID (required)
    * path, string: Path (required)
    * mode, string: Mode (optional)
-   * Groupdocs_Move, string: File ID (move) (optional)
    * Groupdocs_Copy, string: File ID (copy) (optional)
+   * Groupdocs_Move, string: File ID (move) (optional)
    * @return FileMoveResponse
 	 */
 
-   public function MoveFile($userId, $path, $mode=null, $Groupdocs_Move=null, $Groupdocs_Copy=null) {
+   public function MoveFile($userId, $path, $mode=null, $Groupdocs_Copy=null, $Groupdocs_Move=null) {
       if( $userId === null || $path === null ) {
         throw new ApiException("missing required parameters", 400);
       }
@@ -524,11 +528,11 @@ class StorageApi {
       if($mode !== null) {
   		  $queryParams['mode'] = $this->apiClient->toPathValue($mode);
   		}
-  		if($Groupdocs_Move !== null) {
-  		 	$headerParams['Groupdocs-Move'] = $this->apiClient->toPathValue($Groupdocs_Move);
-  		}
-      if($Groupdocs_Copy !== null) {
+  		if($Groupdocs_Copy !== null) {
   		 	$headerParams['Groupdocs-Copy'] = $this->apiClient->toPathValue($Groupdocs_Copy);
+  		}
+      if($Groupdocs_Move !== null) {
+  		 	$headerParams['Groupdocs-Move'] = $this->apiClient->toPathValue($Groupdocs_Move);
   		}
       if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",

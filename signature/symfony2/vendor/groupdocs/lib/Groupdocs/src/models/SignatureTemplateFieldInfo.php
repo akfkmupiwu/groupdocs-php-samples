@@ -36,7 +36,8 @@ class SignatureTemplateFieldInfo {
       'fieldType' => 'int',
       'acceptableValues' => 'string',
       'defaultValue' => 'string',
-      'tooltip' => 'string'
+      'tooltip' => 'string',
+      'guidanceText' => 'string'
 
     );
 
@@ -53,5 +54,6 @@ class SignatureTemplateFieldInfo {
   public $acceptableValues; // string
   public $defaultValue; // string
   public $tooltip; // string
+  public $guidanceText; // string
   }
 

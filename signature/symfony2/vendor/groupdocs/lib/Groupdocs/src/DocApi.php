@@ -49,15 +49,16 @@ class DocApi {
    * width, string: Width (optional)
    * quality, string: Quality (optional)
    * usePdf, string: Use Pdf (optional)
+   * passwordSalt, string: A password hash for password protected documents (optional)
    * @return ViewDocumentResponse
 	 */
 
-   public function ViewDocument($userId, $fileId, $pageNumber=null, $pageCount=null, $width=null, $quality=null, $usePdf=null) {
+   public function ViewDocument($userId, $fileId, $pageNumber=null, $pageCount=null, $width=null, $quality=null, $usePdf=null, $passwordSalt=null) {
       if( $userId === null || $fileId === null ) {
         throw new ApiException("missing required parameters", 400);
       }
       //parse inputs
-  	  $resourcePath = str_replace("*", "", "/doc/{userId}/files/{fileId}/thumbnails?page_number={pageNumber}&page_count={pageCount}&width={width}&quality={quality}&use_pdf={usePdf}");
+  	  $resourcePath = str_replace("*", "", "/doc/{userId}/files/{fileId}/thumbnails?page_number={pageNumber}&page_count={pageCount}&width={width}&quality={quality}&use_pdf={usePdf}&passwordSalt={passwordSalt}");
   	  $pos = strpos($resourcePath, "?");
 	  if($pos !== false){
   	  	$resourcePath = substr($resourcePath, 0, $pos);
@@ -81,6 +82,9 @@ class DocApi {
   		}
   		if($usePdf !== null) {
   		  $queryParams['use_pdf'] = $this->apiClient->toPathValue($usePdf);
+  		}
+  		if($passwordSalt !== null) {
+  		  $queryParams['passwordSalt'] = $this->apiClient->toPathValue($passwordSalt);
   		}
   		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
@@ -106,20 +110,21 @@ class DocApi {
       }
   /**
 	 * ViewDocumentAsHtml
-	 * View Document
+	 * View Document as Html
    * userId, string: User GUID (required)
    * fileId, string: File GUID (required)
    * pageNumber, string: Page Number (optional)
    * pageCount, string: Page Count (optional)
+   * passwordSalt, string: A password hash for password protected documents (optional)
    * @return ViewDocumentResponse
 	 */
 
-   public function ViewDocumentAsHtml($userId, $fileId, $pageNumber=null, $pageCount=null) {
+   public function ViewDocumentAsHtml($userId, $fileId, $pageNumber=null, $pageCount=null, $passwordSalt=null) {
       if( $userId === null || $fileId === null ) {
         throw new ApiException("missing required parameters", 400);
       }
       //parse inputs
-  	  $resourcePath = str_replace("*", "", "/doc/{userId}/files/{fileId}/htmlRepresentations?page_number={pageNumber}&page_count={pageCount}");
+  	  $resourcePath = str_replace("*", "", "/doc/{userId}/files/{fileId}/htmlRepresentations?page_number={pageNumber}&page_count={pageCount}&passwordSalt={passwordSalt}");
   	  $pos = strpos($resourcePath, "?");
 	  if($pos !== false){
   	  	$resourcePath = substr($resourcePath, 0, $pos);
@@ -134,6 +139,9 @@ class DocApi {
   		}
   		if($pageCount !== null) {
   		  $queryParams['page_count'] = $this->apiClient->toPathValue($pageCount);
+  		}
+  		if($passwordSalt !== null) {
+  		  $queryParams['passwordSalt'] = $this->apiClient->toPathValue($passwordSalt);
   		}
   		if($userId !== null) {
   			$resourcePath = str_replace("{" . "userId" . "}",
@@ -245,6 +253,48 @@ class DocApi {
 
   	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'SharedUsersResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * SetDocumentPassword
+	 * Set document password
+   * userId, string: User GUID (required)
+   * fileId, string: File GUID (required)
+   * body, string: Password (required)
+   * @return SetDocumentPasswordResponse
+	 */
+
+   public function SetDocumentPassword($userId, $fileId, $body) {
+      if( $userId === null || $fileId === null || $body === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/doc/{userId}/files/{fileId}/password");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "PUT";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($fileId !== null) {
+  			$resourcePath = str_replace("{" . "fileId" . "}",
+  			                            $fileId, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'SetDocumentPasswordResponse');
   	  return $responseObject;
       }
   /**
@@ -802,7 +852,7 @@ class DocApi {
         throw new ApiException("missing required parameters", 400);
       }
       //parse inputs
-  	  $resourcePath = str_replace("*", "", "/doc/{userId}/files/{fileId}/pages/{pageNumber}/images/{dimension}?quality={quality}&use_pdf={usePdf}&expires={expiresOn}");
+  	  $resourcePath = str_replace("*", "", "/doc/{userId}/files/{fileId}/pages/{pageNumber}/images/{dimension}?quality={quality}&use_pdf={usePdf}&expires={expiresOn}&v={version}");
   	  $pos = strpos($resourcePath, "?");
 	  if($pos !== false){
   	  	$resourcePath = substr($resourcePath, 0, $pos);
@@ -836,6 +886,53 @@ class DocApi {
   		if($dimension !== null) {
   			$resourcePath = str_replace("{" . "dimension" . "}",
   			                            $dimension, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      return $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams, $outFileStream);
+      }
+  /**
+	 * GetDocumentPageHtmlFixed
+	 * Returns an HTML Fixed representantion of a particular document page.
+   * userId, string: GroupDocs user global unique identifier. (required)
+   * fileId, string: Document global unique identifier. (required)
+   * pageNumber, int: Document page number to get image for. (required)
+   * expiresOn, bool: The date and time in milliseconds since epoch the URL expires. (optional)
+   * @return stream
+	 */
+
+   public function GetDocumentPageHtmlFixed($userId, $fileId, $pageNumber, $expiresOn=null, FileStream $outFileStream) {
+      if( $userId === null || $fileId === null || $pageNumber === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/doc/{userId}/files/{fileId}/pages/{pageNumber}/htmlFixed?expires={expiresOn}");
+  	  $pos = strpos($resourcePath, "?");
+	  if($pos !== false){
+  	  	$resourcePath = substr($resourcePath, 0, $pos);
+	  }
+	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "GET";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($expiresOn !== null) {
+  		  $queryParams['expires'] = $this->apiClient->toPathValue($expiresOn);
+  		}
+  		if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($fileId !== null) {
+  			$resourcePath = str_replace("{" . "fileId" . "}",
+  			                            $fileId, $resourcePath);
+  		}
+  		if($pageNumber !== null) {
+  			$resourcePath = str_replace("{" . "pageNumber" . "}",
+  			                            $pageNumber, $resourcePath);
   		}
   		//make the API Call
       if (! isset($body)) {
@@ -1225,6 +1322,52 @@ class DocApi {
 
   	  $responseObject = $this->apiClient->deserialize($response,
   		                                                'RemoveTagsResponse');
+  	  return $responseObject;
+      }
+  /**
+	 * GetDocumentContent
+	 * Returns document content
+   * userId, string: GroupDocs user global unique identifier. (required)
+   * fileId, string: Document global unique identifier. (required)
+   * contentType, string: Content type. (required)
+   * @return GetDocumentContentResponse
+	 */
+
+   public function GetDocumentContent($userId, $fileId, $contentType) {
+      if( $userId === null || $fileId === null || $contentType === null ) {
+        throw new ApiException("missing required parameters", 400);
+      }
+      //parse inputs
+  	  $resourcePath = str_replace("*", "", "/doc/{userId}/files/{fileId}/content/{contentType}");
+  	  $resourcePath = str_replace("{format}", "json", $resourcePath);
+  	  $method = "GET";
+      $queryParams = array();
+      $headerParams = array();
+
+      if($userId !== null) {
+  			$resourcePath = str_replace("{" . "userId" . "}",
+  			                            $userId, $resourcePath);
+  		}
+  		if($fileId !== null) {
+  			$resourcePath = str_replace("{" . "fileId" . "}",
+  			                            $fileId, $resourcePath);
+  		}
+  		if($contentType !== null) {
+  			$resourcePath = str_replace("{" . "contentType" . "}",
+  			                            $contentType, $resourcePath);
+  		}
+  		//make the API Call
+      if (! isset($body)) {
+        $body = null;
+      }
+      $response = $this->apiClient->callAPI($this->basePath, $resourcePath, $method,
+  		                                      $queryParams, $body, $headerParams);
+      if(! $response){
+        return null;
+      }
+
+  	  $responseObject = $this->apiClient->deserialize($response,
+  		                                                'GetDocumentContentResponse');
   	  return $responseObject;
       }
   

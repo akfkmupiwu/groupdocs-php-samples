@@ -24,8 +24,8 @@
 class SignatureEnvelopeSettings {
 
   static $swaggerTypes = array(
-      'ownerShouldSign' => 'int',
-      'orderedSignature' => 'int',
+      'ownerShouldSign' => 'bool',
+      'orderedSignature' => 'bool',
       'reminderTime' => 'float',
       'stepExpireTime' => 'float',
       'envelopeExpireTime' => 'float',
@@ -33,12 +33,16 @@ class SignatureEnvelopeSettings {
       'emailBody' => 'string',
       'isDemo' => 'bool',
       'waterMarkText' => 'string',
-      'waterMarkImage' => 'string'
+      'waterMarkImage' => 'string',
+      'attachSignedDocument' => 'bool',
+      'includeViewLink' => 'bool',
+      'canBeCommented' => 'bool',
+      'inPersonSign' => 'bool'
 
     );
 
-  public $ownerShouldSign; // int
-  public $orderedSignature; // int
+  public $ownerShouldSign; // bool
+  public $orderedSignature; // bool
   public $reminderTime; // float
   public $stepExpireTime; // float
   public $envelopeExpireTime; // float
@@ -47,5 +51,9 @@ class SignatureEnvelopeSettings {
   public $isDemo; // bool
   public $waterMarkText; // string
   public $waterMarkImage; // string
+  public $attachSignedDocument; // bool
+  public $includeViewLink; // bool
+  public $canBeCommented; // bool
+  public $inPersonSign; // bool
   }
 

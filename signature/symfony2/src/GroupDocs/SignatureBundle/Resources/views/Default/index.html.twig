@@ -10,7 +10,7 @@
     </style>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="http://dev-apps.groupdocs.com/content/signaturewidgets/groupdocs.sign.js"></script>
+    <script type="text/javascript" src="http://dev-apps-groupdocs.dynabic.com/content/signaturewidgets/groupdocs.sign.js"></script>
  {% endblock %}
 
 {% block content %}
@@ -22,11 +22,11 @@
     <form action='#' onsubmit="return false;">
         <label for='client_id'>GroupDocs Client ID</label>
         <br />
-        <input type='text', id='client_id' />
+        <input type='text' id='client_id' />
         <br />
         <label for='private_key'>GroupDocs Private Key</label>
         <br />
-        <input type='text', id='private_key' />
+        <input type='text' id='private_key' />
         <br />
         <label for='file_document'>Document to sign</label>
         <br />
@@ -106,7 +106,6 @@
                     },
                     onSigned: function (e, data) {
                         var result = data;
-                        console.log(data);
                         $("#viewer").attr("src", "https://apps.groupdocs.com/document-viewer/Embed/" + data.documentId);
                         $('#viewer').fadeIn("slow");
                     }

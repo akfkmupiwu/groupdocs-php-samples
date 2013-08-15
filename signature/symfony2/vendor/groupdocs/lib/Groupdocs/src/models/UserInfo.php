@@ -63,6 +63,10 @@ class UserInfo {
       'is_polyline_annotation_button_enabled' => 'bool',
       'is_typewriter_annotation_button_enabled' => 'bool',
       'is_watermark_annotation_button_enabled' => 'bool',
+      'is_annotation_document_name_shown' => 'bool',
+      'annotation_navigation_icons' => 'array[int]',
+      'annotation_tool_icons' => 'array[int]',
+      'annotation_background_color' => 'int',
       'viewer_logo' => 'array[int]',
       'viewer_options' => 'int',
       'is_viewer_navigation_widget_enabled' => 'bool',
@@ -70,10 +74,17 @@ class UserInfo {
       'is_viewer_download_widget_enabled' => 'bool',
       'is_viewer_print_widget_enabled' => 'bool',
       'is_viewer_help_widget_enabled' => 'bool',
+      'is_viewer_document_name_shown' => 'bool',
+      'isviewer_right_mouse_button_menu_enabled' => 'bool',
       'signedupOn' => 'string',
       'signedinOn' => 'string',
       'signin_count' => 'int',
       'roles' => 'array[RoleInfo]',
+      'signature_watermark_enabled' => 'bool',
+      'signature_desktop_notifications' => 'bool',
+      'webhook_notification_retries' => 'int',
+      'webhook_notification_failed_recipients' => 'string',
+      'signature_color' => 'string',
       'id' => 'float',
       'guid' => 'string',
       'primary_email' => 'string'
@@ -119,6 +130,10 @@ class UserInfo {
   public $is_polyline_annotation_button_enabled; // bool
   public $is_typewriter_annotation_button_enabled; // bool
   public $is_watermark_annotation_button_enabled; // bool
+  public $is_annotation_document_name_shown; // bool
+  public $annotation_navigation_icons; // array[int]
+  public $annotation_tool_icons; // array[int]
+  public $annotation_background_color; // int
   public $viewer_logo; // array[int]
   public $viewer_options; // int
   public $is_viewer_navigation_widget_enabled; // bool
@@ -126,10 +141,17 @@ class UserInfo {
   public $is_viewer_download_widget_enabled; // bool
   public $is_viewer_print_widget_enabled; // bool
   public $is_viewer_help_widget_enabled; // bool
+  public $is_viewer_document_name_shown; // bool
+  public $isviewer_right_mouse_button_menu_enabled; // bool
   public $signedupOn; // string
   public $signedinOn; // string
   public $signin_count; // int
   public $roles; // array[RoleInfo]
+  public $signature_watermark_enabled; // bool
+  public $signature_desktop_notifications; // bool
+  public $webhook_notification_retries; // int
+  public $webhook_notification_failed_recipients; // string
+  public $signature_color; // string
   public $id; // float
   public $guid; // string
   public $primary_email; // string

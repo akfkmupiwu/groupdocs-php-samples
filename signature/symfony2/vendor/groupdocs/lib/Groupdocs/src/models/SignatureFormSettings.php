@@ -28,7 +28,9 @@ class SignatureFormSettings {
       'fieldsInFinalFileName' => 'string',
       'canParticipantDownloadForm' => 'bool',
       'waterMarkText' => 'string',
-      'waterMarkImage' => 'string'
+      'waterMarkImage' => 'string',
+      'notifyOwnerOnSign ' => 'bool',
+      'attachSignedDocument' => 'bool'
 
     );
 
@@ -37,5 +39,7 @@ class SignatureFormSettings {
   public $canParticipantDownloadForm; // bool
   public $waterMarkText; // string
   public $waterMarkImage; // string
+  public $notifyOwnerOnSign ; // bool
+  public $attachSignedDocument; // bool
   }
 

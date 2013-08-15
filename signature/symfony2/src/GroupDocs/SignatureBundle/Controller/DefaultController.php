@@ -60,11 +60,19 @@ class DefaultController extends Controller
         $settings->signers = $signers;
         
         $response = $signatureApi->SignDocument($userId, $settings);
-
-        if ($userId != "") {
-            $return = array("responseCode" => 200, "documentId" => $response->result->documents[0]->documentId);
+        //Check is file signed and uploaded successfully
+        if ($response->status == "Ok") {
+            sleep(5);
+            $getDocumentStatus = $signatureApi->GetSignDocumentStatus($userId, $response->result->jobId);
+            //Get file guid
+            if ($getDocumentStatus->status == "Ok") {
+                $guid = $getDocumentStatus->result->documents[0]->documentId;
+                $return = array("responseCode" => 200, "documentId" =>  $guid);
+            } else {
+                $return = array("responseCode" => 400, "greeting" => $getDocumentStatus->error_message);
+            }
         } else {
-            $return = array("responseCode" => 400, "greeting" => "You have to write your name!");
+            $return = array("responseCode" => 400, "greeting" => $response->error_message);
         }
 
         $return = json_encode($return); //jscon encode the array

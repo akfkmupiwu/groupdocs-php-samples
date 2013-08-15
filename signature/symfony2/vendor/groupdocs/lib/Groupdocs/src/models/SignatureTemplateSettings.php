@@ -24,11 +24,11 @@
 class SignatureTemplateSettings {
 
   static $swaggerTypes = array(
-      'ownerShouldSign' => 'int',
-      'orderedSignature' => 'int',
+      'ownerShouldSign' => 'bool',
+      'orderedSignature' => 'bool',
       'reminderTime' => 'float',
       'stepExpireTime' => 'float',
-      'envelopeExpireTime' => 'float',
+      'templateExpireTime' => 'float',
       'emailSubject' => 'string',
       'emailBody' => 'string',
       'waterMarkText' => 'string',
@@ -36,11 +36,11 @@ class SignatureTemplateSettings {
 
     );
 
-  public $ownerShouldSign; // int
-  public $orderedSignature; // int
+  public $ownerShouldSign; // bool
+  public $orderedSignature; // bool
   public $reminderTime; // float
   public $stepExpireTime; // float
-  public $envelopeExpireTime; // float
+  public $templateExpireTime; // float
   public $emailSubject; // string
   public $emailBody; // string
   public $waterMarkText; // string

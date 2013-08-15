@@ -43,7 +43,8 @@ class SignatureFormFieldSettings {
       'acceptableValues' => 'string',
       'defaultValue' => 'string',
       'tooltip' => 'string',
-      'align' => 'int'
+      'align' => 'int',
+      'guidanceText' => 'string'
 
     );
 
@@ -67,5 +68,6 @@ class SignatureFormFieldSettings {
   public $defaultValue; // string
   public $tooltip; // string
   public $align; // int
+  public $guidanceText; // string
   }
 

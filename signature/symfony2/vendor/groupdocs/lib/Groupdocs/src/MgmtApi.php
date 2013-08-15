@@ -405,7 +405,7 @@ class MgmtApi {
 	 * CreateUserLogin
 	 * Create user login
    * callerId, string: Caller GUID (required)
-   * userId, string: User GUID (required)
+   * userId, string: User name (required)
    * password, string: Password (required)
    * @return UserInfoResponse
 	 */
