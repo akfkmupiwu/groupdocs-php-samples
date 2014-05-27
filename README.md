@@ -36,4 +36,4 @@ License
 	See the License for the specific language governing permissions and
 	limitations under the License.
 
-###Created by [Marketplace Team](http://groupdocs.com/marketplace/).
+###Created by [Marketplace Team](http://groupdocs.com/marketplace/plugins).
