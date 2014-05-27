@@ -17,7 +17,7 @@ Simple example of integrating PHP SDK with YII framework (annotation API). Uploa
 ###[View, Sign, Manage, Annotate, Assemble, Compare and Convert Documents with GroupDocs](http://groupdocs.com)
 * [View and Annotate Doc, PDF, Docx, PPT and other documents online with GroupDocs Viewer](http://groupdocs.com/apps)
 * [All GroupDocs SDK] (http://groupdocs.com/api/sdk-platforms)
-* [All GroupDocs SDK examples] (http://groupdocs.com/api/sdk-examples)
+* [All GroupDocs SDK examples] (http://groupdocs.com/cloud/sdk-examples)
 
 License
 -------
