@@ -16,4 +16,4 @@ Above example is using "xampp", so "framework" folder you can place where you go
 * [All GroupDocs SDK] (http://groupdocs.com/cloud/sdk)
 * [All GroupDocs SDK examples] (http://groupdocs.com/cloud/sdk-examples)
 
-###Created by [Marketplace Team](http://groupdocs.com/marketplace/).
+###Created by [Marketplace Team](http://groupdocs.com/marketplace/plugins).
